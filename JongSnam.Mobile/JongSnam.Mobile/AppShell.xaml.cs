@@ -15,6 +15,8 @@ namespace JongSnam.Mobile
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(YourStorePage), typeof(YourStorePage));
             Routing.RegisterRoute(nameof(AddStorePage), typeof(AddStorePage));
+            Routing.RegisterRoute(nameof(UpdateStorePage), typeof(UpdateStorePage));
+            Routing.RegisterRoute(nameof(YourFieldPage), typeof(YourFieldPage));
         }
 
     }

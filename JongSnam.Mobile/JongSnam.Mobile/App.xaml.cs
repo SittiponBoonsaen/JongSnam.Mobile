@@ -14,7 +14,9 @@ namespace JongSnam.Mobile
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+
             MainPage = new AppShell();
+
         }
 
         protected override void OnStart()

@@ -16,6 +16,11 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadItemsCommand { get; }
 
         public Command AddStoreCommand { get; }
+
+        public Command UpdateStoreCommand { get; }
+
+        public Command YourFieldCommand { get; }
+
         public YourStoreViewModel()
         {
             Items = new ObservableCollection<Item>();
@@ -23,7 +28,12 @@ namespace JongSnam.Mobile.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             AddStoreCommand = new Command(OnAddStore);
+
+            UpdateStoreCommand = new Command<Item>(OnUpdateStore);
+
+            YourFieldCommand = new Command<Item>(OnYourField);
         }
+
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
@@ -74,6 +84,16 @@ namespace JongSnam.Mobile.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(AddStorePage));
         }
+
+        async void OnUpdateStore(Item item)
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
+        }
+        async void OnYourField(Item item)
+        {
+            await Shell.Current.GoToAsync(nameof(YourFieldPage));
+        }
+
 
         public void OnAppearing()
         {
