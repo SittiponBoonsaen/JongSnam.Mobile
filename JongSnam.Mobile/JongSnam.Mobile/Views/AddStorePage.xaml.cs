@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JongSnam.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,16 @@ namespace JongSnam.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddStorePage : ContentPage
     {
+        AddStoreViewModel _viewModel;
         public AddStorePage()
         {
             InitializeComponent();
+            BindingContext = _viewModel = new AddStoreViewModel();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAppearing();
         }
     }
 }
