@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Autorests\JongSnam.Services\" />
     <Folder Include="Models\RequestModels\" />
-    <Folder Include="Validations\" />
     <Folder Include="Services\Base\" />
     <Folder Include="Services\Implementations\" />
     <Folder Include="Services\Interfaces\" />
