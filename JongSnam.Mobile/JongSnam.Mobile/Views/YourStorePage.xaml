@@ -14,16 +14,35 @@
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}"
-                               LineBreakMode="NoWrap"
+                    <StackLayout Padding="0" x:DataType="model:Item">
+                        <Grid Margin="5,7,5,7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1" />
+                                </Grid.RowDefinitions>
+
+                            <!--<Button Text="แก้ไข" Grid.Column="0" Grid.RowSpan="2"
+                                HorizontalOptions="End" VerticalOptions="Center" />-->
+                            <Image Source="https://static.vecteezy.com/system/resources/thumbnails/000/522/621/small/kflj_bbzy_140326.jpg" 
+                                   Grid.Column="0" Grid.RowSpan="2"/>
+
+                            <Label Text="{Binding Text}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
                                Style="{DynamicResource ListItemTextStyle}"
-                               FontSize="16"/>
-                        <Label Text="{Binding Description}"
-                               LineBreakMode="TailTruncation"
-                               Style="{DynamicResource ListItemDetailTextStyle}"
                                FontSize="13"/>
+
+                            <Button Text="ดู" Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" FontSize="13"/>
+
+                            <Button Text="แก้ไข" Grid.Column="3" Grid.RowSpan="2" HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"/>
+                        </Grid>
+                            <BoxView HeightRequest="1" Color="Gray"></BoxView>
                     </StackLayout>
+
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

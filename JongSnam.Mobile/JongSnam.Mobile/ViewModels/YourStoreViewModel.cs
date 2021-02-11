@@ -34,13 +34,23 @@ namespace JongSnam.Mobile.ViewModels
 
                 var items = new ObservableCollection<Item> {
                     new Item{
-                        Text = "test",
+                        Text = "The goals",
                         Description = "ggg"
                     },
                     new Item
                     {
-                        Text = "gad",
-                        Description = "gfgsdf"
+                        Text = "ร้าน Happy มอใหม่",
+                        Description = "gfgasdf"
+                    },
+                    new Item
+                    {
+                        Text = "ร้าน Happy ท่าขอนยาง",
+                        Description = "gfgasdf"
+                    },
+                    new Item
+                    {
+                        Text = "Soccer pro บางนา",
+                        Description = "gfgasdf"
                     }
                 };
 
