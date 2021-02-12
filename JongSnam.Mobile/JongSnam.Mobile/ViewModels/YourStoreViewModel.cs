@@ -91,6 +91,7 @@ namespace JongSnam.Mobile.ViewModels
         }
         async void OnYourField(Item item)
         {
+
             await Shell.Current.GoToAsync(nameof(YourFieldPage));
         }
 
