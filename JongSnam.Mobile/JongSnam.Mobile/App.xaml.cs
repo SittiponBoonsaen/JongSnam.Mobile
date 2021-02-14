@@ -1,4 +1,6 @@
 ﻿using JongSnam.Mobile.Services;
+using JongSnam.Mobile.Services.Implementations;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using System;
 using Xamarin.Forms;
@@ -13,9 +15,14 @@ namespace JongSnam.Mobile
         {
             InitializeComponent();
 
+            DependencyService.Register<IConfigurationService, ConfigurationService>();
+            DependencyService.Register<IUsersServices, UsersServices>();
+
             DependencyService.Register<MockDataStore>();
 
             MainPage = new AppShell();
+
+
 
         }
 

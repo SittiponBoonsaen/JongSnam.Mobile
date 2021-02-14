@@ -1,4 +1,5 @@
 ﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ namespace JongSnam.Mobile.ViewModels
     public class YourFieldViewModel : BaseViewModel
     {
         public Command LoadItemsCommand { get; }
-
+        public Command UpdateFieldCommand { get; }
         public ObservableCollection<Item> Items { get; }
 
         public YourFieldViewModel()
@@ -19,7 +20,10 @@ namespace JongSnam.Mobile.ViewModels
             Items = new ObservableCollection<Item>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+
+            UpdateFieldCommand = new Command<Item>(OnUpdateField);
         }
+
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
@@ -65,7 +69,10 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-
+        async void OnUpdateField(Item Item)
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
+        }
         public void OnAppearing()
         {
             IsBusy = true;

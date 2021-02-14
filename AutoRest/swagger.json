@@ -1,0 +1,1825 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "JongSnam.Services",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Field/Search": {
+      "get": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "GetAll",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "StartPrice",
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "in": "query",
+            "name": "ToPrice",
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "in": "query",
+            "name": "DistrictId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "ProvinceId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDtoBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Field/{id}": {
+      "get": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "GetFieldById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDetailDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Field/{storeId}/Fields": {
+      "get": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "GetFieldByStore",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "storeId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDtoBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Field": {
+      "post": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "AddField",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddFieldRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "UpdateField",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateFieldRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Field/{id}/DeleteField": {
+      "put": {
+        "tags": [
+          "Field"
+        ],
+        "operationId": "DeleteField",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Payment": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "operationId": "CreatePayment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Payment"
+        ],
+        "operationId": "UpdatePayment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePaymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation/{storeId}": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "GetYourReservation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "storeId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "ownerId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDtoBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation/Search": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "GetAll",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "storeId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "ownerId",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Year",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Month",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Day",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Hour",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Minute",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StartTime.Second",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Year",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Month",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Day",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Hour",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Minute",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "StopTime.Second",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "UserName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "StoreName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDtoBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation/{Id}/Detail": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "GetShowDetailYourReservation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/FieldDtoBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation/ApprovalStatus": {
+      "put": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "UpdateApprovalStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ReservationApprovalRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation": {
+      "post": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "CreateReservation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ReservationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Reservation/{id}/DeleteReservation": {
+      "put": {
+        "tags": [
+          "Reservation"
+        ],
+        "operationId": "DeleteReservation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Review/{storeId}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "GetReviewByStoreId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "storeId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SumaryRatingDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Review": {
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "operationId": "AddReview",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ReviewRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Store": {
+      "get": {
+        "tags": [
+          "Store"
+        ],
+        "operationId": "GetStores",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StoreDtoBasePagingDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Store"
+        ],
+        "operationId": "AddStore",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/StoreRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Store"
+        ],
+        "operationId": "UpdateStore",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateStoreRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Store/{ownerId}": {
+      "get": {
+        "tags": [
+          "Store"
+        ],
+        "operationId": "GetYourStores",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ownerId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/YourStoreBasePagingDto"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/User": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetUsers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDto"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "CreateUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/User/ChangePassword": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "ChangePassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FieldDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "storeName": {
+          "type": "string"
+        },
+        "isOpen": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FieldDtoBasePagingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldDto"
+          }
+        }
+      }
+    },
+    "ProblemsDetailDto": {
+      "type": "object",
+      "properties": {
+        "detail": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": { },
+          "readOnly": true
+        },
+        "instance": {
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ImageFieldDto": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "FieldDetailDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "format": "double",
+          "type": "number"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "percentage": {
+          "format": "double",
+          "type": "number"
+        },
+        "imageFieldDto": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageFieldDto"
+          }
+        }
+      }
+    },
+    "FieldRequest": {
+      "required": [
+        "name",
+        "price",
+        "size",
+        "storeId"
+      ],
+      "type": "object",
+      "properties": {
+        "storeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "size": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "price": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isOpen": {
+          "type": "boolean"
+        }
+      }
+    },
+    "DiscountRequest": {
+      "required": [
+        "endDate",
+        "percentage",
+        "startDate"
+      ],
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "percentage": {
+          "format": "double",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "detail": {
+          "maxLength": 50,
+          "type": "string"
+        }
+      }
+    },
+    "ImageFieldRequest": {
+      "required": [
+        "image"
+      ],
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "AddFieldRequest": {
+      "type": "object",
+      "properties": {
+        "fieldRequest": {
+          "$ref": "#/definitions/FieldRequest"
+        },
+        "discountRequest": {
+          "$ref": "#/definitions/DiscountRequest"
+        },
+        "pictureFieldRequest": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageFieldRequest"
+          }
+        }
+      }
+    },
+    "UpdateDiscountRequest": {
+      "required": [
+        "endDate",
+        "percentage",
+        "startDate"
+      ],
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "percentage": {
+          "format": "double",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "detail": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UpdatePictureFieldRequest": {
+      "required": [
+        "image"
+      ],
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UpdateFieldRequest": {
+      "required": [
+        "name",
+        "price",
+        "size",
+        "storeId"
+      ],
+      "type": "object",
+      "properties": {
+        "storeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "size": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "price": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "updateDiscountRequest": {
+          "$ref": "#/definitions/UpdateDiscountRequest"
+        },
+        "updatePictureFieldRequest": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpdatePictureFieldRequest"
+          }
+        }
+      }
+    },
+    "PaymentRequest": {
+      "type": "object",
+      "properties": {
+        "reservationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "isFullAmount": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UpdatePaymentRequest": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "isFullAmount": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ReservationApprovalRequest": {
+      "type": "object",
+      "properties": {
+        "approvalStatus": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ReservationRequest": {
+      "type": "object",
+      "properties": {
+        "storeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "userId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "fieldId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "stopTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ReviewDto": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "rating": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "SumaryRatingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReviewDto"
+          }
+        },
+        "totalFive": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalFour": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalThree": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalTwo": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalOne": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "summaryRating": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "ReviewRequest": {
+      "required": [
+        "message",
+        "rating",
+        "storeId",
+        "userId"
+      ],
+      "type": "object",
+      "properties": {
+        "storeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "userId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "rating": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "StoreDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "rating": {
+          "format": "double",
+          "type": "number"
+        },
+        "officeHours": {
+          "type": "string"
+        }
+      }
+    },
+    "StoreDtoBasePagingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StoreDto"
+          }
+        }
+      }
+    },
+    "StoreRequest": {
+      "required": [
+        "address",
+        "amphur",
+        "contactMobile",
+        "district",
+        "isOpen",
+        "name",
+        "ownerId",
+        "province"
+      ],
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        },
+        "name": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "address": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "district": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "amphur": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "province": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "contactMobile": {
+          "format": "tel",
+          "maxLength": 10,
+          "minLength": 9,
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "longtitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "officeHours": {
+          "maxLength": 150,
+          "type": "string"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "rules": {
+          "maxLength": 50,
+          "type": "string"
+        }
+      }
+    },
+    "UpdateStoreRequest": {
+      "required": [
+        "address",
+        "contactMobile",
+        "district",
+        "isOpen",
+        "name",
+        "province",
+        "subDistrict"
+      ],
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "name": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "address": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "subDistrict": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "district": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "province": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contactMobile": {
+          "format": "tel",
+          "maxLength": 10,
+          "minLength": 9,
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "longtitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "officeHours": {
+          "maxLength": 150,
+          "type": "string"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "rules": {
+          "maxLength": 50,
+          "type": "string"
+        }
+      }
+    },
+    "YourStore": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "YourStoreBasePagingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/YourStore"
+          }
+        }
+      }
+    },
+    "UserDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        }
+      }
+    },
+    "UserRequest": {
+      "required": [
+        "confirmPassword",
+        "contactMobile",
+        "email",
+        "firstName",
+        "lastName",
+        "password",
+        "userTypeId"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "format": "email",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "password": {
+          "maxLength": 20,
+          "minLength": 8,
+          "type": "string"
+        },
+        "confirmPassword": {
+          "maxLength": 20,
+          "minLength": 8,
+          "type": "string"
+        },
+        "firstName": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "lastName": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "address": {
+          "format": "string",
+          "maxLength": 150,
+          "type": "string"
+        },
+        "contactMobile": {
+          "format": "tel",
+          "maxLength": 10,
+          "minLength": 9,
+          "type": "string"
+        },
+        "imageProfile": {
+          "type": "string"
+        },
+        "userTypeId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ChangePasswordRequest": {
+      "required": [
+        "confirmNewPassword",
+        "newPassword",
+        "oldPassword"
+      ],
+      "type": "object",
+      "properties": {
+        "oldPassword": {
+          "maxLength": 20,
+          "minLength": 8,
+          "type": "string"
+        },
+        "newPassword": {
+          "maxLength": 20,
+          "minLength": 8,
+          "type": "string"
+        },
+        "confirmNewPassword": {
+          "maxLength": 20,
+          "minLength": 8,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

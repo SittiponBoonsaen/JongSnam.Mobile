@@ -1,4 +1,5 @@
-﻿using JongSnam.Mobile.Views;
+﻿using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,14 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class YourProFileViewModel : BaseViewModel
     {
+
+        private readonly IUsersServices _usersServices; 
+
         public Command ChangePasswordCommand { get; }
 
-        public YourProFileViewModel()
+        public YourProFileViewModel(int id)
         {
+            _usersServices = DependencyService.Get<IUsersServices>();
             ChangePasswordCommand = new Command(OnChangePassword);
         }
 
@@ -19,9 +24,10 @@ namespace JongSnam.Mobile.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(ChangePasswordPage));
         }
-        public void OnAppearing()
+        public async void OnAppearing()
         {
             IsBusy = true;
+            var aa = await _usersServices.GetUsers();
         }
     }
 }
