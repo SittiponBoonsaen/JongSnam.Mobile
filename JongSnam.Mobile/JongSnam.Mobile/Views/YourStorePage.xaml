@@ -37,6 +37,7 @@
                                FontSize="13"/>
 
                             <Button Text="ดู" Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" FontSize="13"
+
                                     Command="{Binding BindingContext.YourFieldCommand, Source={x:Reference ThisPage}}"
                                     CommandParameter="{Binding .}"/>
 

@@ -14,7 +14,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command ChangePasswordCommand { get; }
 
-        public YourProFileViewModel(int id)
+        public YourProFileViewModel()
         {
             _usersServices = DependencyService.Get<IUsersServices>();
             ChangePasswordCommand = new Command(OnChangePassword);
