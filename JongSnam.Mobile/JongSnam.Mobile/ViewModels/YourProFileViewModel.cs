@@ -14,7 +14,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command ChangePasswordCommand { get; }
 
-        public YourProFileViewModel()
+        public YourProFileViewModel(int id)
         {
             _usersServices = DependencyService.Get<IUsersServices>();
             ChangePasswordCommand = new Command(OnChangePassword);
@@ -27,7 +27,7 @@ namespace JongSnam.Mobile.ViewModels
         public async void OnAppearing()
         {
             IsBusy = true;
-            var aa = await _usersServices.GetUsers();
+            var dataUser = await _usersServices.GetUsers();
         }
     }
 }

@@ -14,11 +14,13 @@ namespace JongSnam.Mobile.Views
     public partial class YourProFilePage : ContentPage
     {
         YourProFileViewModel _viewModel;
+
         public YourProFilePage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new YourProFileViewModel();
+            BindingContext = _viewModel = new YourProFileViewModel(5);
+
         }
 
         protected override void OnAppearing()
