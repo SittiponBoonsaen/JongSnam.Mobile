@@ -9,29 +9,19 @@ using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
-    public class YourStoreViewModel : BaseViewModel
+    public class YourFieldViewModel : BaseViewModel
     {
+        public Command LoadItemsCommand { get; }
+        public Command UpdateFieldCommand { get; }
         public ObservableCollection<Item> Items { get; }
 
-        public Command LoadItemsCommand { get; }
-
-        public Command AddStoreCommand { get; }
-
-        public Command UpdateStoreCommand { get; }
-
-        public Command YourFieldCommand { get; }
-
-        public YourStoreViewModel()
+        public YourFieldViewModel()
         {
             Items = new ObservableCollection<Item>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            AddStoreCommand = new Command(OnAddStore);
-
-            UpdateStoreCommand = new Command<Item>(OnUpdateStore);
-
-            YourFieldCommand = new Command<Item>(OnYourField);
+            UpdateFieldCommand = new Command<Item>(OnUpdateField);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -44,23 +34,23 @@ namespace JongSnam.Mobile.ViewModels
 
                 var items = new ObservableCollection<Item> {
                     new Item{
-                        Text = "The goals",
-                        Description = "ggg"
+                        Text = "สนามที่1",
+                        Description = "test"
                     },
                     new Item
                     {
-                        Text = "ร้าน Happy มอใหม่",
-                        Description = "gfgasdf"
+                        Text = "สนามที่2",
+                        Description = "hgadf"
                     },
                     new Item
                     {
-                        Text = "ร้าน Happy ท่าขอนยาง",
-                        Description = "gfgasdf"
+                        Text = "สนามที่3",
+                        Description = "ดกhafdเหก"
                     },
                     new Item
                     {
-                        Text = "Soccer pro บางนา",
-                        Description = "gfgasdf"
+                        Text = "สนามที่4",
+                        Description = "ahdf"
                     }
                 };
 
@@ -68,7 +58,7 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     Items.Add(item);
                 }
-                
+
             }
             catch
             {
@@ -79,23 +69,10 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-
-        async void OnAddStore(object obj)
+        async void OnUpdateField(Item Item)
         {
-            await Shell.Current.GoToAsync(nameof(AddStorePage));
+            await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
         }
-
-        async void OnUpdateStore(Item item)
-        {
-            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
-        }
-        async void OnYourField(Item item)
-        {
-
-            await Shell.Current.GoToAsync(nameof(YourFieldPage));
-        }
-
-
         public void OnAppearing()
         {
             IsBusy = true;
