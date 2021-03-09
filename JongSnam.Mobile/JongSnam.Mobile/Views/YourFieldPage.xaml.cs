@@ -11,14 +11,15 @@ using Xamarin.Forms.Xaml;
 namespace JongSnam.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddStorePage : ContentPage
+    public partial class YourFieldPage : ContentPage
     {
-        AddStoreViewModel _viewModel;
-        public AddStorePage()
+        YourFieldViewModel _viewModel;
+        public YourFieldPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new AddStoreViewModel();
+            BindingContext = _viewModel = new YourFieldViewModel();
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

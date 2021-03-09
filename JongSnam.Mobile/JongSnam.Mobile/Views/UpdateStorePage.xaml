@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.AddStorePage"
-             Title="เพิ่มร้าน">
+             x:Class="JongSnam.Mobile.Views.UpdateStorePage"
+             Title="แก้ไขร้าน">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
@@ -11,12 +11,12 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <StackLayout>
-                <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
-            </StackLayout>
-            <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
-            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
+                <StackLayout>
+                    <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
+                    <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
+                </StackLayout>
+                <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
+                <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
                 <Picker x:Name="SubDistricts" Title="ตำบล"
                 HorizontalOptions="FillAndExpand">
                     <Picker.Items>
@@ -41,28 +41,28 @@
                     </Picker.Items>
                 </Picker>
 
-            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
-            <Grid >
-                <Entry Grid.Column="0"
+                <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
+                <Grid >
+                    <Entry Grid.Column="0"
                    Keyboard="Numeric"
                    Placeholder="ลัดติจูด"
                    IsEnabled="false" />
 
-                <Entry Grid.Column="1"
+                    <Entry Grid.Column="1"
                    Keyboard="Numeric"
                    Placeholder="ลองติจูด"
                    IsEnabled="false" />
-            </Grid>
-            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
+                </Grid>
+                <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
+                <Picker x:Name="Status" Title="สถานนะของสนาม"
             HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
-            </Picker>
-            <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
-        </StackLayout>
+                    <Picker.Items>
+                        <x:String>เปิดบริการ</x:String>
+                        <x:String>ปิดบริการ</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
