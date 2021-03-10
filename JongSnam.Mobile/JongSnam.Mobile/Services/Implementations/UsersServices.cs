@@ -16,5 +16,35 @@ namespace JongSnam.Mobile.Services.Implementations
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<UserDto>>(response);
         }
 
+        public async Task<bool> CreateUser(UserRequest userRequest)
+        {
+            try
+            {
+                var response = await JongSnamServices.CreateUserWithHttpMessagesAsync(userRequest);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangePassword(int id, ChangePasswordRequest changePasswordRequest)
+        {
+            try
+            {
+                var response = await JongSnamServices.ChangePasswordWithHttpMessagesAsync(id, changePasswordRequest);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
     }
 }

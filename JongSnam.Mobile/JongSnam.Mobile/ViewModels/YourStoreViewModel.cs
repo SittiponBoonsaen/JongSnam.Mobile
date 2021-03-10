@@ -1,4 +1,5 @@
 ﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class YourStoreViewModel : BaseViewModel
     {
+        private readonly IStoreServices _storeServices;
+
         public ObservableCollection<Item> Items { get; }
 
         public Command LoadItemsCommand { get; }
@@ -37,6 +40,7 @@ namespace JongSnam.Mobile.ViewModels
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
+
 
             try
             {
