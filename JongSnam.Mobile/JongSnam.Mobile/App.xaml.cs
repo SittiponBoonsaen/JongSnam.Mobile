@@ -16,13 +16,12 @@ namespace JongSnam.Mobile
             InitializeComponent();
 
             DependencyService.Register<IConfigurationService, ConfigurationService>();
-            DependencyService.Register<IUsersServices, UsersServices>();
-            DependencyService.Register<IStoreServices, StoreServices>();
-            DependencyService.Register<IReviewServices, ReviewServices>();
-            DependencyService.Register<IReservationServices, ReservationServices>();
-            DependencyService.Register<IPaymentServices, PaymentServices>();
             DependencyService.Register<IFieldServices, FieldServices>();
-
+            DependencyService.Register<IPaymentServices, PaymentServices>();
+            DependencyService.Register<IReservationServices, ReservationServices>();
+            DependencyService.Register<IReviewServices, ReviewServices>();
+            DependencyService.Register<IStoreServices, StoreServices>();
+            DependencyService.Register<IUsersServices, UsersServices>();
             DependencyService.Register<MockDataStore>();
 
             MainPage = new AppShell();

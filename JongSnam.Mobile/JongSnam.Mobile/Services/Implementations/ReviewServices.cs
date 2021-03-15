@@ -12,7 +12,7 @@ namespace JongSnam.Mobile.Services.Implementations
     {
         public async Task<IEnumerable<SumaryRatingDto>> GetReviewByStoreId(int storeId, int currentPage, int pageSize)
         {
-            var response = await JongSnamServices.GetReviewByStoreIdWithHttpMessagesAsync(storeId, currentPage, pageSize);
+            var response = await JongSnamServices.GetReviewByStoreIdWithHttpMessagesAsync(storeId, currentPage, pageSize, CustomHeaders);
 
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<SumaryRatingDto>>(response);
         }
@@ -21,7 +21,7 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             try
             {
-                var response = await JongSnamServices.AddReviewWithHttpMessagesAsync(reviewRequest);
+                var response = await JongSnamServices.AddReviewWithHttpMessagesAsync(reviewRequest, CustomHeaders);
 
                 return true;
             }
@@ -30,5 +30,5 @@ namespace JongSnam.Mobile.Services.Implementations
                 return false;
             }
         }
-        }
+    }
 }
