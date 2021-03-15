@@ -17,6 +17,7 @@ namespace JongSnam.Mobile
 
             DependencyService.Register<IConfigurationService, ConfigurationService>();
             DependencyService.Register<IUsersServices, UsersServices>();
+            DependencyService.Register<IStoreServices, StoreServices>();
 
             DependencyService.Register<MockDataStore>();
 

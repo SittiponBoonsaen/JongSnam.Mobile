@@ -20,7 +20,7 @@ namespace JongSnam.Mobile.Services.Base
 
         protected readonly JongSnamServices JongSnamServices;
 
-      
+        protected readonly IConnectivityService ConnectivityService;
 
         protected Dictionary<string, List<string>> CustomHeaders
         {
@@ -45,8 +45,9 @@ namespace JongSnam.Mobile.Services.Base
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
             //JongSnamServices = new JongSnamServices(new Uri(ConfigurationService.Configuration.JongSnamServicesUrl), handler);
-            JongSnamServices = new JongSnamServices(new Uri("http://192.168.197.177:8080/"), handler);
+            JongSnamServices = new JongSnamServices(new Uri("http://172.17.29.65:8080/"), handler);
         }
+
 
         protected async Task<T> GetRespondDtoHandlerHttpStatus<T>(HttpOperationResponse httpOperationResponse)
         {

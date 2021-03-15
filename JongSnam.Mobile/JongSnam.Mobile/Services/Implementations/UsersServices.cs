@@ -16,6 +16,12 @@ namespace JongSnam.Mobile.Services.Implementations
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<UserDto>>(response);
         }
 
+        public async Task<UserDto> GetUserById(int id)
+        {
+            var response = await JongSnamServices.GetByIdWithHttpMessagesAsync(id, CustomHeaders);
+            return await GetRespondDtoHandlerHttpStatus<UserDto>(response);
+        }
+
         public async Task<bool> CreateUser(UserRequest userRequest)
         {
             try

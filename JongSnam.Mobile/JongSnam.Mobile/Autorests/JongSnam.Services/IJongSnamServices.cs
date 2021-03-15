@@ -52,7 +52,7 @@ namespace JongSnamService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetAllWithHttpMessagesAsync(double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetFieldBySearchWithHttpMessagesAsync(double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>
@@ -190,7 +190,7 @@ namespace JongSnamService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetAll1WithHttpMessagesAsync(int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetReservationBySearchWithHttpMessagesAsync(int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>
@@ -323,6 +323,16 @@ namespace JongSnamService
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<object>> CreateUserWithHttpMessagesAsync(UserRequest body = default(UserRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetByIdWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>

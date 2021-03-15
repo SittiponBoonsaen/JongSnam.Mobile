@@ -10,6 +10,8 @@ namespace JongSnam.Mobile.Services.Interfaces
     {
         Task<IEnumerable<UserDto>> GetUsers();
 
+        Task<UserDto> GetUserById(int id);
+
         Task<bool> CreateUser(UserRequest userRequest);
 
         Task<bool> ChangePassword(int id, ChangePasswordRequest changePasswordRequest);

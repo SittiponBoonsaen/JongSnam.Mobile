@@ -1,6 +1,7 @@
 ﻿using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ namespace JongSnam.Mobile.ViewModels
     {
         private readonly IStoreServices _storeServices;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<YourStore> Items { get; }
 
         public Command LoadItemsCommand { get; }
 
@@ -26,7 +27,9 @@ namespace JongSnam.Mobile.ViewModels
 
         public YourStoreViewModel()
         {
-            Items = new ObservableCollection<Item>();
+            
+
+            Items = new ObservableCollection<YourStore>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
@@ -35,6 +38,8 @@ namespace JongSnam.Mobile.ViewModels
             UpdateStoreCommand = new Command<Item>(OnUpdateStore);
 
             YourFieldCommand = new Command<Item>(OnYourField);
+
+            _storeServices = DependencyService.Get<IStoreServices>();
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -45,38 +50,16 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-
-                var items = new ObservableCollection<Item> {
-                    new Item{
-                        Text = "The goals",
-                        Description = "ggg"
-                    },
-                    new Item
-                    {
-                        Text = "ร้าน Happy มอใหม่",
-                        Description = "gfgasdf"
-                    },
-                    new Item
-                    {
-                        Text = "ร้าน Happy ท่าขอนยาง",
-                        Description = "gfgasdf"
-                    },
-                    new Item
-                    {
-                        Text = "Soccer pro บางนา",
-                        Description = "gfgasdf"
-                    }
-                };
-
-                foreach (var item in items)
+                var data = await _storeServices.GetYourStores(4, 1, 5);
+                foreach (var item in data)
                 {
                     Items.Add(item);
                 }
                 
             }
-            catch
+            catch(Exception ex)
             {
-
+                throw ex;
             }
             finally
             {
@@ -98,7 +81,6 @@ namespace JongSnam.Mobile.ViewModels
 
             await Shell.Current.GoToAsync(nameof(YourFieldPage));
         }
-
 
         public void OnAppearing()
         {
