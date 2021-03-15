@@ -206,6 +206,32 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='reservationId'>
+            /// </param>
+            public static object GetPaymentByReservationId(this IJongSnamServices operations, int reservationId)
+            {
+                return operations.GetPaymentByReservationIdAsync(reservationId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetPaymentByReservationIdAsync(this IJongSnamServices operations, int reservationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPaymentByReservationIdWithHttpMessagesAsync(reservationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='body'>
             /// </param>
             public static object CreatePayment(this IJongSnamServices operations, PaymentRequest body = default(PaymentRequest))

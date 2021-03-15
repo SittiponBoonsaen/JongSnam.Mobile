@@ -110,6 +110,16 @@ namespace JongSnamService
         /// </param>
         Task<HttpOperationResponse<object>> DeleteFieldWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='reservationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetPaymentByReservationIdWithHttpMessagesAsync(int reservationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
