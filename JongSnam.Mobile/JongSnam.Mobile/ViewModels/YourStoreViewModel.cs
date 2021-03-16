@@ -27,19 +27,19 @@ namespace JongSnam.Mobile.ViewModels
 
         public YourStoreViewModel()
         {
-            
+            _storeServices = DependencyService.Get<IStoreServices>();
 
             Items = new ObservableCollection<YourStore>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
+
             AddStoreCommand = new Command(OnAddStore);
 
-            UpdateStoreCommand = new Command<Item>(OnUpdateStore);
+            UpdateStoreCommand = new Command<YourStore>(OnUpdateStore);
 
-            YourFieldCommand = new Command<Item>(OnYourField);
+            YourFieldCommand = new Command<YourStore>(OnYourField);
 
-            _storeServices = DependencyService.Get<IStoreServices>();
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -72,11 +72,11 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.GoToAsync(nameof(AddStorePage));
         }
 
-        async void OnUpdateStore(Item item)
+        async void OnUpdateStore(YourStore yourStore)
         {
             await Shell.Current.GoToAsync(nameof(UpdateStorePage));
         }
-        async void OnYourField(Item item)
+        async void OnYourField(YourStore yourStore)
         {
 
             await Shell.Current.GoToAsync(nameof(YourFieldPage));

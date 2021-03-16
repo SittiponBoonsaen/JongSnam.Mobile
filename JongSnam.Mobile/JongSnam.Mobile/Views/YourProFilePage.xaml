@@ -14,14 +14,18 @@
     <StackLayout BackgroundColor="#f5f5f3" Padding="15">
         <StackLayout>
             <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-            <Label Text="{Binding FirstName}" HorizontalOptions="Center" />
+            <Label Text="เปลี่ยนรูปภาพ..." HorizontalOptions="Center" />
         </StackLayout>
+        <Label Text="ชื่อ-สกุล"/>
         <Grid>
             <Editor Text="{Binding FirstName }" Grid.Column="0"/>
             <Editor Text="{Binding LastName }" Grid.Column="1"/>
         </Grid>
-        <Entry Placeholder="" Text="{Binding FirstName }" PlaceholderColor="Gray" />
-        <Entry Placeholder="Phone" Text="{Binding Phone }" MaxLength="10" PlaceholderColor="Gray" />
-        <Editor Placeholder="Address" HeightRequest="80" Text="{Binding Address }" />
+        <Label Text="อีเมลล์"/>
+        <Entry Text="{Binding Email }" PlaceholderColor="Gray" />
+        <Label Text="เบอร์โทร"/>
+        <Entry Text="{Binding Phone }" MaxLength="10" PlaceholderColor="Gray" />
+        <Label Text="ที่อยู่"/>
+        <Editor HeightRequest="80" Text="{Binding Address }" PlaceholderColor="Gray"/>
     </StackLayout>
 </ContentPage>

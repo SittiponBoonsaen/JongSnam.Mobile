@@ -1,5 +1,7 @@
 ﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,17 +13,22 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class YourFieldViewModel : BaseViewModel
     {
+        private readonly IFieldServices _fieldServices;
+
         public Command LoadItemsCommand { get; }
         public Command UpdateFieldCommand { get; }
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<FieldDto> Items { get; }
 
         public YourFieldViewModel()
         {
-            Items = new ObservableCollection<Item>();
+
+            _fieldServices = DependencyService.Get<IFieldServices>();
+
+            Items = new ObservableCollection<FieldDto>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            UpdateFieldCommand = new Command<Item>(OnUpdateField);
+            UpdateFieldCommand = new Command<FieldDto>(OnUpdateField);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -31,30 +38,8 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-
-                var items = new ObservableCollection<Item> {
-                    new Item{
-                        Text = "สนามที่1",
-                        Description = "test"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่2",
-                        Description = "hgadf"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่3",
-                        Description = "ดกhafdเหก"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่4",
-                        Description = "ahdf"
-                    }
-                };
-
-                foreach (var item in items)
+                var data = await _fieldServices.GetFieldByStoreId(5, 1, 3);
+                foreach (var item in data)
                 {
                     Items.Add(item);
                 }
@@ -69,7 +54,7 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-        async void OnUpdateField(Item Item)
+        async void OnUpdateField(FieldDto fieldDto)
         {
             await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
         }
