@@ -20,7 +20,7 @@ namespace JongSnam.Mobile.Services.Implementations
         }
         public async Task<IEnumerable<YourStore>> GetStores(int currentPage, int pageSize)
         {
-            var response = await JongSnamServices.GetStoresWithHttpMessagesAsync(currentPage, pageSize);
+            var response = await JongSnamServices.GetStoresWithHttpMessagesAsync(currentPage, pageSize, CustomHeaders);
 
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<YourStore>>(response);
         }
@@ -29,7 +29,7 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             try
             {
-                var response = await JongSnamServices.AddStoreWithHttpMessagesAsync(storeRequest);
+                var response = await JongSnamServices.AddStoreWithHttpMessagesAsync(storeRequest, CustomHeaders);
 
                 return true;
             }
@@ -43,7 +43,7 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             try
             {
-                var response = await JongSnamServices.UpdateStoreWithHttpMessagesAsync(id, updateStoreRequest);
+                var response = await JongSnamServices.UpdateStoreWithHttpMessagesAsync(id, updateStoreRequest, CustomHeaders);
 
                 return true;
             }
@@ -56,7 +56,7 @@ namespace JongSnam.Mobile.Services.Implementations
         public async Task<IEnumerable<YourStore>> GetYourStores(int ownerId, int currentPage, int pageSize)
         {
 
-            var response = await JongSnamServices.GetYourStoresWithHttpMessagesAsync(ownerId, currentPage, pageSize);
+            var response = await JongSnamServices.GetYourStoresWithHttpMessagesAsync(ownerId, currentPage, pageSize, CustomHeaders);
 
             var respondModel =  await GetRespondDtoHandlerHttpStatus<YourStoreBasePagingDto>(response);
 
