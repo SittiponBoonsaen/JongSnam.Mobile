@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.YourFieldPage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
-             xmlns:model="clr-namespace:JongSnam.Mobile.Models"
+             xmlns:model="clr-namespace:JongSnamService.Models"
              x:Name="ThisPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="เพิ่ม" Command="{Binding AddFieldCommand}"/>
@@ -15,7 +15,7 @@
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="0" x:DataType="model:Item">
+                    <StackLayout Padding="0" x:DataType="model:FieldDto">
                         <Grid Margin="5,7,5,7" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.5*" />
@@ -27,12 +27,10 @@
                                 <RowDefinition Height="1" />
                             </Grid.RowDefinitions>
 
-                            <!--<Button Text="แก้ไข" Grid.Column="0" Grid.RowSpan="2"
-                                HorizontalOptions="End" VerticalOptions="Center" />-->
                             <Image Source="https://static.vecteezy.com/system/resources/thumbnails/000/522/621/small/kflj_bbzy_140326.jpg" 
                                    Grid.Column="0" Grid.RowSpan="2"/>
 
-                            <Label Text="{Binding Text}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
+                            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 

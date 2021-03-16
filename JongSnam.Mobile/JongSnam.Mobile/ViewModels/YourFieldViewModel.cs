@@ -1,5 +1,7 @@
 ﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,20 +13,24 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class YourFieldViewModel : BaseViewModel
     {
+        private readonly IFieldServices _fieldServices;
         public Command LoadItemsCommand { get; }
         public Command UpdateFieldCommand { get; }
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<FieldDto> Items { get; }
 
-        public YourFieldViewModel()
+
+        public YourFieldViewModel(int storeId)
         {
-            Items = new ObservableCollection<Item>();
+            _fieldServices = DependencyService.Get<IFieldServices>();
 
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            Items = new ObservableCollection<FieldDto>();
+
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId));
 
             UpdateFieldCommand = new Command<Item>(OnUpdateField);
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadItemsCommand(int storeId)
         {
             IsBusy = true;
 
@@ -32,27 +38,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 Items.Clear();
 
-                var items = new ObservableCollection<Item> {
-                    new Item{
-                        Text = "สนามที่1",
-                        Description = "test"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่2",
-                        Description = "hgadf"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่3",
-                        Description = "ดกhafdเหก"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่4",
-                        Description = "ahdf"
-                    }
-                };
+                var items = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
 
                 foreach (var item in items)
                 {
@@ -69,10 +55,12 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
+
         async void OnUpdateField(Item Item)
         {
             await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
         }
+
         public void OnAppearing()
         {
             IsBusy = true;

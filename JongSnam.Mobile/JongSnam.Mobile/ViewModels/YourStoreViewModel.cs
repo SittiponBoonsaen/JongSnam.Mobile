@@ -35,9 +35,9 @@ namespace JongSnam.Mobile.ViewModels
 
             AddStoreCommand = new Command(OnAddStore);
 
-            UpdateStoreCommand = new Command<Item>(OnUpdateStore);
+            UpdateStoreCommand = new Command<YourStore>(OnUpdateStore);
 
-            YourFieldCommand = new Command<Item>(OnYourField);
+            YourFieldCommand = new Command<YourStore>(OnYourField);
 
             _storeServices = DependencyService.Get<IStoreServices>();
         }
@@ -72,14 +72,14 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.GoToAsync(nameof(AddStorePage));
         }
 
-        async void OnUpdateStore(Item item)
+        async void OnUpdateStore(YourStore item)
         {
             await Shell.Current.GoToAsync(nameof(UpdateStorePage));
         }
-        async void OnYourField(Item item)
-        {
 
-            await Shell.Current.GoToAsync(nameof(YourFieldPage));
+        async void OnYourField(YourStore item)
+        {
+            await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value));
         }
 
         public void OnAppearing()
