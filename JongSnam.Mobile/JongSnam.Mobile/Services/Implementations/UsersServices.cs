@@ -36,6 +36,20 @@ namespace JongSnam.Mobile.Services.Implementations
             }
         }
 
+        public async Task<bool> UpdateUser(UserRequest userRequest)
+        {
+            try
+            {
+                //var response = await JongSnamServices.CreateUserWithHttpMessagesAsync(userRequest);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> ChangePassword(int id, ChangePasswordRequest changePasswordRequest)
         {
             try
@@ -49,8 +63,5 @@ namespace JongSnam.Mobile.Services.Implementations
                 return false;
             }
         }
-
-
-
     }
 }

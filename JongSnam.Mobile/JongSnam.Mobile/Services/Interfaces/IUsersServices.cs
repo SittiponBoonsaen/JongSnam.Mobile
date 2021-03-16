@@ -15,5 +15,7 @@ namespace JongSnam.Mobile.Services.Interfaces
         Task<bool> CreateUser(UserRequest userRequest);
 
         Task<bool> ChangePassword(int id, ChangePasswordRequest changePasswordRequest);
+
+        Task<bool> UpdateUser(UserRequest userRequest);
     }
 }

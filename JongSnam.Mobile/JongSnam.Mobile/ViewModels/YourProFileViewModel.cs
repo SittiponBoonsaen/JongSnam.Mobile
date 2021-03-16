@@ -16,29 +16,79 @@ namespace JongSnam.Mobile.ViewModels
 
         private readonly IUsersServices _usersServices;
 
+        private string _firstName;
+        private string _lastName;
+        private string _phone;
+        private string _address;
+
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            {
+                _firstName = value;
+                OnPropertyChanged(nameof(FirstName));
+            }
+        }
+
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                _lastName = value;
+                OnPropertyChanged(nameof(LastName));
+            }
+        }
+
+        public string Phone
+        {
+            get => _phone;
+            set
+            {
+                _phone = value;
+                OnPropertyChanged(nameof(Phone));
+            }
+        }
+
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                _address = value;
+                OnPropertyChanged(nameof(Address));
+            }
+        }
+
         public UserDto DataUser { get; set; }
 
         public Command LoadItemsCommand { get; }
 
         public Command ChangePasswordCommand { get; }
+        public Command SaveCommand { get; }
 
         public YourProFileViewModel(int id)
         {
+            _usersServices = DependencyService.Get<IUsersServices>();
 
             DataUser = new UserDto();
 
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(id));
+            Task.Run(async () => await ExecuteLoadItemsCommand(id));
 
-            //ChangePasswordCommand = new Command(OnChangePassword);
-
-            _usersServices = DependencyService.Get<IUsersServices>();
+            SaveCommand = new Command(async () => await ExecuteSaveCommand());
         }
+
         async Task ExecuteLoadItemsCommand(int id)
         {
             IsBusy = true;
             try
             {
-                DataUser = await _usersServices.GetUserById(id);
+                var dataUser = await _usersServices.GetUserById(id);
+                FirstName = dataUser.FirstName;
+                LastName = dataUser.LastName;
+                Phone = dataUser.ContactMobile;
+                Address = dataUser.Address;
             }
             catch (Exception ex)
             {
@@ -47,6 +97,28 @@ namespace JongSnam.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        async Task ExecuteSaveCommand()
+        {
+            var request = new UserRequest
+            {
+                LastName = LastName,
+                FirstName = FirstName,
+                ContactMobile = Phone,
+                Address = Address
+            };
+
+            var statusSaved = await _usersServices.UpdateUser(request);
+
+            if (statusSaved)
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
             }
         }
 
