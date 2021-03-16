@@ -27,8 +27,6 @@
                                 <RowDefinition Height="1" />
                             </Grid.RowDefinitions>
 
-                            <!--<Button Text="แก้ไข" Grid.Column="0" Grid.RowSpan="2"
-                                HorizontalOptions="End" VerticalOptions="Center" />-->
                             <Image Source="https://static.vecteezy.com/system/resources/thumbnails/000/522/621/small/kflj_bbzy_140326.jpg" 
                                    Grid.Column="0" Grid.RowSpan="2"/>
 

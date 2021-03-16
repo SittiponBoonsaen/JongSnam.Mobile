@@ -72,14 +72,23 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.GoToAsync(nameof(AddStorePage));
         }
 
+<<<<<<< HEAD
         async void OnUpdateStore(YourStore yourStore)
         {
             await Shell.Current.GoToAsync(nameof(UpdateStorePage));
         }
         async void OnYourField(YourStore yourStore)
         {
+=======
+        async void OnUpdateStore(YourStore item)
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
+        }
+>>>>>>> e673e83236dfb0defa44a692000c55b658177881
 
-            await Shell.Current.GoToAsync(nameof(YourFieldPage));
+        async void OnYourField(YourStore item)
+        {
+            await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value));
         }
 
         public void OnAppearing()
