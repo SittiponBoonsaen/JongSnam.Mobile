@@ -92,6 +92,32 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetDistrictById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetDistrictByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetDistrictByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDistrictByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='districtId'>
             /// </param>
             public static object GetSubDistrictByDistrictId(this IJongSnamServices operations, int districtId)
@@ -110,6 +136,32 @@ namespace JongSnamService
             public static async Task<object> GetSubDistrictByDistrictIdAsync(this IJongSnamServices operations, int districtId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSubDistrictByDistrictIdWithHttpMessagesAsync(districtId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetSubDistrictById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetSubDistrictByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubDistrictByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubDistrictByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

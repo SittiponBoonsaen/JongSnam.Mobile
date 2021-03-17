@@ -62,6 +62,16 @@ namespace JongSnamService
         /// </param>
         Task<HttpOperationResponse<object>> GetDistrictByProvinceIdWithHttpMessagesAsync(int provinceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetDistrictByIdWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='districtId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -71,6 +81,16 @@ namespace JongSnamService
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<object>> GetSubDistrictByDistrictIdWithHttpMessagesAsync(int districtId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetSubDistrictByIdWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='startPrice'>
         /// </param>
