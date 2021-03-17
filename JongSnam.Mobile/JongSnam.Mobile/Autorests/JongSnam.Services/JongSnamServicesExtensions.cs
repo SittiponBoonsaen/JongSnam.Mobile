@@ -18,6 +18,80 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            public static object GetProvinces(this IJongSnamServices operations)
+            {
+                return operations.GetProvincesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetProvincesAsync(this IJongSnamServices operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetProvincesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='provinceId'>
+            /// </param>
+            public static object GetDistrictByProvinceId(this IJongSnamServices operations, int provinceId)
+            {
+                return operations.GetDistrictByProvinceIdAsync(provinceId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='provinceId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetDistrictByProvinceIdAsync(this IJongSnamServices operations, int provinceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDistrictByProvinceIdWithHttpMessagesAsync(provinceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='districtId'>
+            /// </param>
+            public static object GetSubDistrictByDistrictId(this IJongSnamServices operations, int districtId)
+            {
+                return operations.GetSubDistrictByDistrictIdAsync(districtId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='districtId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubDistrictByDistrictIdAsync(this IJongSnamServices operations, int districtId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubDistrictByDistrictIdWithHttpMessagesAsync(districtId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='startPrice'>
             /// </param>
             /// <param name='toPrice'>
@@ -234,9 +308,9 @@ namespace JongSnamService
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static object GetStoreById(this IJongSnamServices operations, int id)
+            public static object GetPaymentById(this IJongSnamServices operations, int id)
             {
-                return operations.GetStoreByIdAsync(id).GetAwaiter().GetResult();
+                return operations.GetPaymentByIdAsync(id).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -247,9 +321,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetStoreByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetPaymentByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStoreByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPaymentByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -672,9 +746,35 @@ namespace JongSnamService
             /// </param>
             /// <param name='id'>
             /// </param>
+            public static object GetStoreById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetStoreByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetStoreByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStoreByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
             /// <param name='body'>
             /// </param>
-            public static object UpdateStore(this IJongSnamServices operations, int? id = default(int?), UpdateStoreRequest body = default(UpdateStoreRequest))
+            public static object UpdateStore(this IJongSnamServices operations, int id, UpdateStoreRequest body = default(UpdateStoreRequest))
             {
                 return operations.UpdateStoreAsync(id, body).GetAwaiter().GetResult();
             }
@@ -689,35 +789,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateStoreAsync(this IJongSnamServices operations, int? id = default(int?), UpdateStoreRequest body = default(UpdateStoreRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpdateStoreAsync(this IJongSnamServices operations, int id, UpdateStoreRequest body = default(UpdateStoreRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateStoreWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            public static object GetStoreById1(this IJongSnamServices operations, int id)
-            {
-                return operations.GetStoreById1Async(id).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetStoreById1Async(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetStoreById1WithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -856,6 +930,36 @@ namespace JongSnamService
             public static async Task<object> ChangePasswordAsync(this IJongSnamServices operations, int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ChangePasswordWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object UpdateUser(this IJongSnamServices operations, int id, UpdateUserRequest body = default(UpdateUserRequest))
+            {
+                return operations.UpdateUserAsync(id, body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateUserAsync(this IJongSnamServices operations, int id, UpdateUserRequest body = default(UpdateUserRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateUserWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
