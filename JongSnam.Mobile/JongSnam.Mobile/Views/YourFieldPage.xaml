@@ -4,7 +4,8 @@
              x:Class="JongSnam.Mobile.Views.YourFieldPage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              xmlns:model="clr-namespace:JongSnamService.Models"
-             x:Name="ThisPage">
+             x:Name="ThisPage"
+             Title="{Binding StoreName}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="เพิ่ม" Command="{Binding AddFieldCommand}"/>
     </ContentPage.ToolbarItems>

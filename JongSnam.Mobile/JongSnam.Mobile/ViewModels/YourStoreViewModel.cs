@@ -27,12 +27,10 @@ namespace JongSnam.Mobile.ViewModels
 
         public YourStoreViewModel()
         {
-            _storeServices = DependencyService.Get<IStoreServices>();
 
             Items = new ObservableCollection<YourStore>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
 
             AddStoreCommand = new Command(OnAddStore);
 
@@ -40,6 +38,7 @@ namespace JongSnam.Mobile.ViewModels
 
             YourFieldCommand = new Command<YourStore>(OnYourField);
 
+            _storeServices = DependencyService.Get<IStoreServices>();
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -55,9 +54,9 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     Items.Add(item);
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -72,23 +71,14 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.GoToAsync(nameof(AddStorePage));
         }
 
-<<<<<<< HEAD
-        async void OnUpdateStore(YourStore yourStore)
-        {
-            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
-        }
-        async void OnYourField(YourStore yourStore)
-        {
-=======
         async void OnUpdateStore(YourStore item)
         {
             await Shell.Current.GoToAsync(nameof(UpdateStorePage));
         }
->>>>>>> e673e83236dfb0defa44a692000c55b658177881
 
         async void OnYourField(YourStore item)
         {
-            await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value));
+            await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value, item.Name));
         }
 
         public void OnAppearing()

@@ -14,46 +14,46 @@ namespace JongSnam.Mobile.ViewModels
     public class YourFieldViewModel : BaseViewModel
     {
         private readonly IFieldServices _fieldServices;
-<<<<<<< HEAD
-
-=======
->>>>>>> e673e83236dfb0defa44a692000c55b658177881
         public Command LoadItemsCommand { get; }
         public Command UpdateFieldCommand { get; }
         public ObservableCollection<FieldDto> Items { get; }
 
+        private string _storeName;
 
-        public YourFieldViewModel(int storeId)
+        public string StoreName
         {
-<<<<<<< HEAD
+            get => _storeName;
+            set
+            {
+                _storeName = value;
+                OnPropertyChanged(nameof(StoreName));
+            }
+        }
 
-=======
->>>>>>> e673e83236dfb0defa44a692000c55b658177881
+
+        public YourFieldViewModel(int storeId, string nameStore)
+        {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
             Items = new ObservableCollection<FieldDto>();
 
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId));
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
 
-            UpdateFieldCommand = new Command<FieldDto>(OnUpdateField);
+            UpdateFieldCommand = new Command<Item>(OnUpdateField);
         }
 
-        async Task ExecuteLoadItemsCommand(int storeId)
+        async Task ExecuteLoadItemsCommand(int storeId, string nameStore)
         {
             IsBusy = true;
 
             try
             {
                 Items.Clear();
-<<<<<<< HEAD
-                var data = await _fieldServices.GetFieldByStoreId(5, 1, 3);
-                foreach (var item in data)
-=======
 
                 var items = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
 
+                StoreName = nameStore;
                 foreach (var item in items)
->>>>>>> e673e83236dfb0defa44a692000c55b658177881
                 {
                     Items.Add(item);
                 }
@@ -68,12 +68,8 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-<<<<<<< HEAD
-        async void OnUpdateField(FieldDto fieldDto)
-=======
 
         async void OnUpdateField(Item Item)
->>>>>>> e673e83236dfb0defa44a692000c55b658177881
         {
             await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
         }
