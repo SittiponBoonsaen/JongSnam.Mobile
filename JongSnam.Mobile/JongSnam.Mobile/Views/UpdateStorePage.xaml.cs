@@ -13,11 +13,11 @@ namespace JongSnam.Mobile.Views
     public partial class UpdateStorePage : ContentPage
     {
         UpdateStoreViewModel _viewModel;
-        public UpdateStorePage()
+        public UpdateStorePage(int idStore)
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new UpdateStoreViewModel();
+            BindingContext = _viewModel = new UpdateStoreViewModel(idStore);
 
         }
         protected override void OnAppearing()

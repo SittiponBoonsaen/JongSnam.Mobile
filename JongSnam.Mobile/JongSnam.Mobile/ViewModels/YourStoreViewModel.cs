@@ -73,7 +73,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnUpdateStore(YourStore item)
         {
-            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
+            await Shell.Current.Navigation.PushAsync(new UpdateStorePage(item.Id.Value));
         }
 
         async void OnYourField(YourStore item)

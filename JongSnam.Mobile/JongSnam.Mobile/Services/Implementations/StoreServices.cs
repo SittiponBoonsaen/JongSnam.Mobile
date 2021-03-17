@@ -25,8 +25,15 @@ namespace JongSnam.Mobile.Services.Implementations
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<YourStore>>(response);
         }
 
-        public async Task<bool> AddStore(StoreRequest storeRequest)
+        public async Task<StoreDetailDto> GetStoreById(int id)
         {
+            var response = await JongSnamServices.GetStoreByIdWithHttpMessagesAsync(id, CustomHeaders);
+            return await GetRespondDtoHandlerHttpStatus<StoreDetailDto>(response);
+        }
+
+
+        public async Task<bool> AddStore(StoreRequest storeRequest)
+        {or
             try
             {
                 var response = await JongSnamServices.AddStoreWithHttpMessagesAsync(storeRequest, CustomHeaders);

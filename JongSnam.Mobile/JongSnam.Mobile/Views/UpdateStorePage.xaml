@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.UpdateStorePage"
+             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
+             xmlns:model="clr-namespace:JongSnamService.Models"
              Title="แก้ไขร้าน">
 
     <ContentPage.ToolbarItems>
@@ -15,9 +17,11 @@
                     <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
                     <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
                 </StackLayout>
-                <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
-                <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
-                <Picker x:Name="SubDistricts" Title="ตำบล"
+                <Label Text="ชื่อร้าน"/>
+                <Entry Text="{Binding Name }" PlaceholderColor="Gray" />
+                <Label Text="ที่อยู่"/>
+                <Entry Text="{Binding Address }" PlaceholderColor="Gray" />
+                <Picker x:Name="SubDistricts" Title="{Binding SubDistrictId }"
                 HorizontalOptions="FillAndExpand">
                     <Picker.Items>
                         <x:String>เหมาะสำหรับ 5คน</x:String>
@@ -26,14 +30,14 @@
                     </Picker.Items>
                 </Picker>
 
-                <Picker x:Name="Districts" Title="อำเภอ"
+                <Picker x:Name="Districts" Title="{Binding DistrictId }"
                 HorizontalOptions="FillAndExpand">
                     <Picker.Items>
                         <x:String>เปิดบริการ</x:String>
                         <x:String>ปิดบริการ</x:String>
                     </Picker.Items>
                 </Picker>
-                <Picker x:Name="Province" Title="จังหวัด"
+                <Picker x:Name="Province" Title="{Binding ProvinceId }"
                 HorizontalOptions="FillAndExpand">
                     <Picker.Items>
                         <x:String>เปิดยริก่าร</x:String>
@@ -41,19 +45,18 @@
                     </Picker.Items>
                 </Picker>
 
-                <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
+                <Label Text="เบอร์โทร"/>
+                <Entry Text="{Binding ContactMobile }" PlaceholderColor="Gray" />
                 <Grid >
-                    <Entry Grid.Column="0"
+                    <Entry Grid.Column="0" Text="{Binding Latitude }"
                    Keyboard="Numeric"
-                   Placeholder="ลัดติจูด"
                    IsEnabled="false" />
 
-                    <Entry Grid.Column="1"
+                    <Entry Grid.Column="1" Text="{Binding Longtitude }"
                    Keyboard="Numeric"
-                   Placeholder="ลองติจูด"
                    IsEnabled="false" />
                 </Grid>
-                <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
+                <Entry Text="{Binding OfficeHours }" PlaceholderColor="Gray" />
                 <Picker x:Name="Status" Title="สถานนะของสนาม"
             HorizontalOptions="FillAndExpand">
                     <Picker.Items>
@@ -61,7 +64,7 @@
                         <x:String>ปิดบริการ</x:String>
                     </Picker.Items>
                 </Picker>
-                <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
+                <Editor Text="{Binding Rules}" HeightRequest="80" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

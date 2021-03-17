@@ -11,6 +11,8 @@ namespace JongSnam.Mobile.Services.Interfaces
     {
         Task<IEnumerable<YourStore>> GetStores(int currentPage, int pageSize);
 
+        Task<StoreDetailDto> GetStoreById(int id);
+
         Task<bool> AddStore(StoreRequest storeRequest);
 
         Task<bool> UpdateStore(int id, UpdateStoreRequest updateStoreRequest);

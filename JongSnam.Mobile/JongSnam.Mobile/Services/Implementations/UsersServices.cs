@@ -36,11 +36,11 @@ namespace JongSnam.Mobile.Services.Implementations
             }
         }
 
-        public async Task<bool> UpdateUser(UserRequest userRequest)
+        public async Task<bool> UpdateUser(int id, UpdateUserRequest updateUserRequest)
         {
             try
             {
-                //var response = await JongSnamServices.CreateUserWithHttpMessagesAsync(userRequest);
+                var response = await JongSnamServices.UpdateUserWithHttpMessagesAsync(id , updateUserRequest, CustomHeaders);
 
                 return true;
             }

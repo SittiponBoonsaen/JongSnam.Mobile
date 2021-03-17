@@ -86,7 +86,7 @@ namespace JongSnam.Mobile.ViewModels
 
             Task.Run(async () => await ExecuteLoadItemsCommand(id));
 
-            SaveCommand = new Command(async () => await ExecuteSaveCommand());
+            SaveCommand = new Command(async () => await ExecuteSaveCommand(id));
         }
 
         async Task ExecuteLoadItemsCommand(int id)
@@ -111,9 +111,15 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        async Task ExecuteSaveCommand()
+        async Task ExecuteSaveCommand(int id)
         {
-            var request = new UserRequest
+            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+            if (!answer)
+            {
+                return;
+            }
+
+            var request = new UpdateUserRequest
             {
                 LastName = LastName,
                 FirstName = FirstName,
@@ -122,7 +128,7 @@ namespace JongSnam.Mobile.ViewModels
                 Address = Address
             };
 
-            var statusSaved = await _usersServices.UpdateUser(request);
+            var statusSaved = await _usersServices.UpdateUser(id, request);
 
             if (statusSaved)
             {
