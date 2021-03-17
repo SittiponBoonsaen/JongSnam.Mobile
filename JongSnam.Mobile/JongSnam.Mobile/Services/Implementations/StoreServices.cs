@@ -33,7 +33,7 @@ namespace JongSnam.Mobile.Services.Implementations
 
 
         public async Task<bool> AddStore(StoreRequest storeRequest)
-        {or
+        {
             try
             {
                 var response = await JongSnamServices.AddStoreWithHttpMessagesAsync(storeRequest, CustomHeaders);

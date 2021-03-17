@@ -14,15 +14,13 @@ namespace JongSnam.Mobile.ViewModels
 
         private readonly IAddressServices _addressServices;
 
-
-
         public Command LoadItemsCommand { get; }
 
         private string _name;
         private string _address;
-        private int _subDistrictId;
-        private int _districtId;
-        private int _provinceId;
+        private string _subDistrict;
+        private string _district;
+        private string _province;
         private string _contactMobile;
         private double _latitude;
         private double _longtitude;
@@ -30,6 +28,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _image;
         private bool _isOpen;
         private string _officeHours;
+
 
         public string Name
         {
@@ -50,32 +49,32 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Address));
             }
         }        
-        public int SubDistrictId
+        public string SubDistrict
         {
-            get => _subDistrictId;
+            get => _subDistrict;
             set
             {
-                _subDistrictId = value;
-                OnPropertyChanged(nameof(SubDistrictId));
+                _subDistrict = value;
+                OnPropertyChanged(nameof(SubDistrict));
             }
         }
-        public int DistrictId
+        public string District
         {
-            get => _districtId;
+            get => _district;
             set
             {
-                _districtId = value;
-                OnPropertyChanged(nameof(DistrictId));
+                _district = value;
+                OnPropertyChanged(nameof(District));
             }
         }
 
-       public int ProvinceId
+       public string Province
         {
-            get => _provinceId;
+            get => _province;
             set
             {
-                _provinceId = value;
-                OnPropertyChanged(nameof(ProvinceId));
+                _province = value;
+                OnPropertyChanged(nameof(Province));
             }
         }
         
@@ -164,9 +163,6 @@ namespace JongSnam.Mobile.ViewModels
                 var dataStore = await _storeServices.GetStoreById(idStore);
                 Name = dataStore.Name;
                 Address = dataStore.Address;
-                SubDistrictId = (int)dataStore.SubDistrictId;
-                DistrictId = (int)dataStore.DistrictId;
-                ProvinceId = (int)dataStore.ProvinceId;
                 ContactMobile = dataStore.ContactMobile;
                 Latitude = (double)dataStore.Latitude;
                 Longtitude = (double)dataStore.Longtitude;
@@ -174,7 +170,13 @@ namespace JongSnam.Mobile.ViewModels
                 Image = dataStore.Image;
                 IsOpen = (bool)dataStore.IsOpen;
                 OfficeHours = dataStore.OfficeHours;
+                var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
+                var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
+                var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
 
+                SubDistrict = subDistrict.Name;
+                District = district.Name;
+                Province = province.Name;
 
             }
             catch (Exception ex)

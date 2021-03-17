@@ -23,6 +23,12 @@ namespace JongSnam.Mobile.Services.Implementations
             return respondModel;
 
         }
+        public async Task<ProvinceModel> GetProvinceById(int id)
+        {
+            var response = await JongSnamServices.GetProvinceByIdWithHttpMessagesAsync(id, CustomHeaders);
+            return await GetRespondDtoHandlerHttpStatus<ProvinceModel>(response);
+        }
+
 
         public async Task<IEnumerable<DistrictModel>> GetDistrictByProvinceId(int ProvinceId)
         {
@@ -34,6 +40,13 @@ namespace JongSnam.Mobile.Services.Implementations
 
         }
 
+        public async Task<DistrictModel> GetDistrictById(int id)
+        {
+            var response = await JongSnamServices.GetDistrictByIdWithHttpMessagesAsync(id, CustomHeaders);
+            return await GetRespondDtoHandlerHttpStatus<DistrictModel>(response);
+        }
+
+
         public async Task<IEnumerable<SubDistrictModel>> GetSubDistrictByDistrictId(int DistrictId)
         {
             var response = await JongSnamServices.GetSubDistrictByDistrictIdWithHttpMessagesAsync(DistrictId);
@@ -42,6 +55,13 @@ namespace JongSnam.Mobile.Services.Implementations
 
             return respondModel;
 
+        }
+
+        public async Task<SubDistrictModel> GetSubDistrictById(int id)
+        {
+            var response = await JongSnamServices.GetSubDistrictByIdWithHttpMessagesAsync(id, CustomHeaders);
+
+            return await GetRespondDtoHandlerHttpStatus<SubDistrictModel>(response);
         }
     }
 }
