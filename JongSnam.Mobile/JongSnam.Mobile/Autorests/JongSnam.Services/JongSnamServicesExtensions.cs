@@ -40,6 +40,32 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetProvinceById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetProvinceByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetProvinceByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetProvinceByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='provinceId'>
             /// </param>
             public static object GetDistrictByProvinceId(this IJongSnamServices operations, int provinceId)
