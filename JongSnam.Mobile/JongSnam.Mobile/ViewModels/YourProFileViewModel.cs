@@ -18,6 +18,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private string _firstName;
         private string _lastName;
+        private string _emailName;
         private string _phone;
         private string _address;
 
@@ -38,6 +39,15 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _lastName = value;
                 OnPropertyChanged(nameof(LastName));
+            }
+        }
+        public string Email
+        {
+            get => _emailName;
+            set
+            {
+                _emailName = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
 
@@ -87,6 +97,7 @@ namespace JongSnam.Mobile.ViewModels
                 var dataUser = await _usersServices.GetUserById(id);
                 FirstName = dataUser.FirstName;
                 LastName = dataUser.LastName;
+                Email = dataUser.Email;
                 Phone = dataUser.ContactMobile;
                 Address = dataUser.Address;
             }
@@ -106,6 +117,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 LastName = LastName,
                 FirstName = FirstName,
+                Email = Email,
                 ContactMobile = Phone,
                 Address = Address
             };

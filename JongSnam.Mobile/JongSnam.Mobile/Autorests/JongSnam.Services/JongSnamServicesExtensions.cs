@@ -232,6 +232,32 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetStoreById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetStoreByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetStoreByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStoreByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='body'>
             /// </param>
             public static object CreatePayment(this IJongSnamServices operations, PaymentRequest body = default(PaymentRequest))
@@ -674,6 +700,32 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetStoreById1(this IJongSnamServices operations, int id)
+            {
+                return operations.GetStoreById1Async(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetStoreById1Async(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStoreById1WithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='ownerId'>
             /// </param>
             /// <param name='currentPage'>
@@ -758,9 +810,9 @@ namespace JongSnamService
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static object GetById(this IJongSnamServices operations, int id)
+            public static object GetUserById(this IJongSnamServices operations, int id)
             {
-                return operations.GetByIdAsync(id).GetAwaiter().GetResult();
+                return operations.GetUserByIdAsync(id).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -771,9 +823,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetUserByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetUserByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
