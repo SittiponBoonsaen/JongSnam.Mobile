@@ -20,6 +20,7 @@ namespace JongSnam.Mobile
             Routing.RegisterRoute(nameof(YourFieldPage), typeof(YourFieldPage));
             Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
             Routing.RegisterRoute(nameof(UpdateFieldPage), typeof(UpdateFieldPage));
+            Routing.RegisterRoute(nameof(AddFieldPage), typeof(AddFieldPage));
         }
 
     }

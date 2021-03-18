@@ -160,6 +160,10 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
+                var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
+                var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
+
                 var dataStore = await _storeServices.GetStoreById(idStore);
                 Name = dataStore.Name;
                 Address = dataStore.Address;
@@ -170,13 +174,14 @@ namespace JongSnam.Mobile.ViewModels
                 Image = dataStore.Image;
                 IsOpen = (bool)dataStore.IsOpen;
                 OfficeHours = dataStore.OfficeHours;
-                var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
-                var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
-                var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
 
                 SubDistrict = subDistrict.Name;
                 District = district.Name;
                 Province = province.Name;
+
+
+
+
 
             }
             catch (Exception ex)

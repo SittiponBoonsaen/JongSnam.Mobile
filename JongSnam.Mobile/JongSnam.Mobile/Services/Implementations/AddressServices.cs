@@ -16,7 +16,7 @@ namespace JongSnam.Mobile.Services.Implementations
         }
         public async Task<IEnumerable<ProvinceModel>> GetProvinces()
         {
-            var response = await JongSnamServices.GetProvincesWithHttpMessagesAsync();
+            var response = await JongSnamServices.GetProvincesWithHttpMessagesAsync(CustomHeaders);
 
             var respondModel = await GetRespondDtoHandlerHttpStatus<IEnumerable<ProvinceModel>>(response);
 

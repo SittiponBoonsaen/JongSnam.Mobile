@@ -7,62 +7,56 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
-    
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <StackLayout>
-                <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
-            </StackLayout>
-            <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
-            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
-                <Picker x:Name="SubDistricts" Title="ตำบล"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เหมาะสำหรับ 5คน</x:String>
-                        <x:String>เหมาะสำหรับ 7คน</x:String>
-                        <x:String>เหมาะสำหรับ 11คน</x:String>
-                    </Picker.Items>
-                </Picker>
 
-                <Picker x:Name="Districts" Title="อำเภอ"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดบริการ</x:String>
-                        <x:String>ปิดบริการ</x:String>
-                    </Picker.Items>
-                </Picker>
-                <Picker x:Name="Province" Title="จังหวัด"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดยริก่าร</x:String>
-                        <x:String>ปิดบริกร</x:String>
-                    </Picker.Items>
-                </Picker>
+    <ContentPage.Content>
+            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+                    <StackLayout>
+                        <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
+                        <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
+                    </StackLayout>
+                    <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
+                    <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
+
+                       <Picker x:Name="District" 
+                            Title="Select Job" 
+                            ItemsSource="{Binding SubDistrictProperty}"
+                            ItemDisplayBinding="{Binding Name}"
+                            />
+
+                       <Picker x:Name="SubDistrict" 
+                            Title="Select Job" 
+                            ItemsSource="{Binding DistrictsProperty}"
+                            ItemDisplayBinding="{Binding Name}"
+                            />
+                       <Picker x:Name="Province" 
+                            Title="Select Job" 
+                            ItemsSource="{Binding ProvincesProperty}"
+                            ItemDisplayBinding="{Binding Name}"
+                            />
+
+
 
             <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
-            <Grid >
-                <Entry Grid.Column="0"
-                   Keyboard="Numeric"
-                   Placeholder="ลัดติจูด"
-                   IsEnabled="false" />
+                    <Grid >
+                        <Entry Grid.Column="0"
+                           Keyboard="Numeric"
+                           Placeholder="ลัดติจูด"
+                           IsEnabled="false" />
 
-                <Entry Grid.Column="1"
-                   Keyboard="Numeric"
-                   Placeholder="ลองติจูด"
-                   IsEnabled="false" />
-            </Grid>
-            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
-            </Picker>
-            <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
-        </StackLayout>
-        </ScrollView>
+                        <Entry Grid.Column="1"
+                           Keyboard="Numeric"
+                           Placeholder="ลองติจูด"
+                           IsEnabled="false" />
+                    </Grid>
+                    <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
+                    <Picker x:Name="Status" Title="สถานนะของสนาม"
+                    HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>เปิดบริการ</x:String>
+                            <x:String>ปิดบริการ</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
+                </StackLayout>
     </ContentPage.Content>
 </ContentPage>
