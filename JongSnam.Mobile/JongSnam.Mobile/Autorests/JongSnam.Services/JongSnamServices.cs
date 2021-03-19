@@ -1191,7 +1191,7 @@ namespace JongSnamService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<EnumDto>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<EnumDto>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

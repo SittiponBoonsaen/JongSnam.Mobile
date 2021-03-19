@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.AddStorePage"
+             xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
              Title="เพิ่มร้าน">
 
     <ContentPage.ToolbarItems>
@@ -17,22 +18,42 @@
                     <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
                     <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
 
-                       <Picker x:Name="District" 
-                            Title="Select Job" 
-                            ItemsSource="{Binding SubDistrictProperty}"
-                            ItemDisplayBinding="{Binding Name}"
-                            />
+            <Picker ItemsSource="{Binding Province}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก จังหวัด">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedProvinceIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadDistictCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
 
-                       <Picker x:Name="SubDistrict" 
-                            Title="Select Job" 
-                            ItemsSource="{Binding DistrictsProperty}"
-                            ItemDisplayBinding="{Binding Name}"
-                            />
-                       <Picker x:Name="Province" 
-                            Title="Select Job" 
-                            ItemsSource="{Binding ProvincesProperty}"
-                            ItemDisplayBinding="{Binding Name}"
-                            />
+            <Picker ItemsSource="{Binding District}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก อำเภอ">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedDistrictIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadSubDistrictCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+
+            <Picker ItemsSource="{Binding SubDistrict}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก ตำบล">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
+                    
+                </Picker.Behaviors>
+            </Picker>
+
 
 
 
