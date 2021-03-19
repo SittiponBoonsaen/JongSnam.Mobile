@@ -18,7 +18,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private readonly IAddressServices _addressServices;
 
-
+        public ValidatableObject<ImageSource> BillImage { get; set; }
 
         public Command LoadItemsCommand { get; }
         public Command UploadImageCommand { get; private set; }
