@@ -26,7 +26,7 @@
                     <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedProvinceIndexChangedCommand}"/>
                     <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding LoadDistictCommand}"/>
+                                                                          Command="{Binding LoadDistrictCommand}"/>
                 </Picker.Behaviors>
             </Picker>
 

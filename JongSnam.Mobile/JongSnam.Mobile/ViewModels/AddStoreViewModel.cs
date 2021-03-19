@@ -259,6 +259,8 @@ namespace JongSnam.Mobile.ViewModels
             ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
             _selectedProvince = new ValidatableObject<EnumDto>();
             _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
+            _selectedDistrict = new ValidatableObject<EnumDto>();
+            _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
         }
         private bool IsValid
         {
@@ -275,13 +277,6 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = true;
 
                 Province = await _enumServices.GetProvinces();
-
-                //var districts = await _enumServices.GetDistrictByProvinceId(55);
-                //DistrictsProperty = districts;
-
-                //var subdistricts = await _enumServices.GetSubDistrictByDistrictId(152);
-                //SubDistrictProperty = subdistricts;
-
             }
             catch(Exception ex)
             {
@@ -337,9 +332,9 @@ namespace JongSnam.Mobile.ViewModels
                 Image = Image,
                 Name = Name,
                 Address = Address,
-                //District = SubDistrict,
-                //Amphur = District,
-                //Province = Province,
+                //District = SelectedSubDistrict,
+                //Amphur = SelectedDistrict.Value.Id.Value,
+                //Province = SelectedDistrict.Value.Id.Value,
                 ContactMobile = ContactMobile,
                 Latitude = Latitude,
                 Longtitude = Longtitude,
