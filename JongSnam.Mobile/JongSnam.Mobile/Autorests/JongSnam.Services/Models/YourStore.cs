@@ -22,10 +22,11 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the YourStore class.
         /// </summary>
-        public YourStore(int? id = default(int?), string name = default(string))
+        public YourStore(int? id = default(int?), string name = default(string), string image = default(string))
         {
             Id = id;
             Name = name;
+            Image = image;
             CustomInit();
         }
 
@@ -43,6 +44,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "image")]
+        public string Image { get; set; }
 
     }
 }

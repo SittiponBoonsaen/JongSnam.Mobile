@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -15,8 +19,9 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IAddressServices _addressServices;
 
 
-
+        public ValidatableObject<ImageSource> BillImage { get; set; }
         public Command LoadItemsCommand { get; }
+        public Command UploadImageCommand { get; private set; }
 
         private string _name;
         private string _address;
@@ -98,7 +103,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Latitude));
             }
         }
-                
+
        public double Longtitude
         {
             get => _longtitude;
@@ -154,7 +159,14 @@ namespace JongSnam.Mobile.ViewModels
 
             _addressServices = DependencyService.Get<IAddressServices>();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(idStore));
+            Task.Run(async () => await ExecuteLoadItemsCommand(idStore)); 
+            
+            UploadImageCommand = new Command(() =>
+            {
+
+                Task.Run(async () => await TakePhotoAsync());
+                //ShowPhotoActionSheet();
+            });
         }
         async Task ExecuteLoadItemsCommand(int idStore)
         {
@@ -191,6 +203,93 @@ namespace JongSnam.Mobile.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
+        }
+
+        private void ShowPhotoActionSheet()
+        {
+            var config = new ActionSheetConfig();
+
+            config.Options.Add(new ActionSheetOption(text: "ถ่ายรูป", icon: "camera", action: async () =>
+            {
+                await TakePhotoAsync();
+            }));
+
+            config.Options.Add(new ActionSheetOption(text: "คลังภาพ", icon: "image", action: async () =>
+            {
+                await PickPhotoAsync();
+            }));
+
+            config.SetDestructive(text: "ยกเลิก", icon: "close_box", action: () => BillImage.Validate());
+
+            config.SetUseBottomSheet(true);
+
+            UserDialog.ActionSheet(config);
+        }
+        private async Task TakePhotoAsync()
+        {
+            if (!CrossMedia.Current.IsCameraAvailable)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                return;
+            }
+
+            if (!CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                SaveToAlbum = true,
+                Directory = "uco",
+                DefaultCamera = CameraDevice.Rear,
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                // รูปได้ค่าตอนนี้เด้อ
+                BillImage.Value = ImageSource.FromStream(() => file.GetStream());
+
+                BillImage.Validate();
+            }
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = false;
+        }
+
+        private async Task PickPhotoAsync()
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                BillImage.Value = ImageSource.FromStream(() => file.GetStream());
+
+                BillImage.Validate();
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = false;
         }
     }
 }

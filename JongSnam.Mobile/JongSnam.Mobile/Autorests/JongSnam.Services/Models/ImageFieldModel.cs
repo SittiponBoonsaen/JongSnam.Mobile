@@ -9,25 +9,25 @@ namespace JongSnamService.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class StoreDto
+    public partial class ImageFieldModel
     {
         /// <summary>
-        /// Initializes a new instance of the StoreDto class.
+        /// Initializes a new instance of the ImageFieldModel class.
         /// </summary>
-        public StoreDto()
+        public ImageFieldModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StoreDto class.
+        /// Initializes a new instance of the ImageFieldModel class.
         /// </summary>
-        public StoreDto(int? id = default(int?), string name = default(string), double? rating = default(double?), string officeHours = default(string), string image = default(string))
+        public ImageFieldModel(int? id = default(int?), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? updatedDate = default(System.DateTime?), int? fieldId = default(int?), string image = default(string))
         {
             Id = id;
-            Name = name;
-            Rating = rating;
-            OfficeHours = officeHours;
+            CreatedDate = createdDate;
+            UpdatedDate = updatedDate;
+            FieldId = fieldId;
             Image = image;
             CustomInit();
         }
@@ -44,18 +44,18 @@ namespace JongSnamService.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "createdDate")]
+        public System.DateTime? CreatedDate { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "rating")]
-        public double? Rating { get; set; }
+        [JsonProperty(PropertyName = "updatedDate")]
+        public System.DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "officeHours")]
-        public string OfficeHours { get; set; }
+        [JsonProperty(PropertyName = "fieldId")]
+        public int? FieldId { get; set; }
 
         /// <summary>
         /// </summary>

@@ -990,7 +990,7 @@ namespace JongSnamService
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static object ChangePassword(this IJongSnamServices operations, int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest))
+            public static object ChangePassword(this IJongSnamServices operations, int id, ChangePasswordRequest body = default(ChangePasswordRequest))
             {
                 return operations.ChangePasswordAsync(id, body).GetAwaiter().GetResult();
             }
@@ -1005,7 +1005,7 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> ChangePasswordAsync(this IJongSnamServices operations, int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ChangePasswordAsync(this IJongSnamServices operations, int id, ChangePasswordRequest body = default(ChangePasswordRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ChangePasswordWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
                 {

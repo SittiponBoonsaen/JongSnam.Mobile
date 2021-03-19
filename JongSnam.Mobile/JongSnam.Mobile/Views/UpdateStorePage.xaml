@@ -15,7 +15,7 @@
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
                 <StackLayout>
                     <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                    <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
+                    <Button Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" Command="{Binding UploadImageCommand}" />
                 </StackLayout>
                 <Label Text="ชื่อร้าน"/>
                 <Entry Text="{Binding Name }" PlaceholderColor="Gray" />

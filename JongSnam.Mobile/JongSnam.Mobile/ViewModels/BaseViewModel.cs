@@ -1,4 +1,5 @@
-﻿using JongSnam.Mobile.Models;
+﻿using Acr.UserDialogs;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services;
 using System;
 using System.Collections.Generic;
@@ -50,5 +51,8 @@ namespace JongSnam.Mobile.ViewModels
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+
+        public IUserDialogs UserDialog => UserDialogs.Instance;
     }
 }

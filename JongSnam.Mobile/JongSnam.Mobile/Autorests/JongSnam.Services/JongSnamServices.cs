@@ -5229,7 +5229,7 @@ namespace JongSnamService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> ChangePasswordWithHttpMessagesAsync(int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> ChangePasswordWithHttpMessagesAsync(int id, ChangePasswordRequest body = default(ChangePasswordRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (body != null)
             {
@@ -5249,16 +5249,8 @@ namespace JongSnamService
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/User/ChangePassword").ToString();
-            List<string> _queryParameters = new List<string>();
-            if (id != null)
-            {
-                _queryParameters.Add(string.Format("id={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/User/{id}/ChangePassword").ToString();
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
