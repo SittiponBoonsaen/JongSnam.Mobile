@@ -160,11 +160,11 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                var dataStore = await _storeServices.GetStoreById(idStore);
                 var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
                 var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
                 var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
 
-                var dataStore = await _storeServices.GetStoreById(idStore);
                 Name = dataStore.Name;
                 Address = dataStore.Address;
                 ContactMobile = dataStore.ContactMobile;
