@@ -23,15 +23,15 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the StoreRequest class.
         /// </summary>
-        public StoreRequest(int ownerId, string name, string address, string district, string amphur, string province, string contactMobile, bool isOpen, string image = default(string), double? latitude = default(double?), double? longtitude = default(double?), string officeHours = default(string), string rules = default(string))
+        public StoreRequest(int ownerId, string name, string address, int subDistrictId, int districtId, int provinceId, string contactMobile, bool isOpen, string image = default(string), double? latitude = default(double?), double? longtitude = default(double?), string officeHours = default(string), string rules = default(string))
         {
             OwnerId = ownerId;
             Image = image;
             Name = name;
             Address = address;
-            District = district;
-            Amphur = amphur;
-            Province = province;
+            SubDistrictId = subDistrictId;
+            DistrictId = districtId;
+            ProvinceId = provinceId;
             ContactMobile = contactMobile;
             Latitude = latitude;
             Longtitude = longtitude;
@@ -68,18 +68,18 @@ namespace JongSnamService.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "district")]
-        public string District { get; set; }
+        [JsonProperty(PropertyName = "subDistrictId")]
+        public int SubDistrictId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "amphur")]
-        public string Amphur { get; set; }
+        [JsonProperty(PropertyName = "districtId")]
+        public int DistrictId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "province")]
-        public string Province { get; set; }
+        [JsonProperty(PropertyName = "provinceId")]
+        public int ProvinceId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -127,18 +127,6 @@ namespace JongSnamService.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Address");
             }
-            if (District == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "District");
-            }
-            if (Amphur == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Amphur");
-            }
-            if (Province == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Province");
-            }
             if (ContactMobile == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ContactMobile");
@@ -155,27 +143,6 @@ namespace JongSnamService.Models
                 if (Address.Length > 50)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "Address", 50);
-                }
-            }
-            if (District != null)
-            {
-                if (District.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "District", 50);
-                }
-            }
-            if (Amphur != null)
-            {
-                if (Amphur.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Amphur", 50);
-                }
-            }
-            if (Province != null)
-            {
-                if (Province.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Province", 50);
                 }
             }
             if (ContactMobile != null)
