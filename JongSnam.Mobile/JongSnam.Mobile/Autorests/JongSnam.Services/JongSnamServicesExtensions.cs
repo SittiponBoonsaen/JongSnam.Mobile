@@ -170,6 +170,36 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='enumName'>
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetEnums(this IJongSnamServices operations, string enumName = default(string), int? id = default(int?))
+            {
+                return operations.GetEnumsAsync(enumName, id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='enumName'>
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetEnumsAsync(this IJongSnamServices operations, string enumName = default(string), int? id = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEnumsWithHttpMessagesAsync(enumName, id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='startPrice'>
             /// </param>
             /// <param name='toPrice'>
