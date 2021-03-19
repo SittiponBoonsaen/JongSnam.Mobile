@@ -45,7 +45,11 @@ namespace JongSnam.Mobile.Services.Base
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
             //JongSnamServices = new JongSnamServices(new Uri(ConfigurationService.Configuration.JongSnamServicesUrl), handler);
+<<<<<<< HEAD
             JongSnamServices = new JongSnamServices(new Uri("http://192.168.1.2:5545/"), handler);
+=======
+            JongSnamServices = new JongSnamServices(new Uri("http://172.18.110.145:8080/"), handler);
+>>>>>>> 4400d944ee95a32c53a916a0489efce41b1464ea
         }
 
 

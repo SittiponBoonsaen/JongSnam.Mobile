@@ -18,11 +18,14 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             _mapperService = DependencyService.Get<IMapperService>();
         }
-        public async Task<IEnumerable<YourStore>> GetStores(int currentPage, int pageSize)
+        public async Task<IEnumerable<StoreDto>> GetStores(int currentPage, int pageSize)
         {
             var response = await JongSnamServices.GetStoresWithHttpMessagesAsync(currentPage, pageSize, CustomHeaders);
 
-            return await GetRespondDtoHandlerHttpStatus<IEnumerable<YourStore>>(response);
+            var respondModel = await GetRespondDtoHandlerHttpStatus<StoreDtoBasePagingDto>(response);
+
+            return respondModel.Collection;
+
         }
 
         public async Task<StoreDetailDto> GetStoreById(int id)

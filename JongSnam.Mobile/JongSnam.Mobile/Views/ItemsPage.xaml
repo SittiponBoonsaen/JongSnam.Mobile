@@ -4,7 +4,7 @@
              x:Class="JongSnam.Mobile.Views.ItemsPage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
-             xmlns:model="clr-namespace:JongSnam.Mobile.Models"  
+             xmlns:model="clr-namespace:JongSnamService.Models"
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
@@ -20,12 +20,12 @@
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
+                    <StackLayout Padding="10" x:DataType="model:StoreDto">
+                        <Label Text="{Binding Name}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                        <Label Text="{Binding OfficeHours}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />

@@ -10,8 +10,14 @@ namespace JongSnam.Mobile.Services.Interfaces
     {
         Task<IEnumerable<ProvinceModel>> GetProvinces();
 
+        Task<ProvinceModel> GetProvinceById(int id);
+
         Task<IEnumerable<DistrictModel>> GetDistrictByProvinceId(int ProvinceId);
 
+        Task<DistrictModel> GetDistrictById(int id);
+
         Task<IEnumerable<SubDistrictModel>> GetSubDistrictByDistrictId(int DistrictId);
+
+        Task<SubDistrictModel> GetSubDistrictById(int id);
     }
 }

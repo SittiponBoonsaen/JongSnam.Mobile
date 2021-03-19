@@ -1,5 +1,7 @@
 ﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,17 +12,23 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
+        private readonly IStoreServices _storeServices;
+
         private Item _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<StoreDto> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            _storeServices = DependencyService.Get<IStoreServices>();
+
+            Title = "JongSnamFootBall";
+
+            Items = new ObservableCollection<StoreDto>();
+
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             ItemTapped = new Command<Item>(OnItemSelected);
@@ -35,7 +43,7 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await _storeServices.GetStores(1, 10);
                 foreach (var item in items)
                 {
                     Items.Add(item);
