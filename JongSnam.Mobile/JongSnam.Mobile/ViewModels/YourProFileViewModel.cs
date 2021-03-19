@@ -87,6 +87,8 @@ namespace JongSnam.Mobile.ViewModels
             Task.Run(async () => await ExecuteLoadItemsCommand(id));
 
             SaveCommand = new Command(async () => await ExecuteSaveCommand(id));
+
+            ChangePasswordCommand = new Command(OnChangePassword);
         }
 
         async Task ExecuteLoadItemsCommand(int id)
@@ -100,6 +102,7 @@ namespace JongSnam.Mobile.ViewModels
                 Email = dataUser.Email;
                 Phone = dataUser.ContactMobile;
                 Address = dataUser.Address;
+                DataUser = dataUser;
             }
             catch (Exception ex)
             {
@@ -141,9 +144,9 @@ namespace JongSnam.Mobile.ViewModels
         }
 
 
-        async void OnChangePassword(object obj)
+        async void OnChangePassword()
         {
-            await Shell.Current.GoToAsync(nameof(ChangePasswordPage));
+            await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(DataUser.Id.Value));
         }
         public void OnAppearing()
         {

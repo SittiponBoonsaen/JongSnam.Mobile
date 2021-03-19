@@ -275,7 +275,7 @@ namespace JongSnam.Mobile.ViewModels
              };
             
 
-            bool answer = await Shell.Current.DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
+            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
             if (!answer || !IsValid)
             {
                 return;

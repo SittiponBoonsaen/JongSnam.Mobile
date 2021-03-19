@@ -18,7 +18,10 @@ namespace JongSnam.Mobile.ViewModels
         public Command UpdateFieldCommand { get; }
         public ObservableCollection<FieldDto> Items { get; }
 
+        public Command AddFieldCommand { get; }
+
         private string _storeName;
+
 
         public string StoreName
         {
@@ -40,7 +43,10 @@ namespace JongSnam.Mobile.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
 
             UpdateFieldCommand = new Command<Item>(OnUpdateField);
+
+            AddFieldCommand = new Command(OnAddFieldAsync);
         }
+
 
         async Task ExecuteLoadItemsCommand(int storeId, string nameStore)
         {
@@ -72,6 +78,10 @@ namespace JongSnam.Mobile.ViewModels
         async void OnUpdateField(Item Item)
         {
             await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
+        }
+        async void OnAddFieldAsync(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(AddFieldPage));
         }
 
         public void OnAppearing()

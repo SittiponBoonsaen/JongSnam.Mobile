@@ -14,6 +14,8 @@ namespace JongSnam.Mobile.ViewModels
             _fieldServices = DependencyService.Get<IFieldServices>();
         }
 
+
+
         internal void OnAppearing()
         {
             IsBusy = true;

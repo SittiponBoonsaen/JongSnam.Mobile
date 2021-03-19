@@ -14,10 +14,10 @@ namespace JongSnam.Mobile.Views
     public partial class ChangePasswordPage : ContentPage
     {
         ChangePasswordViewModel _viewModel;
-        public ChangePasswordPage()
+        public ChangePasswordPage(int idUser)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ChangePasswordViewModel();
+            BindingContext = _viewModel = new ChangePasswordViewModel(idUser);
         }
         protected override void OnAppearing()
         {

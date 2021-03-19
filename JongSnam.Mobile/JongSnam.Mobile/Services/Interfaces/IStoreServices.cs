@@ -9,7 +9,7 @@ namespace JongSnam.Mobile.Services.Interfaces
 {
     public interface IStoreServices
     {
-        Task<IEnumerable<YourStore>> GetStores(int currentPage, int pageSize);
+        Task<IEnumerable<StoreDto>> GetStores(int currentPage, int pageSize);
 
         Task<StoreDetailDto> GetStoreById(int id);
 
