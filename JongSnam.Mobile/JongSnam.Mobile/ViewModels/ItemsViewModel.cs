@@ -14,10 +14,10 @@ namespace JongSnam.Mobile.ViewModels
     public class ItemsViewModel : BaseViewModel
     {
         private readonly IStoreServices _storeServices;
+        private Xamarin.Forms.ImageSource image;
 
         private StoreDto _selectedItem;
-        private string _imageBase64;
-        private Xamarin.Forms.ImageSource _image;
+        private string imageBase64;
 
         public ObservableCollection<StoreDto> Items { get; }
         public Command LoadItemsCommand { get; }
@@ -33,27 +33,30 @@ namespace JongSnam.Mobile.ViewModels
                 OnItemSelected(value);
             }
         }
-        public string ImageBase64
+        //public string ImageBase64
+        //{
+        //    get { return imageBase64; }
+        //    set
+        //    {
+        //        imageBase64 = value;
+        //        OnPropertyChanged(nameof(ImageBase64));
+
+        //        Image = Xamarin.Forms.ImageSource.FromStream(
+        //            () => new MemoryStream(Convert.FromBase64String(imageBase64)));
+        //    }
+        //}
+
+        public Xamarin.Forms.ImageSource ImageBase64
         {
-            get { return _imageBase64; }
+            get { return image; }
             set
             {
-                _imageBase64 = value;
-                OnPropertyChanged("ImageBase64");
-                Image = Xamarin.Forms.ImageSource.FromStream(
-                    () => new MemoryStream(Convert.FromBase64String(_imageBase64)));
+                image = value;
+                OnPropertyChanged(nameof(ImageBase64));
+
             }
         }
 
-        public Xamarin.Forms.ImageSource Image
-        {
-            get { return _image; }
-            set
-            {
-                _image = value;
-                OnPropertyChanged("Image");
-            }
-        }
 
 
 
@@ -80,13 +83,12 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await _storeServices.GetStores(1, 10);
+                var items = await _storeServices.GetStores(1, 2);
 
 
                 foreach (var item in items)
                 {
                     Items.Add(item);
-                    Image = item.Image;
                 }
 
             }
