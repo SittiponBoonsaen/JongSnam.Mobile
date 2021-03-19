@@ -14,7 +14,7 @@ namespace JongSnam.Mobile.ViewModels
     {
         private readonly IStoreServices _storeServices;
 
-        private readonly IAddressServices _addressServices;
+        private readonly IEnumServices _enumServices;
         public Command SaveCommand { get; }
         public Command LoadItemsCommand { get; }
 
@@ -29,16 +29,23 @@ namespace JongSnam.Mobile.ViewModels
         public ValidatableObject<string> LongValidata { get; set; }
         public ValidatableObject<string> OfficeHoursValidata { get; set; }
         public ValidatableObject<string> RulesValidata { get; set; }
+        private ValidatableObject<EnumDto> _selectedProvince;
+        private ValidatableObject<EnumDto> _selectedDistrict;
+        public Command SelectedProvinceIndexChangedCommand { get; private set; }
 
-        IEnumerable<ProvinceModel> _provinces;
+        public Command LoadDistrictCommand { get; private set; }
+
+        public Command LoadSubDistrictCommand { get; private set; }
+
+        private List<EnumDto> _province;
+        private List<EnumDto> _district;
+        private List<EnumDto> _subDistrict;
+
         IEnumerable<DistrictModel> _districts;
         IEnumerable<SubDistrictModel> _subDistricts;
 
         private string _name;
         private string _address;
-        private string _subDistrict;
-        private string _district;
-        private string _province;
         private string _contactMobile;
         private double _latitude;
         private double _longtitude;
@@ -46,17 +53,6 @@ namespace JongSnam.Mobile.ViewModels
         private string _image;
         private bool _isOpen;
         private string _officeHours;
-
-
-        public IEnumerable<ProvinceModel> ProvincesProperty
-        {
-            get => _provinces;
-            set
-            {
-                _provinces = value;
-                OnPropertyChanged(nameof(ProvincesProperty));
-            }
-        }
 
         public IEnumerable<DistrictModel> DistrictsProperty
         {
@@ -97,7 +93,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Address));
             }
         }
-        public string SubDistrict
+        public List<EnumDto> SubDistrict
         {
             get => _subDistrict;
             set
@@ -106,9 +102,13 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(SubDistrict));
             }
         }
-        public string District
+        public List<EnumDto> District
         {
-            get => _district;
+            get
+            {
+                return _district;
+            }
+
             set
             {
                 _district = value;
@@ -116,9 +116,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public string Province
+        public List<EnumDto> Province
         {
-            get => _province;
+            get
+            {
+                return _province;
+            }
+
             set
             {
                 _province = value;
@@ -195,29 +199,68 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        public ValidatableObject<EnumDto> SelectedProvince
+        {
+            get
+            {
+                return _selectedProvince;
+            }
 
+            set
+            {
+                _selectedProvince = value;
+                OnPropertyChanged(nameof(SelectedProvince));
+            }
+        }
+        public ValidatableObject<EnumDto> SelectedDistrict
+        {
+            get
+            {
+                return _selectedDistrict;
+            }
 
-
+            set
+            {
+                _selectedDistrict = value;
+                OnPropertyChanged(nameof(SelectedDistrict));
+            }
+        }
 
         public AddStoreViewModel()
         {
             _storeServices = DependencyService.Get<IStoreServices>();
 
-            _addressServices = DependencyService.Get<IAddressServices>();
+            _enumServices = DependencyService.Get<IEnumServices>();
+
+            InitValidation();
 
             SaveCommand = new Command(async () => await OnSaveCommand());
 
-            Task.Run(async () => await ExecuteLoadItemsCommand());
+            SelectedProvinceIndexChangedCommand = new Command(() => _selectedProvince.Validate());
+
+            LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
+
+            LoadSubDistrictCommand = new Command(async () => await LoadSubDistrictEnum(SelectedDistrict.Value.Id.Value));
+
+            Task.Run(async () => await LoadProvinceEnum());
+
+            
+
         }
 
         public void OnAppearing()
         {
             IsBusy = true;
         }
+
         private void InitValidation()
         {
             ImageValidata = new ValidatableObject<string>();
-            ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> {ValidationMessage = "Image is null"});
+            ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
+            _selectedProvince = new ValidatableObject<EnumDto>();
+            _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
+            _selectedDistrict = new ValidatableObject<EnumDto>();
+            _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
         }
         private bool IsValid
         {
@@ -227,21 +270,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task LoadProvinceEnum()
         {
             try
             {
                 IsBusy = true;
 
-                var provinces = await _addressServices.GetProvinces();
-                ProvincesProperty = provinces;
-
-                var districts = await _addressServices.GetDistrictByProvinceId(55);
-                DistrictsProperty = districts;
-
-                var subdistricts = await _addressServices.GetSubDistrictByDistrictId(152);
-                SubDistrictProperty = subdistricts;
-
+                Province = await _enumServices.GetProvinces();
             }
             catch(Exception ex)
             {
@@ -253,7 +288,41 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        async Task LoadDistrictEnum(int provinceId)
+        {
+            try
+            {
+                IsBusy = true;
 
+                District = await _enumServices.GetDistrict(provinceId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        async Task LoadSubDistrictEnum(int subDistrict)
+        {
+            try
+            {
+                IsBusy = true;
+
+                SubDistrict = await _enumServices.GetSubDistrict(subDistrict);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         async Task OnSaveCommand()
         {
@@ -263,9 +332,9 @@ namespace JongSnam.Mobile.ViewModels
                 Image = Image,
                 Name = Name,
                 Address = Address,
-                District = SubDistrict,
-                Amphur = District,
-                Province = Province,
+                //District = SelectedSubDistrict,
+                //Amphur = SelectedDistrict.Value.Id.Value,
+                //Province = SelectedDistrict.Value.Id.Value,
                 ContactMobile = ContactMobile,
                 Latitude = Latitude,
                 Longtitude = Longtitude,

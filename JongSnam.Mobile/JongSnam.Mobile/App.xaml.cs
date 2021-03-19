@@ -23,6 +23,7 @@ namespace JongSnam.Mobile
             DependencyService.Register<IStoreServices, StoreServices>();
             DependencyService.Register<IUsersServices, UsersServices>();
             DependencyService.Register<IAddressServices, AddressServices>();
+            DependencyService.Register<IEnumServices, EnumServices>();
             DependencyService.Register<MockDataStore>();
 
             MainPage = new AppShell();
