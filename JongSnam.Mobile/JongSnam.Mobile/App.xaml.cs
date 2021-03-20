@@ -6,8 +6,9 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+[assembly: ExportFont("materialdesignicons-webfont.ttf", Alias = "Material")]
 namespace JongSnam.Mobile
-{
+{ 
     public partial class App : Application
     {
 

@@ -16,8 +16,8 @@
                 <Image WidthRequest="150" HeightRequest="150" Source="C:\Users\Ping Sittipon\Documents\GitHub\FinalProjectComsic\FinalProjectComsic\assets\default-avatar.png"/>
                 <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
             </StackLayout>
-            <Entry Placeholder="สนามที่4" PlaceholderColor="Gray" />
-            <Entry Placeholder="ราคา" PlaceholderColor="Gray" />
+            <Entry Placeholder="ชื่อสนาม" PlaceholderColor="Gray" />
+            <Entry Placeholder="ราคาสนาม"  PlaceholderColor="Gray" />
             <Picker x:Name="SizeField" Title="ขนาดสนาม"
             HorizontalOptions="FillAndExpand">
                 <Picker.Items>
@@ -30,8 +30,8 @@
             <Picker x:Name="Status" Title="สถานนะของสนาม"
             HorizontalOptions="FillAndExpand">
                 <Picker.Items>
-                    <x:String>เปิดยริก่าร</x:String>
-                    <x:String>ปิดบริกร</x:String>
+                    <x:String>เปิดบริการ</x:String>
+                    <x:String>ปิดบริการ</x:String>
                 </Picker.Items>
             </Picker>
             <Entry Placeholder="ส่วนลด" PlaceholderColor="Gray" />

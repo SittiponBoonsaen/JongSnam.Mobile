@@ -29,14 +29,15 @@ namespace JongSnam.Mobile.ViewModels
         public ValidatableObject<string> LongValidata { get; set; }
         public ValidatableObject<string> OfficeHoursValidata { get; set; }
         public ValidatableObject<string> RulesValidata { get; set; }
-        private ValidatableObject<EnumDto> _selectedProvince;
-        private ValidatableObject<EnumDto> _selectedDistrict;
         public Command SelectedProvinceIndexChangedCommand { get; private set; }
 
         public Command LoadDistrictCommand { get; private set; }
 
         public Command LoadSubDistrictCommand { get; private set; }
 
+        private ValidatableObject<EnumDto> _selectedProvince;
+        private ValidatableObject<EnumDto> _selectedDistrict;
+        private ValidatableObject<EnumDto> _selectedSubDistrict;
         private List<EnumDto> _province;
         private List<EnumDto> _district;
         private List<EnumDto> _subDistrict;
@@ -54,43 +55,43 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isOpen;
         private string _officeHours;
 
-        public IEnumerable<DistrictModel> DistrictsProperty
+        public ValidatableObject<EnumDto> SelectedProvince
         {
-            get => _districts;
+            get
+            {
+                return _selectedProvince;
+            }
+
             set
             {
-                _districts = value;
-                OnPropertyChanged(nameof(DistrictsProperty));
+                _selectedProvince = value;
+                OnPropertyChanged(nameof(SelectedProvince));
             }
         }
-
-        public IEnumerable<SubDistrictModel> SubDistrictProperty
+        public ValidatableObject<EnumDto> SelectedDistrict
         {
-            get => _subDistricts;
+            get
+            {
+                return _selectedDistrict;
+            }
+
             set
             {
-                _subDistricts = value;
-                OnPropertyChanged(nameof(SubDistrictProperty));
+                _selectedDistrict = value;
+                OnPropertyChanged(nameof(SelectedDistrict));
             }
         }
-
-        public string Name
+        public ValidatableObject<EnumDto> SelectedSubDistrict
         {
-            get => _name;
-            set
+            get
             {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
+                return _selectedSubDistrict;
             }
-        }
 
-        public string Address
-        {
-            get => _address;
             set
             {
-                _address = value;
-                OnPropertyChanged(nameof(Address));
+                _selectedSubDistrict = value;
+                OnPropertyChanged(nameof(SelectedSubDistrict));
             }
         }
         public List<EnumDto> SubDistrict
@@ -127,6 +128,27 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _province = value;
                 OnPropertyChanged(nameof(Province));
+            }
+        }
+
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                _address = value;
+                OnPropertyChanged(nameof(Address));
             }
         }
 
@@ -199,34 +221,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ValidatableObject<EnumDto> SelectedProvince
-        {
-            get
-            {
-                return _selectedProvince;
-            }
-
-            set
-            {
-                _selectedProvince = value;
-                OnPropertyChanged(nameof(SelectedProvince));
-            }
-        }
-        public ValidatableObject<EnumDto> SelectedDistrict
-        {
-            get
-            {
-                return _selectedDistrict;
-            }
-
-            set
-            {
-                _selectedDistrict = value;
-                OnPropertyChanged(nameof(SelectedDistrict));
-            }
-        }
-
-        public AddStoreViewModel()
+        public AddStoreViewModel(int userId)
         {
             _storeServices = DependencyService.Get<IStoreServices>();
 
@@ -234,7 +229,7 @@ namespace JongSnam.Mobile.ViewModels
 
             InitValidation();
 
-            SaveCommand = new Command(async () => await OnSaveCommand());
+            SaveCommand = new Command(async () => await OnSaveCommand(userId));
 
             SelectedProvinceIndexChangedCommand = new Command(() => _selectedProvince.Validate());
 
@@ -243,8 +238,6 @@ namespace JongSnam.Mobile.ViewModels
             LoadSubDistrictCommand = new Command(async () => await LoadSubDistrictEnum(SelectedDistrict.Value.Id.Value));
 
             Task.Run(async () => await LoadProvinceEnum());
-
-            
 
         }
 
@@ -258,9 +251,11 @@ namespace JongSnam.Mobile.ViewModels
             ImageValidata = new ValidatableObject<string>();
             ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
             _selectedProvince = new ValidatableObject<EnumDto>();
-            _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
             _selectedDistrict = new ValidatableObject<EnumDto>();
+            _selectedSubDistrict = new ValidatableObject<EnumDto>();
+            _selectedSubDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกตำบล" });
             _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
+            _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
         }
         private bool IsValid
         {
@@ -324,17 +319,17 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        async Task OnSaveCommand()
+        async Task OnSaveCommand(int userId)
         {
             var request = new StoreRequest
             {
-                OwnerId = 5,
+                OwnerId = userId,
                 Image = Image,
                 Name = Name,
                 Address = Address,
-                //District = SelectedSubDistrict,
-                //Amphur = SelectedDistrict.Value.Id.Value,
-                //Province = SelectedDistrict.Value.Id.Value,
+                SubDistrictId = SelectedSubDistrict.Value.Id.Value,
+                DistrictId = SelectedDistrict.Value.Id.Value,
+                ProvinceId = SelectedDistrict.Value.Id.Value,
                 ContactMobile = ContactMobile,
                 Latitude = Latitude,
                 Longtitude = Longtitude,

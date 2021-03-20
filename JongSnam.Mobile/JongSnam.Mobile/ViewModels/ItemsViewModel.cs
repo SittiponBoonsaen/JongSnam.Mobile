@@ -14,14 +14,12 @@ namespace JongSnam.Mobile.ViewModels
     public class ItemsViewModel : BaseViewModel
     {
         private readonly IStoreServices _storeServices;
-        private Xamarin.Forms.ImageSource image;
 
         private StoreDto _selectedItem;
-        private string imageBase64;
 
         public ObservableCollection<StoreDto> Items { get; }
         public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
+        public Command SearchItemCommand { get; }
         public Command<StoreDto> ItemTapped { get; }
 
         public StoreDto SelectedItem
@@ -33,39 +31,14 @@ namespace JongSnam.Mobile.ViewModels
                 OnItemSelected(value);
             }
         }
-        //public string ImageBase64
-        //{
-        //    get { return imageBase64; }
-        //    set
-        //    {
-        //        imageBase64 = value;
-        //        OnPropertyChanged(nameof(ImageBase64));
-
-        //        Image = Xamarin.Forms.ImageSource.FromStream(
-        //            () => new MemoryStream(Convert.FromBase64String(imageBase64)));
-        //    }
-        //}
-
-        public Xamarin.Forms.ImageSource ImageBase64
-        {
-            get { return image; }
-            set
-            {
-                image = value;
-                OnPropertyChanged(nameof(ImageBase64));
-
-            }
-        }
-
-
 
 
 
         public ItemsViewModel()
         {
-            _storeServices = DependencyService.Get<IStoreServices>();
-
             Title = "JongSnamFootBall";
+
+            _storeServices = DependencyService.Get<IStoreServices>();
 
             Items = new ObservableCollection<StoreDto>();
 
@@ -73,7 +46,7 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<StoreDto>(OnItemSelected);
 
-            AddItemCommand = new Command(OnAddItem);
+            SearchItemCommand = new Command(OnSearchItem);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -83,13 +56,14 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await _storeServices.GetStores(1, 2);
+                var items = await _storeServices.GetStores(1, 6);
 
 
                 foreach (var item in items)
                 {
                     Items.Add(item);
                 }
+
 
             }
             catch (Exception ex)
@@ -108,9 +82,9 @@ namespace JongSnam.Mobile.ViewModels
             SelectedItem = null;
         }
 
-        private async void OnAddItem(object obj)
+        private async void OnSearchItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(SearchItemPage));
         }
 
         async void OnItemSelected(StoreDto storeDto)
@@ -119,8 +93,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={storeDto.Id}");
+            await Shell.Current.Navigation.PushAsync(new ListFieldPage(storeDto));
         }
     }
 }

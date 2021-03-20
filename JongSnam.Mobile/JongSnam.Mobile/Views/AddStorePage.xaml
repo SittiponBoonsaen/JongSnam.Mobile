@@ -41,8 +41,6 @@
                                                                           Command="{Binding LoadSubDistrictCommand}"/>
                 </Picker.Behaviors>
             </Picker>
-
-
             <Picker ItemsSource="{Binding SubDistrict}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"

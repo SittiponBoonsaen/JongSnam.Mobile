@@ -1,30 +1,24 @@
-﻿using JongSnam.Mobile.Icon;
-using JongSnam.Mobile.Models;
-using JongSnam.Mobile.ViewModels;
-using JongSnam.Mobile.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsPage : ContentPage
+    public partial class SearchItemPage : ContentPage
     {
-        ItemsViewModel _viewModel;
-
-        public ItemsPage()
+        SearchItemViewModel _viewModel;
+        public SearchItemPage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new ItemsViewModel();
+            BindingContext = _viewModel = new SearchItemViewModel();
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();

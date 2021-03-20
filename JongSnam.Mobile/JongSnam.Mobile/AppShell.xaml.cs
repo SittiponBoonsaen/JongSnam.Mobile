@@ -11,7 +11,11 @@ namespace JongSnam.Mobile
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(ReviewPage), typeof(ReviewPage));
+            Routing.RegisterRoute(nameof(FieldPage), typeof(FieldPage));
+            Routing.RegisterRoute(nameof(ListFieldPage), typeof(ListFieldPage));
+            Routing.RegisterRoute(nameof(SearchItemPage), typeof(SearchItemPage));
+            Routing.RegisterRoute(nameof(ItemsPage), typeof(ItemsPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(YourStorePage), typeof(YourStorePage));
             Routing.RegisterRoute(nameof(YourProFilePage), typeof(YourProFilePage));

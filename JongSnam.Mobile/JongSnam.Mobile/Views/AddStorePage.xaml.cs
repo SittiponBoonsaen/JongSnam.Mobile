@@ -9,10 +9,10 @@ namespace JongSnam.Mobile.Views
     public partial class AddStorePage : ContentPage
     {
         AddStoreViewModel _viewModel;
-        public AddStorePage()
+        public AddStorePage(int userId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new AddStoreViewModel();
+            BindingContext = _viewModel = new AddStoreViewModel(userId);
         }
         protected override void OnAppearing()
         {

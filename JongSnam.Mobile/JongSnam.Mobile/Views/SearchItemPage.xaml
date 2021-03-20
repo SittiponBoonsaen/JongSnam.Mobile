@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
+             x:Class="JongSnam.Mobile.Views.SearchItemPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="ค้นหา" Command="{Binding SearchItemCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#f5f5f3" Padding="24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1"></Label>
+                <Entry  Placeholder="0"  Grid.Column="1" Grid.Row="1" />
+                <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" ></Label>
+                <Entry Placeholder="1500"  Grid.Column="3" Grid.Row="1" />
+            </Grid>
+
+            <Picker x:Name="SizeField"
+            HorizontalOptions="FillAndExpand">
+                <Picker.Items>
+                    <x:String>สำหรับ 5 คน</x:String>
+                    <x:String>สำหรับ 7 คน</x:String>
+                    <x:String>สำหรับ 11 คน</x:String>
+                </Picker.Items>
+            </Picker>
+            <Picker ItemsSource="{Binding Province}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก จังหวัด">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedProvinceIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadDistrictCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+            <Picker ItemsSource="{Binding District}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก อำเภอ">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedDistrictIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadSubDistrictCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

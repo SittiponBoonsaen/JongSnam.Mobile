@@ -1,30 +1,24 @@
-﻿using JongSnam.Mobile.Icon;
-using JongSnam.Mobile.Models;
-using JongSnam.Mobile.ViewModels;
-using JongSnam.Mobile.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.ViewModels;
+using JongSnamService.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsPage : ContentPage
+    public partial class ListFieldPage : ContentPage
     {
-        ItemsViewModel _viewModel;
-
-        public ItemsPage()
+        ListFieldViewModel _viewModel;
+        public ListFieldPage(StoreDto storeDto)
         {
             InitializeComponent();
-
-            BindingContext = _viewModel = new ItemsViewModel();
+            BindingContext = _viewModel = new ListFieldViewModel(storeDto);
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();

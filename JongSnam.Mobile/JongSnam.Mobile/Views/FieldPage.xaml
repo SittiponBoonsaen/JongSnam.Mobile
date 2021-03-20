@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JongSnam.Mobile.Views.FieldPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+
+                </Grid.ColumnDefinitions>
+
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="300" HeightRequest="300" Grid.Row="0" Grid.Column="1" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="0" Grid.Column="3" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="1" Grid.Column="1" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="1" Grid.Column="3" />
+            </Grid>
+            <Label BackgroundColor="Black" FontSize="1" Grid.Row="2"     />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+
+                </Grid.ColumnDefinitions>
+                <Frame OutlineColor="Black" >
+                    <Label Text="สนามที่ 4" BackgroundColor="White" TextColor="Black" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"  />
+                </Frame>
+
+                <Label Text="ราคา" BackgroundColor="White" TextColor="Black" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
+                <Label Text="ส่วนลด" BackgroundColor="White" TextColor="Black" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
+                <Label Text="ขนาดของสนาม" BackgroundColor="White" TextColor="Black" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
+                <Label Text="เปิดให้บริการ"  BackgroundColor="White" TextColor="Black" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20" />
+
+            </Grid>
+
+
+
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
