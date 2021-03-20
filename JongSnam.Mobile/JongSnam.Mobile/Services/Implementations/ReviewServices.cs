@@ -10,11 +10,11 @@ namespace JongSnam.Mobile.Services.Implementations
 {
     public class ReviewServices : BaseServices, IReviewServices
     {
-        public async Task<IEnumerable<SumaryRatingDto>> GetReviewByStoreId(int storeId, int currentPage, int pageSize)
+        public async Task<SumaryRatingDto> GetReviewByStoreId(int storeId, int currentPage, int pageSize)
         {
             var response = await JongSnamServices.GetReviewByStoreIdWithHttpMessagesAsync(storeId, currentPage, pageSize, CustomHeaders);
 
-            return await GetRespondDtoHandlerHttpStatus<IEnumerable<SumaryRatingDto>>(response);
+            return await GetRespondDtoHandlerHttpStatus<SumaryRatingDto>(response);
         }
 
         public async Task<bool> AddReview(ReviewRequest reviewRequest)

@@ -8,7 +8,7 @@ namespace JongSnam.Mobile.Services.Interfaces
 {
     public interface IReviewServices
     {
-        Task<IEnumerable<SumaryRatingDto>> GetReviewByStoreId(int storeId, int currentPage, int pageSize);
+        Task<SumaryRatingDto> GetReviewByStoreId(int storeId, int currentPage, int pageSize);
 
         Task<bool> AddReview(ReviewRequest reviewRequest);
     }
