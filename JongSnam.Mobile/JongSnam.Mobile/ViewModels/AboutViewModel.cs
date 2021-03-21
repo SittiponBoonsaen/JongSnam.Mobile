@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using Xamarin.Essentials;
@@ -14,6 +15,8 @@ namespace JongSnam.Mobile.ViewModels
     {
         public ObservableCollection<ReservationDto> Items { get; }
 
+        private readonly IReservationServices _reservationServices;
+
         public Command SearchReservationCommand { get; }
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
@@ -21,6 +24,8 @@ namespace JongSnam.Mobile.ViewModels
         public AboutViewModel()
         {
             Title = "การจองของคุณ";
+
+            _reservationServices = DependencyService.Get<IReservationServices>();
 
             Items = new ObservableCollection<ReservationDto>();
 
@@ -37,8 +42,8 @@ namespace JongSnam.Mobile.ViewModels
 
             try
             {
-                Items.Clear();
-                //var items = await _storeServices.GetStores(1, 6);
+                //Items.Clear();
+                //var items = await _reservationServices.GetYourReservation(1, 6);
 
 
                 //foreach (var item in items)
