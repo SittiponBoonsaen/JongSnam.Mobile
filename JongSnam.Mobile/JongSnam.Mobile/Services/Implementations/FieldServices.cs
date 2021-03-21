@@ -15,7 +15,7 @@ namespace JongSnam.Mobile.Services.Implementations
 
         }
 
-        public async Task<IEnumerable<FieldDto>> GetFieldBySearch(double startPrice, double toPrice, int districtId, int provinceId, int currentPage, int pageSize)
+        public async Task<IEnumerable<FieldDto>> GetFieldBySearch(double? startPrice, double? toPrice, int? districtId, int? provinceId, int currentPage, int pageSize)
         {
             var response = await JongSnamServices.GetFieldBySearchWithHttpMessagesAsync(startPrice, toPrice, districtId, provinceId, currentPage, pageSize, CustomHeaders);
 

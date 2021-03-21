@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JongSnam.Mobile.Views.SearchReservationPage"
+             Shell.PresentationMode="ModalAnimated">
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="0"></Label>
+                <DatePicker MinimumDate="01/01/2018"
+                    MaximumDate="12/31/2018"  Grid.Column="1" Grid.Row="0" 
+                    Date="06/21/2018"  />
+                <Label Text="ถึง :" Grid.Column="2" Grid.Row="0" ></Label>
+                <DatePicker MinimumDate="01/01/2018"
+                    MaximumDate="12/31/2018"  Grid.Column="3" Grid.Row="0"
+                    Date="07/21/2018" />
+                <ImageButton Grid.Column="4" Grid.Row="0" Source="https://icon-library.com/images/black-search-icon-png/black-search-icon-png-8.jpg" />
+            </Grid>
+
+            <StackLayout Orientation="Vertical">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" VerticalOptions="EndAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

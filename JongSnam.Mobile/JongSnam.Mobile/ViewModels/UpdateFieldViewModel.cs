@@ -67,7 +67,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public UpdateFieldViewModel()
+        public UpdateFieldViewModel(FieldDetailDto fieldDetailDto)
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
@@ -75,19 +75,18 @@ namespace JongSnam.Mobile.ViewModels
 
             SaveCommand = new Command(OnSaveCommandAlertYesNoClicked);
 
-            Task.Run(async () => await ExecuteLoadItemsCommand());
+            Task.Run(async () => await ExecuteLoadItemsCommand(fieldDetailDto));
         }
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadItemsCommand(FieldDetailDto fieldDetailDto)
         {
             IsBusy = true;
             try
             {
-                var dataField = await _fieldServices.GetFieldById(5);
-                Name = dataField.Name;
-                Price = (double)dataField.Price;
-                IsOpen = (bool)dataField.IsOpen;
-                Percentage = (double)dataField.Percentage;
-                ImageFieldDto = dataField.ImageFieldDto;
+                Name = fieldDetailDto.Name;
+                Price = (double)fieldDetailDto.Price;
+                IsOpen = (bool)fieldDetailDto.IsOpen;
+                Percentage = (double)fieldDetailDto.Percentage;
+                ImageFieldDto = fieldDetailDto.ImageFieldDto;
             }
             catch (Exception ex)
             {

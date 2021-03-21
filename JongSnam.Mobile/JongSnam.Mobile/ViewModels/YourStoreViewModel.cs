@@ -23,7 +23,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command UpdateStoreCommand { get; }
 
-        public Command YourFieldCommand { get; }
+        public Command<YourStore> ItemTapped { get; }
 
         public YourStoreViewModel()
         {
@@ -36,7 +36,7 @@ namespace JongSnam.Mobile.ViewModels
 
             UpdateStoreCommand = new Command<YourStore>(OnUpdateStore);
 
-            YourFieldCommand = new Command<YourStore>(OnYourField);
+            ItemTapped = new Command<YourStore>(OnYourField);
 
             _storeServices = DependencyService.Get<IStoreServices>();
         }
@@ -78,6 +78,10 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnYourField(YourStore item)
         {
+            if (item == null)
+            {
+                return;
+            }
             await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value, item.Name));
         }
 

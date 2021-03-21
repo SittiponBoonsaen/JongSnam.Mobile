@@ -8,7 +8,7 @@ namespace JongSnam.Mobile.Services.Interfaces
 {
     public interface IFieldServices
     {
-        Task<IEnumerable<FieldDto>> GetFieldBySearch(double startPrice, double toPrice, int districtId, int provinceId, int currentPage, int pageSize);
+        Task<IEnumerable<FieldDto>> GetFieldBySearch(double? startPrice, double? toPrice, int? districtId, int? provinceId, int currentPage, int pageSize);
 
         Task<FieldDetailDto> GetFieldById(int id);
 

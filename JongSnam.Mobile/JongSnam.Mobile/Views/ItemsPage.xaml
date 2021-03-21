@@ -7,7 +7,7 @@
              xmlns:model="clr-namespace:JongSnamService.Models">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Search" Command="{Binding SearchItemCommand}" />
+        <ToolbarItem  IconImageSource="https://icon-library.com/images/black-search-icon-png/black-search-icon-png-8.jpg" Command="{Binding SearchItemCommand}" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
@@ -51,7 +51,8 @@
                         <BoxView 
                                 HeightRequest="1" 
                                 BackgroundColor="Gray" 
-                                HorizontalOptions="FillAndExpand" />        
+                                HorizontalOptions="FillAndExpand" />  
+                        
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
@@ -59,6 +60,7 @@
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
+                        
                     </StackLayout>
 
                 </DataTemplate>

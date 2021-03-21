@@ -23,19 +23,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1"></Label>
-                <Entry  Placeholder="0"  Grid.Column="1" Grid.Row="1" />
+                <Entry  Text="{Binding StartPrice}" Grid.Column="1" Grid.Row="1" />
                 <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" ></Label>
-                <Entry Placeholder="1500"  Grid.Column="3" Grid.Row="1" />
+                <Entry Text="{Binding ToPrice}"  Grid.Column="3" Grid.Row="1" />
             </Grid>
 
-            <Picker x:Name="SizeField"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>สำหรับ 5 คน</x:String>
-                    <x:String>สำหรับ 7 คน</x:String>
-                    <x:String>สำหรับ 11 คน</x:String>
-                </Picker.Items>
-            </Picker>
             <Picker ItemsSource="{Binding Province}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"

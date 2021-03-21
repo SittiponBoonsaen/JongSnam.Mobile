@@ -4,7 +4,8 @@
              x:Class="JongSnam.Mobile.Views.YourStorePage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              xmlns:model="clr-namespace:JongSnamService.Models"
-             x:Name="ThisPage">
+             x:Name="ThisPage"
+             Title="ร้านของคุณ">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="เพิ่ม" Command="{Binding AddStoreCommand}"/>
     </ContentPage.ToolbarItems>
@@ -27,8 +28,6 @@
                                     <RowDefinition Height="1" />
                                 </Grid.RowDefinitions>
 
-                            <!--<Button Text="แก้ไข" Grid.Column="0" Grid.RowSpan="2"
-                                HorizontalOptions="End" VerticalOptions="Center" />-->
                             <Image Source="https://static.vecteezy.com/system/resources/thumbnails/000/522/621/small/kflj_bbzy_140326.jpg" 
                                    Grid.Column="0" Grid.RowSpan="2"/>
 
@@ -36,20 +35,23 @@
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 
-                            <Button Text="ดู" Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" FontSize="13"
-
-                                    Command="{Binding BindingContext.YourFieldCommand, Source={x:Reference ThisPage}}"
-                                    CommandParameter="{Binding .}"/>
-
                             <Button Text="แก้ไข" Grid.Column="3" Grid.RowSpan="2" 
                                     HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"
                                     Command="{Binding BindingContext.UpdateStoreCommand, Source={x:Reference ThisPage}}"
                                     CommandParameter="{Binding .}"/>
                         </Grid>
                             <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                        
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:YourStoreViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        
+                        
                     </StackLayout>
-
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

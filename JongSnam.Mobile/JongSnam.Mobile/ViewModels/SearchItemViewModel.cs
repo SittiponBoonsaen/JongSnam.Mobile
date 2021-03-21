@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
+using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using Xamarin.Forms;
 
@@ -13,8 +15,14 @@ namespace JongSnam.Mobile.ViewModels
     {
         private readonly IEnumServices _enumServices;
 
+        private readonly IFieldServices _fieldServices;
+        public ObservableCollection<FieldDto> Items { get; }
+
         private List<EnumDto> _province;
         private List<EnumDto> _district;
+
+        private double _startPrice;
+        private double _toPrice;
 
         private ValidatableObject<EnumDto> _selectedProvince;
         private ValidatableObject<EnumDto> _selectedDistrict;
@@ -25,6 +33,8 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadDistrictCommand { get; private set; }
 
         public Command LoadSubDistrictCommand { get; private set; }
+
+        public Command SearchItemCommand { get; }
 
         public List<EnumDto> District
         {
@@ -39,6 +49,33 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(District));
             }
         }
+        public double StartPrice
+        {
+            get
+            {
+                return _startPrice;
+            }
+
+            set
+            {
+                _startPrice = value;
+                OnPropertyChanged(nameof(StartPrice));
+            }
+        }
+        public double ToPrice
+        {
+            get
+            {
+                return _toPrice;
+            }
+
+            set
+            {
+                _toPrice = value;
+                OnPropertyChanged(nameof(ToPrice));
+            }
+        }
+
 
         public List<EnumDto> Province
         {
@@ -85,7 +122,11 @@ namespace JongSnam.Mobile.ViewModels
         public SearchItemViewModel()
         {
             _enumServices = DependencyService.Get<IEnumServices>();
+            _fieldServices = DependencyService.Get<IFieldServices>();
+
             InitValidation();
+
+            Items = new ObservableCollection<FieldDto>();
 
             SelectedProvinceIndexChangedCommand = new Command(() => _selectedProvince.Validate());
 
@@ -93,7 +134,9 @@ namespace JongSnam.Mobile.ViewModels
 
             LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
 
-            Task.Run(async () => await LoadProvinceEnum());
+            SearchItemCommand = new Command(OnSearchItemCommand);
+
+            Task.Run(async () => await ExecuteLoadItemsCommand());
 
         }
 
@@ -105,7 +148,8 @@ namespace JongSnam.Mobile.ViewModels
             _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
             _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
         }
-        async Task LoadProvinceEnum()
+
+        async Task ExecuteLoadItemsCommand()
         {
             try
             {
@@ -140,6 +184,22 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
+        async void OnSearchItemCommand()
+        {
+            Items.Clear();
+
+            var data = await _fieldServices.GetFieldBySearch(StartPrice, ToPrice, SelectedDistrict.Value.Id.Value, SelectedProvince.Value.Id.Value, 1, 10);
+
+           
+            foreach (var item in data)
+            {
+                Items.Add(item);
+                await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(item));
+            }
+           
+
+        }
+
 
         internal void OnAppearing()
         {
