@@ -13,11 +13,13 @@
 
   <ItemGroup>
     <None Remove="appsetting.json" />
+    <None Remove="Fonts\fa-regular-400.ttf" />
     <None Remove="materialdesignicons-webfont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="appsetting.json" />
+    <EmbeddedResource Include="Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="materialdesignicons-webfont.ttf" />
   </ItemGroup>
 
@@ -31,8 +33,8 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
 
   <ItemGroup>
