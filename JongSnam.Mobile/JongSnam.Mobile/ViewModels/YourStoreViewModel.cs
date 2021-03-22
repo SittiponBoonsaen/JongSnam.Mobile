@@ -88,7 +88,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnAddStore(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(AddStorePage));
+            await Shell.Current.Navigation.PushAsync(new AddStorePage(4));
         }
 
         async void OnUpdateStore(YourStore item)

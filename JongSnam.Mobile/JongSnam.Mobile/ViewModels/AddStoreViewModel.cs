@@ -321,6 +321,12 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSaveCommand(int userId)
         {
+            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
+            if (!answer)
+            {
+                return;
+            }
+
             var request = new StoreRequest
             {
                 OwnerId = userId,
@@ -336,14 +342,8 @@ namespace JongSnam.Mobile.ViewModels
                 OfficeHours = OfficeHours,
                 IsOpen = IsOpen,
                 Rules = Rules
-             };
-            
+            };
 
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
-            if (!answer || !IsValid)
-            {
-                return;
-            }
             var statusSaved = await _storeServices.AddStore(request);
             if (statusSaved)
             {

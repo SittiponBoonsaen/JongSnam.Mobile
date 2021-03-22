@@ -15,8 +15,8 @@
                         <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
                         <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
                     </StackLayout>
-                    <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
-                    <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
+            <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" Text="{Binding Name}"/>
+            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" Text="{Binding Address}"/>
 
             <Picker ItemsSource="{Binding Province}"
                                         ItemDisplayBinding="{Binding Name}"
@@ -55,7 +55,7 @@
 
 
 
-            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
+            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" Text="{Binding ContactMobile}"/>
                     <Grid >
                         <Entry Grid.Column="0"
                            Keyboard="Numeric"
@@ -67,7 +67,7 @@
                            Placeholder="ลองติจูด"
                            IsEnabled="false" />
                     </Grid>
-                    <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
+            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours}"/>
                     <Picker x:Name="Status" Title="สถานนะของสนาม"
                     HorizontalOptions="FillAndExpand">
                         <Picker.Items>
