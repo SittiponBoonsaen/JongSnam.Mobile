@@ -12,10 +12,13 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
     <StackLayout BackgroundColor="#f5f5f3" Padding="15">
-        
-        <StackLayout>
+
+            <StackLayout>
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
                 <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
-                <!--<Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>-->
                 <ImageButton Margin="3"
                              BackgroundColor="#f5f5f3"
                             HeightRequest="56" 

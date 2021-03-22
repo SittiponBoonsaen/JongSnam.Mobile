@@ -75,7 +75,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ImageSource ImageProfile 
+        public ImageSource ImageProfile
         {
             get { return _imageProfile; }
             set
@@ -90,6 +90,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadItemsCommand { get; }
 
         public Command ChangePasswordCommand { get; }
+
         public Command SaveCommand { get; }
 
         public Command UploadImageCommand { get; private set; }
@@ -106,7 +107,7 @@ namespace JongSnam.Mobile.ViewModels
 
             ChangePasswordCommand = new Command(OnChangePassword);
 
-            UploadImageCommand = new Command(async() =>
+            UploadImageCommand = new Command(async () =>
             {
                 if (IsBusy)
                 {
@@ -165,32 +166,44 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteSaveCommand(int id)
         {
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
-            if (!answer)
+            IsBusy = true;
+            try
             {
-                return;
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+                if (!answer)
+                {
+                    return;
+                }
+                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
+                var request = new UpdateUserRequest
+                {
+                    LastName = LastName,
+                    FirstName = FirstName,
+                    Email = Email,
+                    ContactMobile = Phone,
+                    Address = Address,
+                    ImageProfile = await GeneralHelper.GetBase64StringAsync(imageStream),
+                };
+
+                var statusSaved = await _usersServices.UpdateUser(id, request);
+
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
             }
-            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
-
-            var request = new UpdateUserRequest
+            catch (Exception ex)
             {
-                LastName = LastName,
-                FirstName = FirstName,
-                Email = Email,
-                ContactMobile = Phone,
-                Address = Address,
-                ImageProfile = await GeneralHelper.GetBase64StringAsync(imageStream),
-            };
-
-            var statusSaved = await _usersServices.UpdateUser(id, request);
-
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                throw ex;
             }
-            else
+            finally
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                IsBusy = false;
             }
         }
 
@@ -223,7 +236,7 @@ namespace JongSnam.Mobile.ViewModels
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
                 SaveToAlbum = true,
-                Directory = "uco",
+                Directory = "JongSnam",
                 DefaultCamera = CameraDevice.Rear,
                 PhotoSize = PhotoSize.Large,
                 CompressionQuality = 70,

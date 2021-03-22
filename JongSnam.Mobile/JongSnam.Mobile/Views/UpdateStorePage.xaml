@@ -7,13 +7,24 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
-    
     <ContentPage.Content>
-        <ScrollView>
+            <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
                 <StackLayout>
-                    <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                    <Button Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" Command="{Binding UploadImageCommand}" />
+                    <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
+                    <ImageButton Margin="3"
+                             BackgroundColor="#f5f5f3"
+                            HeightRequest="56" 
+                             WidthRequest="56"
+                            Padding="2"
+                            Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
+                            Command="{Binding UploadImageCommand}">
+                    </ImageButton>
                 </StackLayout>
                 <Label Text="ชื่อร้าน"/>
                 <Entry Text="{Binding Name}" PlaceholderColor="Gray" />

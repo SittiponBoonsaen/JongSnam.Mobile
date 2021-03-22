@@ -8,6 +8,7 @@ namespace JongSnamService.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
+    using Xamarin.Forms;
 
     public partial class YourStore
     {

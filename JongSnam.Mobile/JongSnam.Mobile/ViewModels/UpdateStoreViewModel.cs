@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
+using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
@@ -18,10 +21,11 @@ namespace JongSnam.Mobile.ViewModels
 
         private readonly IAddressServices _addressServices;
 
-        public ValidatableObject<ImageSource> BillImage { get; set; }
 
+        private ImageSource _imageProfile;
         public Command LoadItemsCommand { get; }
         public Command UploadImageCommand { get; private set; }
+        public Command SaveCommand { get; private set; }
 
         private string _name;
         private string _address;
@@ -36,6 +40,16 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isOpen;
         private string _officeHours;
 
+
+        public ImageSource ImageProfile 
+        {
+            get { return _imageProfile; }
+            set
+            {
+                _imageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
 
         public string Name
         {
@@ -162,13 +176,42 @@ namespace JongSnam.Mobile.ViewModels
 
             Task.Run(async () => await ExecuteLoadItemsCommand(idStore)); 
             
-            UploadImageCommand = new Command(() =>
+            UploadImageCommand = new Command(async () =>
             {
 
-                Task.Run(async () => await TakePhotoAsync());
-                //ShowPhotoActionSheet();
+                if (IsBusy)
+                {
+                    return;
+                }
+
+                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
+
+                switch (actionSheet)
+                {
+                    case "Cancel":
+
+                        // Do Something when 'Cancel' Button is pressed
+
+                        break;
+
+                    case "กล้อง":
+
+                        await TakePhotoAsync();
+
+                        break;
+
+                    case "แกลลอรี่":
+
+                        await PickPhotoAsync();
+
+                        break;
+
+                }
             });
+
+            SaveCommand = new Command(async () => await ExecuteSaveCommand(idStore));
         }
+
         async Task ExecuteLoadItemsCommand(int idStore)
         {
             IsBusy = true;
@@ -192,11 +235,7 @@ namespace JongSnam.Mobile.ViewModels
                 SubDistrict = subDistrict.Name;
                 District = district.Name;
                 Province = province.Name;
-
-
-
-
-
+                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataStore.Image)));
             }
             catch (Exception ex)
             {
@@ -208,32 +247,65 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        async Task ExecuteSaveCommand(int idStore)
+        {
+            try
+            {
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+
+                if (!answer)
+                {
+                    return;
+                }
+
+                IsBusy = true;
+
+                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
+                var request = new UpdateStoreRequest
+                {
+                    Address = Address,
+                    ContactMobile = ContactMobile,
+                    District = 1,// District,
+                    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
+                    IsOpen = IsOpen,
+                    Latitude = Latitude,
+                    Longtitude = Longtitude,
+                    Name = Name,
+                    OfficeHours = OfficeHours,
+                    Province = 1,//Province,
+                    Rules = Rules,
+                    SubDistrict = 1,//SubDistrict
+                };
+
+                var statusSaved = await _storeServices.UpdateStore(idStore, request);
+
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         public void OnAppearing()
         {
             IsBusy = true;
         }
 
-        private void ShowPhotoActionSheet()
-        {
-            var config = new ActionSheetConfig();
 
-            config.Options.Add(new ActionSheetOption(text: "ถ่ายรูป", icon: "camera", action: async () =>
-            {
-                await TakePhotoAsync();
-            }));
-
-            config.Options.Add(new ActionSheetOption(text: "คลังภาพ", icon: "image", action: async () =>
-            {
-                await PickPhotoAsync();
-            }));
-
-            config.SetDestructive(text: "ยกเลิก", icon: "close_box", action: () => BillImage.Validate());
-
-            config.SetUseBottomSheet(true);
-
-            UserDialog.ActionSheet(config);
-        }
         private async Task TakePhotoAsync()
         {
             if (!CrossMedia.Current.IsCameraAvailable)
@@ -254,7 +326,7 @@ namespace JongSnam.Mobile.ViewModels
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
                 SaveToAlbum = true,
-                Directory = "uco",
+                Directory = "JongSnam",
                 DefaultCamera = CameraDevice.Rear,
                 PhotoSize = PhotoSize.Large,
                 CompressionQuality = 70,
@@ -264,9 +336,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                BillImage.Value = ImageSource.FromStream(() => file.GetStream());
-
-                BillImage.Validate();
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
@@ -292,9 +362,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                BillImage.Value = ImageSource.FromStream(() => file.GetStream());
-
-                BillImage.Validate();
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
