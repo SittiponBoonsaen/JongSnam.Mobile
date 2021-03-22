@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
              x:Class="JongSnam.Mobile.Views.UpdateStorePage"
              Title="แก้ไขร้าน">
 
@@ -30,31 +30,41 @@
                 <Entry Text="{Binding Name}" PlaceholderColor="Gray" />
                 <Label Text="ที่อยู่"/>
                 <Entry Text="{Binding Address}" PlaceholderColor="Gray" />
-                <Label Text="ตำบล"/>
-                <Picker x:Name="picker" Title="{Binding SubDistrict }"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เหมาะสำหรับ 5คน</x:String>
-                        <x:String>เหมาะสำหรับ 7คน</x:String>
-                        <x:String>เหมาะสำหรับ 11คน</x:String>
-                    </Picker.Items>
+                <Picker ItemsSource="{Binding ListProvince}" 
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
+                                        Title="{Binding Province}">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedProvinceIndexChangedCommand}"/>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadDistrictCommand}"/>
+                    </Picker.Behaviors>
                 </Picker>
-                <Label Text="อำเภอ"/>
-                <Picker x:Name="Districts" Title="{Binding District }"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดบริการ</x:String>
-                        <x:String>ปิดบริการ</x:String>
-                    </Picker.Items>
+
+                <Picker ItemsSource="{Binding ListDistrict}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
+                                        Title="{Binding District}">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedDistrictIndexChangedCommand}"/>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding LoadSubDistrictCommand}"/>
+                    </Picker.Behaviors>
                 </Picker>
-                <Label Text="จังหวัด"/>
-                <Picker x:Name="Province" Title="{Binding Province }"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดยริก่าร</x:String>
-                        <x:String>ปิดบริกร</x:String>
-                    </Picker.Items>
+                <Picker ItemsSource="{Binding ListSubDistrict}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
+                                        Title="{Binding SubDistrict}">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
+
+                    </Picker.Behaviors>
                 </Picker>
+
+
 
                 <Label Text="เบอร์โทร"/>
                 <Entry Text="{Binding ContactMobile }" PlaceholderColor="Gray" />

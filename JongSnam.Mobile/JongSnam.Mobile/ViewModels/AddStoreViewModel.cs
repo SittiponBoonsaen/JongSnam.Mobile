@@ -42,9 +42,6 @@ namespace JongSnam.Mobile.ViewModels
         private List<EnumDto> _district;
         private List<EnumDto> _subDistrict;
 
-        IEnumerable<DistrictModel> _districts;
-        IEnumerable<SubDistrictModel> _subDistricts;
-
         private string _name;
         private string _address;
         private string _contactMobile;

@@ -9,7 +9,8 @@
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
+        <ContentPage.Content>
+        <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
                     <StackLayout>
                         <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
@@ -77,5 +78,6 @@
                     </Picker>
                     <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
                 </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
