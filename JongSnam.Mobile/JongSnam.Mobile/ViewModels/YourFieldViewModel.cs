@@ -5,6 +5,7 @@ using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -22,7 +23,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private string _storeName;
 
-        public Command<FieldDetailDto> ItemTapped { get; }
+        public Command<FieldDto> ItemTapped { get; }
 
         public string StoreName
         {
@@ -43,11 +44,11 @@ namespace JongSnam.Mobile.ViewModels
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
 
-            UpdateFieldCommand = new Command<Item>(OnUpdateField);
+            //UpdateFieldCommand = new Command<FieldDto>(OnUpdateField);
 
             AddFieldCommand = new Command(OnAddFieldAsync);
 
-            ItemTapped = new Command<FieldDetailDto>(OnItemSelected);
+            ItemTapped = new Command<FieldDto>(OnItemSelected);
         }
 
 
@@ -65,7 +66,12 @@ namespace JongSnam.Mobile.ViewModels
 
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    Items.Add(new YourFieldModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                    });
                 }
 
             }
@@ -79,21 +85,21 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        async void OnUpdateField(Item Item)
-        {
-            await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
-        }
+        //async void OnUpdateField(FieldDto fieldDto)
+        //{
+        //    await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto));
+        //}
         async void OnAddFieldAsync(object obj)
         {
             await Shell.Current.GoToAsync(nameof(AddFieldPage));
         }
-        private async void OnItemSelected(FieldDetailDto fieldDetailDto)
+        private async void OnItemSelected(FieldDto fieldDto)
         {
-            if (fieldDetailDto == null)
+            if (fieldDto == null)
             {
                 return;
             }
-            await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDetailDto));
+            await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto));
         }
 
 

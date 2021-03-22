@@ -61,7 +61,6 @@
         <!--loading activity-->
     <!--</RefreshView>-->
 
-
             <Button Text="โหลดเพิ่มเติม" 
                                     HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"
                                     Command="{Binding BindingContext.LoadMoreCommand, Source={x:Reference ThisPage}}"
