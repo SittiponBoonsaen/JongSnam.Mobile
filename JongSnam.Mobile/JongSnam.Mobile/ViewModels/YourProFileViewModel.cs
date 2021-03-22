@@ -5,6 +5,8 @@ using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -90,6 +92,8 @@ namespace JongSnam.Mobile.ViewModels
         public Command ChangePasswordCommand { get; }
         public Command SaveCommand { get; }
 
+        public Command UploadImageCommand { get; private set; }
+
         public YourProFileViewModel(int id)
         {
             _usersServices = DependencyService.Get<IUsersServices>();
@@ -101,6 +105,38 @@ namespace JongSnam.Mobile.ViewModels
             SaveCommand = new Command(async () => await ExecuteSaveCommand(id));
 
             ChangePasswordCommand = new Command(OnChangePassword);
+
+            UploadImageCommand = new Command(async() =>
+            {
+                if (IsBusy)
+                {
+                    return;
+                }
+
+                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
+
+                switch (actionSheet)
+                {
+                    case "Cancel":
+
+                        // Do Something when 'Cancel' Button is pressed
+
+                        break;
+
+                    case "กล้อง":
+
+                        await TakePhotoAsync();
+
+                        break;
+
+                    case "แกลลอรี่":
+
+                        await PickPhotoAsync();
+
+                        break;
+
+                }
+            });
         }
 
         async Task ExecuteLoadItemsCommand(int id)
@@ -158,7 +194,6 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-
         async void OnChangePassword()
         {
             await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(DataUser.Id.Value));
@@ -166,6 +201,69 @@ namespace JongSnam.Mobile.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
+        }
+
+        private async Task TakePhotoAsync()
+        {
+            if (!CrossMedia.Current.IsCameraAvailable)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                return;
+            }
+
+            if (!CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                SaveToAlbum = true,
+                Directory = "uco",
+                DefaultCamera = CameraDevice.Rear,
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                // รูปได้ค่าตอนนี้เด้อ
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+            }
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = false;
+        }
+
+        private async Task PickPhotoAsync()
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = false;
         }
     }
 }

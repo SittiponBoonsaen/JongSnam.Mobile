@@ -14,10 +14,17 @@
     <StackLayout BackgroundColor="#f5f5f3" Padding="15">
         
         <StackLayout>
-                <Image Grid.RowSpan="5" Source="{Binding ImageProfile}" />
+                <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
                 <!--<Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>-->
-            <Label Text="เปลี่ยนรูปภาพ..." HorizontalOptions="Center" />
-        </StackLayout>
+                <ImageButton Margin="3"
+                             BackgroundColor="#f5f5f3"
+                            HeightRequest="56" 
+                             WidthRequest="56"
+                            Padding="2"
+                            Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
+                            Command="{Binding UploadImageCommand}">
+                </ImageButton>
+            </StackLayout>
         <Label Text="ชื่อ-สกุล"/>
         <Grid>
             <Editor Text="{Binding FirstName }" Grid.Column="0"/>
