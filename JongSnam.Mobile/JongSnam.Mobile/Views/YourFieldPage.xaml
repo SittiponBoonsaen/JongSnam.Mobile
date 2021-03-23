@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.YourFieldPage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
-             xmlns:model="clr-namespace:JongSnamService.Models"
-              xmlns:model2="clr-namespace:JongSnam.Mobile.Models"
+              xmlns:model="clr-namespace:JongSnam.Mobile.Models"
              x:Name="ThisPage"
              Title="{Binding StoreName}">
     <ContentPage.ToolbarItems>
@@ -17,7 +16,7 @@
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="0" x:DataType="model2:YourFieldModel">
+                    <StackLayout Padding="0" x:DataType="model:YourFieldModel">
                         <Grid Margin="5,7,5,7" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.5*" />
