@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamService
+namespace JongSnamServices
 {
     using Models;
     using System.Threading;
@@ -496,25 +496,21 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='currentPage'>
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetYourReservation(this IJongSnamServices operations, int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GetYourReservation(this IJongSnamServices operations, int userId, int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetYourReservationAsync(storeId, ownerId, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GetYourReservationAsync(userId, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='currentPage'>
             /// </param>
@@ -523,9 +519,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetYourReservationAsync(this IJongSnamServices operations, int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetYourReservationAsync(this IJongSnamServices operations, int userId, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetYourReservationWithHttpMessagesAsync(storeId, ownerId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetYourReservationWithHttpMessagesAsync(userId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -534,9 +530,7 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='startTimeYear'>
             /// </param>
@@ -570,17 +564,15 @@ namespace JongSnamService
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetReservationBySearch(this IJongSnamServices operations, int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GetReservationBySearch(this IJongSnamServices operations, int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetReservationBySearchAsync(storeId, ownerId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GetReservationBySearchAsync(userId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='startTimeYear'>
             /// </param>
@@ -617,9 +609,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetReservationBySearchAsync(this IJongSnamServices operations, int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetReservationBySearchAsync(this IJongSnamServices operations, int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetReservationBySearchWithHttpMessagesAsync(storeId, ownerId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetReservationBySearchWithHttpMessagesAsync(userId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

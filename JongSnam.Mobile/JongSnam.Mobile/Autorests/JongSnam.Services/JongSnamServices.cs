@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamService
+namespace JongSnamServices
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
@@ -2822,9 +2822,7 @@ namespace JongSnamService
             return _result;
         }
 
-        /// <param name='storeId'>
-        /// </param>
-        /// <param name='ownerId'>
+        /// <param name='userId'>
         /// </param>
         /// <param name='currentPage'>
         /// </param>
@@ -2845,7 +2843,7 @@ namespace JongSnamService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetYourReservationWithHttpMessagesAsync(int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetYourReservationWithHttpMessagesAsync(int userId, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2854,8 +2852,7 @@ namespace JongSnamService
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("storeId", storeId);
-                tracingParameters.Add("ownerId", ownerId);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("currentPage", currentPage);
                 tracingParameters.Add("pageSize", pageSize);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2863,13 +2860,9 @@ namespace JongSnamService
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Reservation/{storeId}").ToString();
-            _url = _url.Replace("{storeId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(storeId, SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Reservation/{userId}").ToString();
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(userId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
-            if (ownerId != null)
-            {
-                _queryParameters.Add(string.Format("ownerId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(ownerId, SerializationSettings).Trim('"'))));
-            }
             if (currentPage != null)
             {
                 _queryParameters.Add(string.Format("currentPage={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(currentPage, SerializationSettings).Trim('"'))));
@@ -3005,9 +2998,7 @@ namespace JongSnamService
             return _result;
         }
 
-        /// <param name='storeId'>
-        /// </param>
-        /// <param name='ownerId'>
+        /// <param name='userId'>
         /// </param>
         /// <param name='startTimeYear'>
         /// </param>
@@ -3056,7 +3047,7 @@ namespace JongSnamService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetReservationBySearchWithHttpMessagesAsync(int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetReservationBySearchWithHttpMessagesAsync(int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3065,8 +3056,7 @@ namespace JongSnamService
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("storeId", storeId);
-                tracingParameters.Add("ownerId", ownerId);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("startTimeYear", startTimeYear);
                 tracingParameters.Add("startTimeMonth", startTimeMonth);
                 tracingParameters.Add("startTimeDay", startTimeDay);
@@ -3090,13 +3080,9 @@ namespace JongSnamService
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Reservation/Search").ToString();
             List<string> _queryParameters = new List<string>();
-            if (storeId != null)
+            if (userId != null)
             {
-                _queryParameters.Add(string.Format("storeId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(storeId, SerializationSettings).Trim('"'))));
-            }
-            if (ownerId != null)
-            {
-                _queryParameters.Add(string.Format("ownerId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(ownerId, SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("userId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(userId, SerializationSettings).Trim('"'))));
             }
             if (startTimeYear != null)
             {

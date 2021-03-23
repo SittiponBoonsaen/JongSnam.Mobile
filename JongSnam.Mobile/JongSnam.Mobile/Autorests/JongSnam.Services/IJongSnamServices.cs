@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamService
+namespace JongSnamServices
 {
     using Microsoft.Rest;
     using Models;
@@ -222,9 +222,7 @@ namespace JongSnamService
         /// </param>
         Task<HttpOperationResponse<object>> UpdatePaymentWithHttpMessagesAsync(int? id = default(int?), UpdatePaymentRequest body = default(UpdatePaymentRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='storeId'>
-        /// </param>
-        /// <param name='ownerId'>
+        /// <param name='userId'>
         /// </param>
         /// <param name='currentPage'>
         /// </param>
@@ -236,11 +234,9 @@ namespace JongSnamService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetYourReservationWithHttpMessagesAsync(int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetYourReservationWithHttpMessagesAsync(int userId, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='storeId'>
-        /// </param>
-        /// <param name='ownerId'>
+        /// <param name='userId'>
         /// </param>
         /// <param name='startTimeYear'>
         /// </param>
@@ -280,7 +276,7 @@ namespace JongSnamService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetReservationBySearchWithHttpMessagesAsync(int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetReservationBySearchWithHttpMessagesAsync(int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>

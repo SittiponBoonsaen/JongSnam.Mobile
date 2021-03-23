@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamService.Models
+namespace JongSnamServices.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
@@ -22,11 +22,12 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the ReservationDto class.
         /// </summary>
-        public ReservationDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?))
+        public ReservationDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?))
         {
             Id = id;
             ApprovalStatus = approvalStatus;
             UserName = userName;
+            StoreName = storeName;
             ContactMobile = contactMobile;
             StartTime = startTime;
             StopTime = stopTime;
@@ -52,6 +53,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "userName")]
         public string UserName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "storeName")]
+        public string StoreName { get; set; }
 
         /// <summary>
         /// </summary>
