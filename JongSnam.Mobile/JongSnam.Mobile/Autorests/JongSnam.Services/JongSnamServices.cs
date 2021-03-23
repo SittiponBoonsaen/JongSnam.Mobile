@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamServices
+namespace JongSnamService
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
