@@ -1,5 +1,5 @@
 ﻿using JongSnam.Mobile.Services.Interfaces;
-using JongSnamService;
+using JongSnamServices;
 using Microsoft.Rest;
 using Newtonsoft.Json;
 using System;
@@ -44,7 +44,7 @@ namespace JongSnam.Mobile.Services.Base
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
-            JongSnamServices = new JongSnamServices(new Uri("http://192.168.1.6:5545/"), handler);
+            JongSnamServices = new JongSnamServices(new Uri("http://172.18.109.17:8080/"), handler);
         }
 
 
