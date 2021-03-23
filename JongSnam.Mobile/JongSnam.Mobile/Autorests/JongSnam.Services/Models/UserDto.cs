@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace JongSnamServices.Models
+namespace JongSnamService.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
