@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;

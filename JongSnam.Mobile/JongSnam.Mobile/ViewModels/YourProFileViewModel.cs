@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;

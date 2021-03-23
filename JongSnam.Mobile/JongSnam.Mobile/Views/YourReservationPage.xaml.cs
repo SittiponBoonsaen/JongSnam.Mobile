@@ -6,13 +6,13 @@ using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {
-    public partial class AboutPage : ContentPage
+    public partial class YourReservationPage : ContentPage
     {
-        AboutViewModel _viewModel;
-        public AboutPage()
+        YourReservationViewModel _viewModel;
+        public YourReservationPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new AboutViewModel();
+            BindingContext = _viewModel = new YourReservationViewModel();
         }
         protected override void OnAppearing()
         {

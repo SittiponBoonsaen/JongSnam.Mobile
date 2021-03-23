@@ -11,6 +11,7 @@ namespace JongSnam.Mobile
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(YourReservationPage), typeof(YourReservationPage));
             Routing.RegisterRoute(nameof(SearchReservationPage), typeof(SearchReservationPage));
             Routing.RegisterRoute(nameof(ResultSearchItemPage), typeof(ResultSearchItemPage));
             Routing.RegisterRoute(nameof(ReviewPage), typeof(ReviewPage));
