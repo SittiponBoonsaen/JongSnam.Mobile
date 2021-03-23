@@ -4,8 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices;
-using JongSnamServices.Models;
+using JongSnamService;
+using JongSnamService.Models;
 
 namespace JongSnam.Mobile.Services.Implementations
 {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Services.Implementations
@@ -16,17 +16,17 @@ namespace JongSnam.Mobile.Services.Implementations
         {
 
         }
-        public async Task<IEnumerable<ReservationDto>> GetYourReservation(int storeId, int ownerId, int currentPage, int pageSize)
+        public async Task<IEnumerable<ReservationDto>> GetYourReservation(int userId, int currentPage, int pageSize)
         {
-            var response = await JongSnamServices.GetYourReservationWithHttpMessagesAsync(storeId, ownerId, currentPage, pageSize, CustomHeaders);
+            var response = await JongSnamServices.GetYourReservationWithHttpMessagesAsync(userId, currentPage, pageSize, CustomHeaders);
 
             var ReservationDto =  await GetRespondDtoHandlerHttpStatus<ReservationDtoBasePagingDto>(response);
 
             return ReservationDto.Collection;
         }
-        public async Task<IEnumerable<ReservationDto>> GetReservationBySearch(int storeId, int ownerId, int startTimeYear, int startTimeMonth, int startTimeDay , int startTimeHour, int startTimeMinute, int startTimeSecond, int stopTimeYear, int stopTimeMonth, int stopTimeDay, int stopTimeHour, int stopTimeMinute, int stopTimeSecond, string userName, string storeName, int currentPage, int pageSize)
+        public async Task<IEnumerable<ReservationDto>> GetReservationBySearch(int userId, int startTimeYear, int startTimeMonth, int startTimeDay , int startTimeHour, int startTimeMinute, int startTimeSecond, int stopTimeYear, int stopTimeMonth, int stopTimeDay, int stopTimeHour, int stopTimeMinute, int stopTimeSecond, string userName, string storeName, int currentPage, int pageSize)
         {
-            var response = await JongSnamServices.GetReservationBySearchWithHttpMessagesAsync(storeId, ownerId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, CustomHeaders);
+            var response = await JongSnamServices.GetReservationBySearchWithHttpMessagesAsync(userId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, CustomHeaders);
 
             var ReservationDto = await GetRespondDtoHandlerHttpStatus<ReservationDtoBasePagingDto>(response);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels

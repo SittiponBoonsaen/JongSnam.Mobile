@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

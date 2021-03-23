@@ -1,6 +1,6 @@
 ﻿using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
