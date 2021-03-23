@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Models
