@@ -1,6 +1,6 @@
 ﻿using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

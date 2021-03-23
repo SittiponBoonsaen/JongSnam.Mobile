@@ -3,9 +3,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -42,14 +43,40 @@ namespace JongSnam.Mobile.ViewModels
 
             try
             {
-                //Items.Clear();
-                //var items = await _reservationServices.GetYourReservation(1, 6);
+                Items.Clear();
+                var items = await _reservationServices.GetYourReservation(4, 1, 5);
+                foreach (var item in items)
+                {
+                    if (item.ApprovalStatus == true)
+                    {
+                        Items.Add(
+                            new YourReservationModel
+                            {
+                                Id = item.Id,
+                                UserName = item.UserName,
+                                StoreName = item.StoreName,
+                                ContactMobile = item.ContactMobile,
+                                StartTime = item.StartTime,
+                                StopTime = item.StopTime,
+                                ApprovalStatusString = "อนุมัติ"
+                            });
+                    }
+                    else
+                    {
+                        Items.Add(
+                            new YourReservationModel
+                            {
+                                Id = item.Id,
+                                UserName = item.UserName,
+                                StoreName = item.StoreName,
+                                ContactMobile = item.ContactMobile,
+                                StartTime = item.StartTime,
+                                StopTime = item.StopTime,
+                                ApprovalStatusString = "ไม่อนุมัติ"
+                            });
+                    }
 
-
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
+                }
 
 
             }
@@ -64,7 +91,7 @@ namespace JongSnam.Mobile.ViewModels
         }
         async void OnItemSelected(ReservationDto reservationDto)
         {
-            //await Shell.Current.Navigation.PushAsync(new ListFieldPage(storeDto));
+            await Shell.Current.Navigation.PushAsync(new DetailYourReservationPage(reservationDto.Id.Value));
         }
 
 

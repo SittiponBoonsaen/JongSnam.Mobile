@@ -1,5 +1,5 @@
 ﻿using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices;
+using JongSnamService;
 using Microsoft.Rest;
 using Newtonsoft.Json;
 using System;

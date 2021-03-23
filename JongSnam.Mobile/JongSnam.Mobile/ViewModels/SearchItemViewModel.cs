@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnam.Mobile.Views;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels

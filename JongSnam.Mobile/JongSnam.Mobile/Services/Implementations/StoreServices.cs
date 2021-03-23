@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
-using JongSnamServices.Models;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Services.Implementations
