@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class YourReservationViewModel : BaseViewModel
     {
         public ObservableCollection<ReservationDto> Items { get; }
 
@@ -21,7 +21,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
 
-        public AboutViewModel()
+        public YourReservationViewModel()
         {
             Title = "การจองของคุณ";
 

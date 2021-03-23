@@ -87,6 +87,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\YourReservationPage.xaml.cs">
+      <DependentUpon>YourReservationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SearchItemPage.xaml.cs">
       <DependentUpon>SearchItemPage.xaml</DependentUpon>
     </Compile>

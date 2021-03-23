@@ -1,6 +1,4 @@
-﻿
-
-using AutoMapper;
+﻿using AutoMapper;
 
 namespace JongSnam.Mobile.Services.Interfaces
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Models;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 
 namespace JongSnam.Mobile.Services.Interfaces
 {

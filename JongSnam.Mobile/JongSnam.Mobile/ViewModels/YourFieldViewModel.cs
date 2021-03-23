@@ -1,7 +1,7 @@
 ﻿using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

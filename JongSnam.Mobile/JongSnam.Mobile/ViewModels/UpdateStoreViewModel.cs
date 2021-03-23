@@ -7,7 +7,7 @@ using Acr.UserDialogs;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;

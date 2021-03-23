@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JongSnamService.Models;
+using JongSnamServices.Models;
 
 namespace JongSnam.Mobile.ViewModels
 {
