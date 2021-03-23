@@ -2258,7 +2258,7 @@ namespace JongSnamService
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Payment/{reservationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Payment/{reservationId}/ReservationId").ToString();
             _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(reservationId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -3377,7 +3377,7 @@ namespace JongSnamService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ReservationDetailDtoBasePagingDto>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ReservationDetailDto>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

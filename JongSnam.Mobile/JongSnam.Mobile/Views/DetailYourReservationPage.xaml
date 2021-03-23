@@ -1,141 +1,145 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.DetailYourReservationPage">
-    <ScrollView>
-        <StackLayout>
-            <Label             
-               Text="สนามฟรีแมน"
+             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
+             xmlns:model="clr-namespace:JongSnam.Mobile.Models"
+             x:Class="JongSnam.Mobile.Views.DetailYourReservationPage"
+             BindingContext="{Binding DetailYourReservationViewModel}">
+
+        <ScrollView>
+            <StackLayout>
+                <Label             
+               Text="{Binding StoreName}"
                FontSize="25"
             Padding="20"
                HorizontalOptions="Center"
                VerticalOptions="Center"
             TextColor="Black"
                    />
-            <Grid RowSpacing="0"
+                <Grid RowSpacing="0"
           ColumnSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                <Image Source="https://png.pngtree.com/element_pic/00/09/34/2256a0713ee8e6f.jpg" 
+                    <Image Source="https://png.pngtree.com/element_pic/00/09/34/2256a0713ee8e6f.jpg" 
                    Grid.Row="0"
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="Center"
                    WidthRequest="80"
                    HeightRequest="60"/>
 
-                <Label Text="รหัสการจอง:" TextColor="Black" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"/>
-                <Label Text="สถานะการจอง:" TextColor="Black" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"/>
-                <Label Text="ชื่อ:" TextColor="Black" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center"/>
-                <Label Text="เบอร์โทร:" TextColor="Black" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="รหัสการจอง:" TextColor="Black" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="สถานะการจอง:" TextColor="Black" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="ชื่อ:" TextColor="Black" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="เบอร์โทร:" TextColor="Black" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center"/>
 
-                <Label Text="JSN133" TextColor="Black" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start"/>
-                <Label Text="ไม่อนุมัติ" TextColor="Black" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start"/>
-                <Label Text="กฤติเดช พลเยี่ยม" TextColor="Black" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start"/>
-                <Label Text="0880600255" TextColor="Black" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start"/>
-            </Grid>
+                    <Label Text="{Binding Id}" TextColor="Black" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start"/>
+                     <Label Text="{Binding ApprovalStatus}" TextColor="Black" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start"/>
+                    <Label Text="{Binding UserName}" TextColor="Black" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start"/>
+                    <Label Text="{Binding ContactMobile}" TextColor="Black" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start"/>
+                </Grid>
 
 
-            <Grid RowSpacing="0"
+                <Grid RowSpacing="0"
           ColumnSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
 
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Label Text="วันที่จอง:" Grid.Row="0" Grid.Column="1" 
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="วันที่จอง:" Grid.Row="0" Grid.Column="1" 
                    TextColor="Black"
                    HorizontalOptions="Center"
                     VerticalOptions="Center"/>
-                <DatePicker MinimumDate="01/01/2018"
+                    <DatePicker MinimumDate="01/01/2018"
                MaximumDate="12/31/2018"  Grid.Row="0"  Grid.Column="2" 
                Date="07/21/2018"
                HorizontalOptions="Start"
                VerticalOptions="Start"/>
-                <Label Text="Start" Grid.Row="1" TextColor="Black"
+                    <Label Text="Start" Grid.Row="1" TextColor="Black"
                Grid.Column="0"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                <DatePicker MinimumDate="01/01/2018"
+                    <DatePicker MinimumDate="01/01/2018"
                MaximumDate="12/31/2018" Grid.Row="1" Grid.Column="1"  
                Date="06/21/2018"  />
-                <Label Text="End" Grid.Row="1" Grid.Column="2" TextColor="Black" 
+                    <Label Text="End" Grid.Row="1" Grid.Column="2" TextColor="Black" 
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                <DatePicker MinimumDate="01/01/2018"
+                    <DatePicker MinimumDate="01/01/2018"
                MaximumDate="12/31/2018" Grid.Row="1"  Grid.Column="3" 
                Date="07/21/2018"  />
-                <Label Text="สนามที่จอง" Grid.Row="2" Grid.Column="0" 
+                    <Label Text="สนามที่จอง" Grid.Row="2" Grid.Column="0" 
                TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                <Label Text="สนามที่ 1" Grid.Row="2" Grid.Column="1" TextColor="Black"
+                    <Label Text="สนามที่ 1" Grid.Row="2" Grid.Column="1" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                <Label Text="อัตราค่าบริการ" Grid.Row="2" Grid.Column="2" TextColor="Black"
+                    <Label Text="อัตราค่าบริการ" Grid.Row="2" Grid.Column="2" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                <Label Text="500/ชม." Grid.Row="2" Grid.Column="3" TextColor="Black"
+                    <Label Text="500/ชม." Grid.Row="2" Grid.Column="3" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
-            </Grid>
-            <Label BackgroundColor="Black" FontSize="0.5" />
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" Padding="10" 
+                </Grid>
+                <Label BackgroundColor="Black" FontSize="0.5" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" Padding="10" 
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"/>
-                <Label Text="จ่ายเต็ม" FontSize="15" TextColor="White" Padding="10" 
+                    <Label Text="จ่ายเต็ม" FontSize="15" TextColor="White" Padding="10" 
                    Background="black" Grid.Row="1" Grid.Column="0"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
-            </Grid>
+                </Grid>
 
-            <Image Source="https://pbs.twimg.com/media/EEgmYqfU0AEoRhw.jpg" WidthRequest="200" HeightRequest="200"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+            <Image Source="{Binding ImageSource}" WidthRequest="200" HeightRequest="200"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="0" Grid.Column="1"  Text="ไม่อนุมัติ" BackgroundColor="Red" />
-                <Button Grid.Row="0" Grid.Column="2"  Text="อนุมัติ" BackgroundColor="GreenYellow" />
-            </Grid>
-        </StackLayout>
-    </ScrollView>
+                <Button Grid.Row="0" Grid.Column="1"  Text="ไม่อนุมัติ"  Command="{Binding CancelApprovalStatusCommand}" BackgroundColor="Red" />
+                <Button Grid.Row="0" Grid.Column="2"  Text="อนุมัติ"   Command="{Binding CommitApprovalStatusCommand}" BackgroundColor="GreenYellow" />
+                </Grid>
+            </StackLayout>
+        </ScrollView>
 </ContentPage>

@@ -34,13 +34,13 @@ namespace JongSnam.Mobile.Services.Implementations
         }
 
 
-        public async Task<IEnumerable<ReservationDto>> GetShowDetailYourReservation(int id)
+        public async Task<ReservationDetailDto> GetShowDetailYourReservation(int id)
         {
-            var response = await JongSnamServices.GetShowDetailYourReservationWithHttpMessagesAsync(id, CustomHeaders);
+             var response = await JongSnamServices.GetShowDetailYourReservationWithHttpMessagesAsync(id, CustomHeaders);
 
-            var ReservationDto = await GetRespondDtoHandlerHttpStatus<ReservationDtoBasePagingDto>(response);
+            var ReservationDto = await GetRespondDtoHandlerHttpStatus<ReservationDetailDto>(response);
 
-            return ReservationDto.Collection;
+            return ReservationDto;
         }
 
 

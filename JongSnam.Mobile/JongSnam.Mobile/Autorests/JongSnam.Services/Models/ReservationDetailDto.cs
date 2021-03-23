@@ -7,6 +7,8 @@
 namespace JongSnamService.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class ReservationDetailDto
@@ -22,7 +24,7 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the ReservationDetailDto class.
         /// </summary>
-        public ReservationDetailDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?), string fieldName = default(string), double? pricePerHour = default(double?), bool? isFullAmount = default(bool?), string image = default(string), double? amountForPay = default(double?))
+        public ReservationDetailDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?), string fieldName = default(string), double? pricePerHour = default(double?), bool? isFullAmount = default(bool?), IList<PaymentModel> paymentModel = default(IList<PaymentModel>), double? amountForPay = default(double?))
         {
             Id = id;
             ApprovalStatus = approvalStatus;
@@ -34,7 +36,7 @@ namespace JongSnamService.Models
             FieldName = fieldName;
             PricePerHour = pricePerHour;
             IsFullAmount = isFullAmount;
-            Image = image;
+            PaymentModel = paymentModel;
             AmountForPay = amountForPay;
             CustomInit();
         }
@@ -96,8 +98,8 @@ namespace JongSnamService.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "image")]
-        public string Image { get; set; }
+        [JsonProperty(PropertyName = "paymentModel")]
+        public IList<PaymentModel> PaymentModel { get; set; }
 
         /// <summary>
         /// </summary>
