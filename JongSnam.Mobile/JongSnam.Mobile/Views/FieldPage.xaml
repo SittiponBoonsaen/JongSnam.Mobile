@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.FieldPage"
-             xmlns:controls="clr-namespace:XamForms.Controls;assembly=XamForms.Controls.Calendar" >
+             x:Class="JongSnam.Mobile.Views.FieldPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="จองทันที" 
@@ -57,7 +56,8 @@
             </StackLayout>
             <BoxView HeightRequest="1" Color="Gray"></BoxView>
                     <StackLayout>
-                        
+                        <Label Text="Select Date"></Label>
+                        <DatePicker/>
                     </StackLayout>
                 </StackLayout>
         </ScrollView>

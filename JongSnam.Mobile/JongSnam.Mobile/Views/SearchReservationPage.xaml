@@ -27,6 +27,10 @@
                     Date="07/21/2018" />
                 <ImageButton Grid.Column="4" Grid.Row="0" Source="https://icon-library.com/images/black-search-icon-png/black-search-icon-png-8.jpg" />
             </Grid>
+            <Label Text="ชื่อลูกค้า"/>
+            <Entry Text="{Binding Email }" PlaceholderColor="Gray" />
+            <Label Text="ชื่อร้าน"/>
+            <Entry Text="{Binding Phone }" MaxLength="10" PlaceholderColor="Gray" />
 
             <StackLayout Orientation="Vertical">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" VerticalOptions="EndAndExpand"></Button>
