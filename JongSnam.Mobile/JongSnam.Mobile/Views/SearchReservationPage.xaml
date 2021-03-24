@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.SearchReservationPage"
-             Shell.PresentationMode="ModalAnimated">
+             >
     
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
@@ -32,9 +32,6 @@
             <Label Text="ชื่อร้าน"/>
             <Entry Text="{Binding StoreName }" MaxLength="10" PlaceholderColor="Gray" />
 
-            <StackLayout Orientation="Vertical">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" VerticalOptions="EndAndExpand"></Button>
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

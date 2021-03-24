@@ -13,8 +13,6 @@ namespace JongSnam.Mobile.ViewModels
         private string _storeName;
 
         public Command SearchCommand { get; }
-        public Command CancelCommand { get; }
-        public Command SaveCommand { get; }
         public Command LoadItemsCommand { get; }
 
         public string UserName
@@ -44,12 +42,6 @@ namespace JongSnam.Mobile.ViewModels
 
             SearchCommand = new Command(async () => await OnSearch(UserName, StoreName));
 
-            CancelCommand = new Command(OnCancel);
-        }
-
-        private async void OnCancel()
-        {
-            await Shell.Current.GoToAsync("..");
         }
 
         async Task OnSearch(string UserName, string StoreName)
