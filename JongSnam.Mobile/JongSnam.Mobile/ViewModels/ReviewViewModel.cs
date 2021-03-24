@@ -27,6 +27,19 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command LoadReview { get; }
 
+        private double _ratingsum;
+
+        public double RatingSum
+        {
+            get => _ratingsum;
+            set
+            {
+                _ratingsum = value;
+                OnPropertyChanged(nameof(RatingSum));
+            }
+        }
+
+
         public ReviewViewModel(int storeId = 0)
         {
             BarModel = new PlotModel
@@ -94,6 +107,12 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 var items = await _reviewServices.GetReviewByStoreId(storeId, _page, 100);
+
+
+                var resultRating = (double)items.SummaryRating;
+
+                RatingSum = Math.Round(resultRating, 1);
+
                 CategoryAxis xaxis = new CategoryAxis 
                 { 
                     Position = AxisPosition.Left,
