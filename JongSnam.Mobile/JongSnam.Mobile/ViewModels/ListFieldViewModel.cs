@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
@@ -24,7 +26,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command<FieldDto> ItemTapped { get; }
         public Command ReviewCommand { get; }
 
-        public ObservableCollection<FieldDto> Items { get; }
+        public ObservableCollection<ListFieldModel> Items { get; }
 
         public string StoreName
         {
@@ -72,48 +74,38 @@ namespace JongSnam.Mobile.ViewModels
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
-            Items = new ObservableCollection<FieldDto>();
+            Items = new ObservableCollection<ListFieldModel>();
 
-            LoadFieldCommand = new Command(async () => await ExecuteLoadFieldCommand(storeDto.Id.Value));
+            //LoadFieldCommand = new Command(async () => await ExecuteLoadFieldCommand(storeDto));
 
             ItemTapped = new Command<FieldDto>(OnItemSelected);
 
             ReviewCommand = new Command(async() => await OnReview(storeDto.Id.Value));
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(storeDto));
+            Task.Run(async () => await ExecuteLoadFieldCommand(storeDto));
 
         }
 
-        async Task ExecuteLoadItemsCommand(StoreDto storeDto)
-        {
-            IsBusy = true;
-            try
-            {
-                StoreName = storeDto.Name;
-                Rating = (double)storeDto.Rating;
-                OfficeHours = storeDto.OfficeHours;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-
-        async Task ExecuteLoadFieldCommand(int storeId)
+        async Task ExecuteLoadFieldCommand(StoreDto storeDto)
         {
             IsBusy = true;
             try
             {
                 Items.Clear();
-                var items = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
-                
+                StoreName = storeDto.Name;
+                Rating = (double)storeDto.Rating;
+                OfficeHours = storeDto.OfficeHours;
+                var items = await _fieldServices.GetFieldByStoreId(storeDto.Id.Value, 1, 20);
+
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    Items.Add(new ListFieldModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        Price = item.Price,
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                    });
                 }
             }
             catch (Exception ex)

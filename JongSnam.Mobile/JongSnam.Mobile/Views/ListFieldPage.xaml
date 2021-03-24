@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.ListFieldPage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
-             xmlns:model="clr-namespace:JongSnamService.Models">
+             xmlns:model="clr-namespace:JongSnam.Mobile.Models">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="ดูรีวิว" Command="{Binding ReviewCommand}"/>
@@ -35,13 +35,13 @@
                     
                 </StackLayout>
                 <StackLayout>
-                    <RefreshView x:DataType="local:ListFieldViewModel" Command="{Binding LoadFieldCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                   
                         <CollectionView x:Name="ItemsListView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="None">   
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout Padding="10" x:DataType="model:FieldDto">
+                                    <StackLayout Padding="10" x:DataType="model:ListFieldModel">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -53,7 +53,7 @@
                                                 <RowDefinition Height="100" />
                                             </Grid.RowDefinitions>
                                             
-                                            <Image Source="https://1.bp.blogspot.com/-MW5gK4oMhuk/XYxY4i5ETkI/AAAAAAAAMLM/J8SwuY-HyPE3mVuhfHjOX9ETrTLOiifAgCLcBGAsYHQ/s1600/DJI_0041.JPG" 
+                                            <Image Source="{Binding ImageSource}" 
                                                  Grid.Column="0" Grid.Row="0"/>
 
                                             <Label Text="{Binding Name}"  Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"
@@ -84,7 +84,6 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </RefreshView>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

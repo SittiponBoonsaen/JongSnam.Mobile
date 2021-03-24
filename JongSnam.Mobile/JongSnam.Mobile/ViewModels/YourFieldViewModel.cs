@@ -70,6 +70,7 @@ namespace JongSnam.Mobile.ViewModels
                     {
                         Id = item.Id,
                         Name = item.Name,
+                        Price = item.Price,
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
                     });
                 }

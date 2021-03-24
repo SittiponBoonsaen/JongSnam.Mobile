@@ -31,10 +31,10 @@
                                     <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1" />
+                                    <RowDefinition Height="80" />
                                 </Grid.RowDefinitions>
 
-                                <Image Source="{Binding ImageSource}"   HeightRequest="60" WidthRequest="50"
+                                <Image Source="{Binding ImageSource}"   HeightRequest="60" WidthRequest="50" Aspect="Fill"
                                    Grid.Column="0" Grid.RowSpan="2"/>
 
                             <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
