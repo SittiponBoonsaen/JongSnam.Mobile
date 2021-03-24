@@ -31,7 +31,7 @@ namespace JongSnam.Mobile.ViewModels
             get => _storeName;
             set
             {
-                _storeName = "ชื่อร้าน :" + value;
+                _storeName =  value;
                 OnPropertyChanged(nameof(StoreName));
             }
         }

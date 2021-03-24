@@ -178,7 +178,7 @@ namespace JongSnam.Mobile.ViewModels
                     IsFullAmount = "จ่ายเต็ม";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
-                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
+                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if(items.ApprovalStatus == false && items.IsFullAmount == false)
                 {
@@ -193,7 +193,7 @@ namespace JongSnam.Mobile.ViewModels
                     IsFullAmount = "แบ่งจ่าย";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
-                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
+                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if (items.ApprovalStatus == true && items.IsFullAmount == false)
                 {
@@ -208,7 +208,7 @@ namespace JongSnam.Mobile.ViewModels
                     IsFullAmount = "แบ่งจ่าย";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
-                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
+                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if (items.ApprovalStatus == false && items.IsFullAmount == true)
                 {
@@ -223,7 +223,7 @@ namespace JongSnam.Mobile.ViewModels
                     IsFullAmount = "จ่ายเต็ม";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
-                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
+                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
 
 
