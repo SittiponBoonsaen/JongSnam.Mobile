@@ -19,6 +19,7 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IReservationServices _reservationServices;
 
         public Command SearchReservationCommand { get; }
+        public Command GraphCommand { get; }
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
 
@@ -32,11 +33,18 @@ namespace JongSnam.Mobile.ViewModels
 
             SearchReservationCommand = new Command(OnSearchReservation);
 
+            GraphCommand = new Command(OnGraph);
+
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             ItemTapped = new Command<ReservationDto>(OnItemSelected);
 
         }
+        async void OnGraph(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(GraphPage));
+        }
+
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
