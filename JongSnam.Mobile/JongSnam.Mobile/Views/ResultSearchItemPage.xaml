@@ -1,12 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.ResultSearchItemPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="JongSnam.Mobile.Views.ResultSearchItemPage"
+             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
+             xmlns:model="clr-namespace:JongSnamService.Models">
+
+
+    <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="0" x:DataType="model:FieldDto">
+                        <Grid Margin="5,7,5,7" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                            </Grid.RowDefinitions>
+                            <Image Source="https://img2.thaipng.com/20180421/wsq/kisspng-computer-icons-checklist-icon-design-list-vector-5adb655605cd48.7232715415243277660238.jpg"   HeightRequest="60" WidthRequest="50"  Aspect="Fill"
+                                   Grid.Column="0" Grid.RowSpan="2"/>
+
+                            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="13"/>
+
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="Gray"></BoxView>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:YourFieldViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+
+
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

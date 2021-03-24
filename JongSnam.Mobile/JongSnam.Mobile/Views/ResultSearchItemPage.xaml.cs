@@ -14,10 +14,10 @@ namespace JongSnam.Mobile.Views
     public partial class ResultSearchItemPage : ContentPage
     {
         ResultSearchItemViewModel _viewModel;
-        public ResultSearchItemPage(FieldDto fieldDto)
+        public ResultSearchItemPage(double startPrice, double toPrice, int districtId, int provinceId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ResultSearchItemViewModel(fieldDto);
+            BindingContext = _viewModel = new ResultSearchItemViewModel(startPrice, toPrice, districtId, provinceId);
         }
 
         protected override void OnAppearing()

@@ -134,7 +134,8 @@ namespace JongSnam.Mobile.ViewModels
 
             LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
 
-            SearchItemCommand = new Command(OnSearchItemCommand);
+
+            SearchItemCommand = new Command(async () => await OnSearchItemCommand(StartPrice, ToPrice, SelectedDistrict.Value.Id.Value, SelectedProvince.Value.Id.Value));
 
             Task.Run(async () => await ExecuteLoadItemsCommand());
 
@@ -184,20 +185,9 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-        async void OnSearchItemCommand()
+        async Task OnSearchItemCommand(double startPrice, double toPrice, int districtId, int provinceId)
         {
-            Items.Clear();
-
-            var data = await _fieldServices.GetFieldBySearch(StartPrice, ToPrice, SelectedDistrict.Value.Id.Value, SelectedProvince.Value.Id.Value, 1, 10);
-
-           
-            foreach (var item in data)
-            {
-                Items.Add(item);
-                await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(item));
-            }
-           
-
+            await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(startPrice, toPrice, districtId, provinceId));
         }
 
 
