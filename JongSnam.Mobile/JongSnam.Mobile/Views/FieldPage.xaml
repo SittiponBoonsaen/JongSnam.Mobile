@@ -1,67 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.FieldPage">
+             x:Class="JongSnam.Mobile.Views.FieldPage"
+             xmlns:controls="clr-namespace:XamForms.Controls;assembly=XamForms.Controls.Calendar" >
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="จองทันที" 
+                 Order="Primary"
+                 Priority="0"  Command="{Binding SearchReservationCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Grid>
+        <RefreshView>
+            <ScrollView>
+            <StackLayout>
+            <Label Text="สนามฟรีแมน" BackgroundColor="White" TextColor="Black" FontSize="20" HorizontalTextAlignment="Center"/>
+            <StackLayout Orientation="Vertical">
+            <Grid  Padding="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
-                    <RowDefinition Height="150"/>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-
-                </Grid.ColumnDefinitions>
-
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="300" HeightRequest="300" Grid.Row="0" Grid.Column="1" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="0" Grid.Column="3" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="1" Grid.Column="1" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" WidthRequest="150" HeightRequest="300" Grid.Row="1" Grid.Column="3" />
-            </Grid>
-            <Label BackgroundColor="Black" FontSize="1" Grid.Row="2"     />
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition  Height="0.5*" />
-                    <RowDefinition  Height="0.5*"  />
-                    <RowDefinition  Height="0.5*"  />
-                    <RowDefinition  Height="0.5*"  />
-                    <RowDefinition  Height="0.5*"  />
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="0.5*"  />
-                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-
-
-                <Frame OutlineColor="Black" >
-                    <Label Text="สนามที่ 4" BackgroundColor="White" TextColor="Black" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"  />
-                </Frame>
-
-                <Label Text="ราคา" BackgroundColor="White" TextColor="Black" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
-                <Label Text="ส่วนลด" BackgroundColor="White" TextColor="Black" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
-                <Label Text="ขนาดของสนาม" BackgroundColor="White" TextColor="Black" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20"/>
-                <Label Text="เปิดให้บริการ"  BackgroundColor="White" TextColor="Black" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" FontSize="20" />
-
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100"  Grid.Row="0" Grid.Column="0" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="0" Grid.Column="1" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="0" />
+                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="1" />
             </Grid>
-
-
-
-
-
-        </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+             <Grid  Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                    <Label Text="สนามที่ 1" TextColor="Black" FontSize="20"  Grid.Row="0" Grid.ColumnSpan="3"/>
+                    <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="20"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
+                    <Label Text="ขนาด7 คน" TextColor="Black" FontSize="20"  Grid.Row="1" Grid.Column="1"/>
+                    <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="20" HorizontalOptions="End"/>
+                    <Label Text="500" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="20"/>
+                    <Label Text="/ชม" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="20" HorizontalOptions="Start"/>
+                    <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalOptions="End"/>
+                    <Label Text="เปิดบริการ" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="20"/>
+                 
+                </Grid>
+            </StackLayout>
+            <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                    <StackLayout>
+                        
+                    </StackLayout>
+                </StackLayout>
+        </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

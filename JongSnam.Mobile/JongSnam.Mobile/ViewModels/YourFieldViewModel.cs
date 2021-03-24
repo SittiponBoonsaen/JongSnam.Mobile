@@ -71,7 +71,8 @@ namespace JongSnam.Mobile.ViewModels
                         Id = item.Id,
                         Name = item.Name,
                         Price = item.Price,
-                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image))) ?? ImageSource.FromUri(
+                        new Uri("https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg"))
                     });
                 }
 

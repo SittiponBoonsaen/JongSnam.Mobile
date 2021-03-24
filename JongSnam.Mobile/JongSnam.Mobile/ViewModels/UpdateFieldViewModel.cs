@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -99,6 +101,8 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        public ImageSource ImageProfile { get; private set; }
+
         public UpdateFieldViewModel(FieldDto fieldDto)
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
@@ -189,6 +193,69 @@ namespace JongSnam.Mobile.ViewModels
             }
 
             await Shell.Current.GoToAsync("..");
+        }
+
+        private async Task TakePhotoAsync()
+        {
+            if (!CrossMedia.Current.IsCameraAvailable)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                return;
+            }
+
+            if (!CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                SaveToAlbum = true,
+                Directory = "JongSnam",
+                DefaultCamera = CameraDevice.Rear,
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                // รูปได้ค่าตอนนี้เด้อ
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+            }
+            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
+            //_isBackFromChooseImage = false;
+        }
+
+        private async Task PickPhotoAsync()
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                return;
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = true;
+
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+            }
+
+            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
+            //_isBackFromChooseImage = false;
         }
     }
 }
