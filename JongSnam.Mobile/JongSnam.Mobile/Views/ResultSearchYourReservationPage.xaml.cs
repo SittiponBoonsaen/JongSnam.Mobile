@@ -13,10 +13,10 @@ namespace JongSnam.Mobile.Views
     public partial class ResultSearchYourReservationPage : ContentPage
     {
         ResultSearchYourReservationViewModel _viewModel;
-        public ResultSearchYourReservationPage()
+        public ResultSearchYourReservationPage(string UserName, string StoreName)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ResultSearchYourReservationViewModel();
+            BindingContext = _viewModel = new ResultSearchYourReservationViewModel(UserName, StoreName);
         }
         protected override void OnAppearing()
         {

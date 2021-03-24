@@ -6,7 +6,7 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class ResultSearchYourReservationViewModel : BaseViewModel
     {
-        public ResultSearchYourReservationViewModel()
+        public ResultSearchYourReservationViewModel(string UserName, string StoreName)
         {
 
         }
