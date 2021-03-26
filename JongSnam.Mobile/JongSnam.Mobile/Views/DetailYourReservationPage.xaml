@@ -66,7 +66,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Label Text="วันที่จอง:" Grid.Row="0" Grid.Column="1" 
-                   TextColor="Black"
+                   TextColor="Black" IsEnabled="False"
                    HorizontalOptions="Center"
                     VerticalOptions="Center"/>
                     <DatePicker MinimumDate="01/01/2018"
@@ -78,25 +78,31 @@
                Grid.Column="0"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                    <DatePicker MinimumDate="01/01/2018"
+                    
+                    <DatePicker MinimumDate="01/01/2018" IsEnabled="False"
                MaximumDate="12/31/2018" Grid.Row="1" Grid.Column="1"  
                Date="06/21/2018"  />
+                    
                     <Label Text="End" Grid.Row="1" Grid.Column="2" TextColor="Black" 
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
-                    <DatePicker MinimumDate="01/01/2018"
+                <DatePicker MinimumDate="01/01/2018" IsEnabled="False"
                MaximumDate="12/31/2018" Grid.Row="1"  Grid.Column="3" 
                Date="07/21/2018"  />
+                    
                     <Label Text="สนามที่จอง" Grid.Row="2" Grid.Column="0" 
                TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
+                    
                     <Label Text="สนามที่ 1" Grid.Row="2" Grid.Column="1" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
+                    
                     <Label Text="อัตราค่าบริการ" Grid.Row="2" Grid.Column="2" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
+                    
                     <Label Text="500/ชม." Grid.Row="2" Grid.Column="3" TextColor="Black"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>

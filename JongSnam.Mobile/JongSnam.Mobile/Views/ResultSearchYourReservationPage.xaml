@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.ResultSearchYourReservationPage"
               xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
-              xmlns:model="clr-namespace:JongSnamService.Models">
+              xmlns:model="clr-namespace:JongSnam.Mobile.Models"
+             Title="ค้นหาการจอง">
             
     
     <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
@@ -12,21 +13,31 @@
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="0" x:DataType="model:ReservationDto">
+                    <StackLayout Padding="0" x:DataType="model:YourReservationModel">
                         <Grid Margin="5,7,5,7" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.5*" />
-                                <ColumnDefinition Width="0.5*" />
-                                <ColumnDefinition Width="0.5*" />
-                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="80" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
                             <Image Source="https://img2.thaipng.com/20180421/wsq/kisspng-computer-icons-checklist-icon-design-list-vector-5adb655605cd48.7232715415243277660238.jpg"   HeightRequest="60" WidthRequest="50"  Aspect="Fill"
-                                   Grid.Column="0" Grid.RowSpan="2"/>
+                                   Grid.Column="0" Grid.RowSpan="3"/>
+                            <Label Text="ชื่อร้าน:" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="0" ></Label>
+                            <Label Text="{Binding StoreName}" Grid.Row="0" Grid.Column="2"   VerticalOptions="Center" HorizontalOptions="Start"
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="13"/>
+                            <Label Text="ชื่อผู้จอง:" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="1" ></Label>
+                            <Label Text="{Binding UserName}" Grid.Row="1" Grid.Column="2"   VerticalOptions="Center" HorizontalOptions="Start"
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="13"/>
 
-                            <Label Text="{Binding StoreName}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
+                            <Label Text="วันที่จอง:" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" Grid.Row="2" ></Label>
+                            <Label Text="{Binding DateTime,StringFormat='{0:dd MMMM, yyyy}'}"  Grid.Row="2" Grid.Column="2"   VerticalOptions="Center" HorizontalOptions="Start"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 

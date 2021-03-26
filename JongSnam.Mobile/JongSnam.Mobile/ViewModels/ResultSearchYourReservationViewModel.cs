@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
@@ -20,7 +21,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command<ReservationDto> ItemTapped { get; }
 
-        public ResultSearchYourReservationViewModel(string UserName, string StoreName)
+        public ResultSearchYourReservationViewModel(string UserName, string StoreName, DateTime StartDate, DateTime EndDate)
         {
             _reservationServices = DependencyService.Get<IReservationServices>();
 
@@ -28,22 +29,39 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<ReservationDto>(OnItemSelected);
 
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(UserName, StoreName));
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(UserName, StoreName, StartDate, EndDate));
         }
-        async Task ExecuteLoadItemsCommand(string UserName, string StoreName)
+        async Task ExecuteLoadItemsCommand(string UserName, string StoreName, DateTime StartDate, DateTime EndDate)
         {
             IsBusy = true;
 
             try
             {
                 Items.Clear();
+                int startTimeYear = (int)StartDate.Year;
+                int startTimeMonth = (int)StartDate.Month;
+                int startTimeDay = (int)StartDate.Day;
+                int stopTimeYear = (int)EndDate.Year;
+                int stopTimeMonth = (int)EndDate.Month;
+                int stopTimeDay = (int)EndDate.Day;
 
-                //var items = await _reservationServices.GetReservationBySearch();
 
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
+                var items = await _reservationServices.GetReservationBySearch(4, startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
+                var data = items;
+                foreach (var item in items)
+                {
+                    Items.Add(
+                           new YourReservationModel
+                           {
+                               Id = item.Id,
+                               UserName = item.UserName,
+                               StoreName = item.StoreName,
+                               ContactMobile = item.ContactMobile,
+                               StartTimePicker = item.StartTime.Value.TimeOfDay,
+                               StopTimePicker = item.StopTime.Value.TimeOfDay,
+                               DateTime = item.StartTime.Value.Date
+                           });
+                }
 
             }
             catch

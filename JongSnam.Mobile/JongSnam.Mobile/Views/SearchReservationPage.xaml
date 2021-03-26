@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.SearchReservationPage"
-             >
+             Title="ค้นหาการจองของคุณ">
     
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
@@ -17,14 +17,17 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
+                
                 <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="0"></Label>
-                <DatePicker MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"  Grid.Column="1" Grid.Row="0" 
-                    Date="06/21/2018"  />
+                <DatePicker MinimumDate="01/01/2018" Format="dd/MM/yyyy"
+                    MaximumDate="12/31/2022"  Grid.Column="1" Grid.Row="0" 
+                    Date="{Binding StartDate, Mode=TwoWay}"/>
+                
                 <Label Text="ถึง :" Grid.Column="2" Grid.Row="0" ></Label>
-                <DatePicker MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"  Grid.Column="3" Grid.Row="0"
-                    Date="07/21/2018" />
+                <DatePicker MinimumDate="01/01/2018" Format="dd/MM/yyyy"
+                    MaximumDate="12/31/2022"  Grid.Column="3" Grid.Row="0"
+                    Date="{Binding EndDate, Mode=TwoWay}" />
+                
                 <ImageButton Grid.Column="4" Grid.Row="0" Command="{Binding SearchCommand}" Source="https://icon-library.com/images/black-search-icon-png/black-search-icon-png-8.jpg" />
             </Grid>
             <Label Text="ชื่อลูกค้า"/>
@@ -35,3 +38,4 @@
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+

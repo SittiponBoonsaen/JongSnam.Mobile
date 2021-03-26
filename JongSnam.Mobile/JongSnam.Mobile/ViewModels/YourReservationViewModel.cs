@@ -84,9 +84,10 @@ namespace JongSnam.Mobile.ViewModels
                                 UserName = item.UserName,
                                 StoreName = item.StoreName,
                                 ContactMobile = item.ContactMobile,
-                                StartTime = item.StartTime,
-                                StopTime = item.StopTime,
-                                ApprovalStatusString = "อนุมัติ"
+                                StartTimePicker = item.StartTime.Value.TimeOfDay,
+                                StopTimePicker = item.StopTime.Value.TimeOfDay,
+                                ApprovalStatusString = "อนุมัติ",
+                                DateTime = item.StartTime.Value.Date
                             });
                     }
                     else
@@ -98,9 +99,10 @@ namespace JongSnam.Mobile.ViewModels
                                 UserName = item.UserName,
                                 StoreName = item.StoreName,
                                 ContactMobile = item.ContactMobile,
-                                StartTime = item.StartTime,
-                                StopTime = item.StopTime,
+                                StartTimePicker = item.StartTime.Value.TimeOfDay,
+                                StopTimePicker = item.StopTime.Value.TimeOfDay,
                                 ApprovalStatusString = "ไม่อนุมัติ"
+                               
                             });
                     }
 

@@ -25,13 +25,14 @@ namespace JongSnam.Mobile.ViewModels
         private string _userName;
         private string _storeName;
         private string _contactMobile;
-        private System.DateTime _startTime;
-        private System.DateTime _stopTime;
+        private TimeSpan _startTime;
+        private TimeSpan _stopTime;
         private string _approvalStatus;
         private string _fieldName;
         private string _isFullAmount;
         private double _pricePerHour;
         private double _amountForPay;
+        private System.DateTime _dateTime;
         private ImageSource _ImageSource;
 
         public int Id
@@ -70,7 +71,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ContactMobile));
             }
         }
-        public System.DateTime StartTime
+        public TimeSpan StartTime
         {
             get => _startTime;
             set
@@ -79,7 +80,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StartTime));
             }
         }
-        public System.DateTime StopTime
+        public TimeSpan StopTime
         {
             get => _stopTime;
             set
@@ -145,6 +146,15 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ImageSource));
             }
         }
+        public System.DateTime DateTime
+        {
+            get => _dateTime;
+            set
+            {
+                _dateTime = value;
+                OnPropertyChanged(nameof(DateTime));
+            }
+        }
 
         public DetailYourReservationViewModel(int reservationId)
         {
@@ -171,13 +181,14 @@ namespace JongSnam.Mobile.ViewModels
                     UserName = items.UserName;
                     StoreName = items.StoreName;
                     ContactMobile = items.ContactMobile;
-                    StartTime = (DateTime)items.StartTime;
-                    StopTime = (DateTime)items.StopTime;
+                    StartTime = items.StartTime.Value.TimeOfDay;
+                    StopTime = items.StopTime.Value.TimeOfDay;
                     ApprovalStatus = "อนุมัติ";
                     FieldName = items.FieldName;
                     IsFullAmount = "จ่ายเต็ม";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
+                    DateTime = items.StartTime.Value.Date;
                     //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if(items.ApprovalStatus == false && items.IsFullAmount == false)
@@ -186,13 +197,14 @@ namespace JongSnam.Mobile.ViewModels
                     UserName = items.UserName;
                     StoreName = items.StoreName;
                     ContactMobile = items.ContactMobile;
-                    StartTime = (DateTime)items.StartTime;
-                    StopTime = (DateTime)items.StopTime;
+                    StartTime = items.StartTime.Value.TimeOfDay;
+                    StopTime = items.StopTime.Value.TimeOfDay;
                     ApprovalStatus = "ไม่อนุมัติ";
                     FieldName = items.FieldName;
                     IsFullAmount = "แบ่งจ่าย";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
+                    DateTime = items.StartTime.Value.Date;
                     //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if (items.ApprovalStatus == true && items.IsFullAmount == false)
@@ -201,13 +213,14 @@ namespace JongSnam.Mobile.ViewModels
                     UserName = items.UserName;
                     StoreName = items.StoreName;
                     ContactMobile = items.ContactMobile;
-                    StartTime = (DateTime)items.StartTime;
-                    StopTime = (DateTime)items.StopTime;
+                    StartTime = items.StartTime.Value.TimeOfDay;
+                    StopTime = items.StopTime.Value.TimeOfDay;
                     ApprovalStatus = "อนุมัติ";
                     FieldName = items.FieldName;
                     IsFullAmount = "แบ่งจ่าย";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
+                    DateTime = items.StartTime.Value.Date;
                     //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
                 else if (items.ApprovalStatus == false && items.IsFullAmount == true)
@@ -216,13 +229,14 @@ namespace JongSnam.Mobile.ViewModels
                     UserName = items.UserName;
                     StoreName = items.StoreName;
                     ContactMobile = items.ContactMobile;
-                    StartTime = (DateTime)items.StartTime;
-                    StopTime = (DateTime)items.StopTime;
+                    StartTime = items.StartTime.Value.TimeOfDay;
+                    StopTime = items.StopTime.Value.TimeOfDay;
                     ApprovalStatus = "ไม่อนุมัติ";
                     FieldName = items.FieldName;
                     IsFullAmount = "จ่ายเต็ม";
                     PricePerHour = (double)items.PricePerHour;
                     AmountForPay = (double)items.AmountForPay;
+                    DateTime = items.StartTime.Value.Date;
                     //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
 

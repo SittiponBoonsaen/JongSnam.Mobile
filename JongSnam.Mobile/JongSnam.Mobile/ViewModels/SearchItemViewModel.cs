@@ -140,6 +140,10 @@ namespace JongSnam.Mobile.ViewModels
             Task.Run(async () => await ExecuteLoadItemsCommand());
 
         }
+        public void checkvalue()
+        {
+
+        }
 
         private void InitValidation()
         {
@@ -187,6 +191,7 @@ namespace JongSnam.Mobile.ViewModels
         }
         async Task OnSearchItemCommand(double startPrice, double toPrice, int districtId, int provinceId)
         {
+
             await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(startPrice, toPrice, districtId, provinceId));
         }
 
