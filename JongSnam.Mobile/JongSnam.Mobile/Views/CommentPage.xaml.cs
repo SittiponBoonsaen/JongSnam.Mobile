@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.ViewModels;
+using JongSnamService.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ReviewPage : ContentPage
+    public partial class CommentPage : ContentPage
     {
-        ReviewViewModel _viewModel;
-        public ReviewPage(int storeId)
+        CommentViewModel _viewModel;
+        public CommentPage(ReviewDto reviewDto)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ReviewViewModel(storeId);
+            BindingContext = _viewModel = new CommentViewModel(reviewDto);
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
-
     }
 }

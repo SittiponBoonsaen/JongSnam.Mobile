@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
-             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
+             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              x:Class="JongSnam.Mobile.Views.ReviewPage"
              xmlns:model="clr-namespace:JongSnamService.Models">
     <!--<AbsoluteLayout>
@@ -12,7 +12,7 @@
     </AbsoluteLayout>-->
 
     <ContentPage.Content>
-        <ScrollView>
+ 
             <StackLayout BackgroundColor="#f5f5f3">
                 <StackLayout>
 
@@ -108,7 +108,22 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </RefreshView>
+            <StackLayout>
+                <Entry
+                Placeholder="แสดงควาคิดเห็น"
+                IsEnabled="False"
+                TextColor="Black"
+                x:Name="phone"/>    
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReviewViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
             </StackLayout>
-        </ScrollView>
+
+        </StackLayout>
+            
     </ContentPage.Content>
 </ContentPage>

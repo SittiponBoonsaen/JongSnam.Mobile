@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -27,7 +28,10 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command LoadReview { get; }
 
+        public Command<ReviewDto> ItemTapped { get; }
+
         private double _ratingsum;
+        private double _textComment;
 
         public double RatingSum
         {
@@ -36,6 +40,16 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _ratingsum = value;
                 OnPropertyChanged(nameof(RatingSum));
+            }
+        }
+
+        public double TextComment
+        {
+            get => _textComment;
+            set
+            {
+                _textComment = value;
+                OnPropertyChanged(nameof(TextComment));
             }
         }
 
@@ -64,6 +78,17 @@ namespace JongSnam.Mobile.ViewModels
             LoadDetailReview = new Command(async () => await LoadDetailReviews(storeId, _page, _pageSize));
 
             LoadReview = new Command(async () => await LoadReviews(storeId));
+
+            ItemTapped = new Command<ReviewDto>(OnComment);
+        }
+
+        async void OnComment(ReviewDto reviewDto)
+        {
+            if (reviewDto == null)
+            {
+                return;
+            }
+            await Shell.Current.Navigation.PushAsync(new CommentPage(reviewDto));
         }
 
         async Task<SumaryRatingDto> LoadDetailReviews(int storeId, int page, int size)
