@@ -10,9 +10,7 @@
                   AbsoluteLayout.LayoutBounds="20,0,.9,.9"  
                   AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional" />
     </AbsoluteLayout>-->
-    <ContentPage.BindingContext>
-        <local:BarChartViewModels></local:BarChartViewModels>
-    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3">

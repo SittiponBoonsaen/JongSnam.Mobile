@@ -19,7 +19,9 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IReservationServices _reservationServices;
 
         public Command SearchReservationCommand { get; }
-        public Command GraphCommand { get; }
+        public Command DayGraphCommand { get; }
+        public Command MonthGraphCommand { get; }
+        public Command YearGraphCommand { get; }
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
 
@@ -33,16 +35,34 @@ namespace JongSnam.Mobile.ViewModels
 
             SearchReservationCommand = new Command(OnSearchReservation);
 
-            GraphCommand = new Command(OnGraph);
-
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             ItemTapped = new Command<ReservationDto>(OnItemSelected);
 
+            DayGraphCommand = new Command(async () => await OnDayGraph(Items));
+
+            MonthGraphCommand = new Command(async () => await OnMonthGraph(Items));
+
+            YearGraphCommand = new Command(async () => await OnYearGraph(Items));
+
+
         }
-        async void OnGraph(object obj)
+        async Task OnDayGraph(ObservableCollection<ReservationDto> items)
         {
-            await Shell.Current.GoToAsync(nameof(GraphPage));
+
+            await Shell.Current.Navigation.PushAsync(new DayGraphPage(items));
+        }
+
+        async Task OnMonthGraph(ObservableCollection<ReservationDto> items)
+        {
+
+            await Shell.Current.Navigation.PushAsync(new MonthGraphPage(items));
+        }
+
+        async Task OnYearGraph(ObservableCollection<ReservationDto> items)
+        {
+
+            await Shell.Current.Navigation.PushAsync(new YearGraphPage(items));
         }
 
         async Task ExecuteLoadItemsCommand()
