@@ -12,12 +12,10 @@ namespace JongSnam.Mobile.Services.Implementations
 {
     public class AuthenticationServices : BaseServices, IAuthenticationServices
     {
-        private readonly IRepository<UserModel> _repository;
         private const int MillisecondsDelay = 400;
 
         public AuthenticationServices()
         {
-            _repository = DependencyService.Get<IRepository<UserModel>>();
         }
 
         public async Task<bool> Login(string user, string password)
@@ -33,15 +31,17 @@ namespace JongSnam.Mobile.Services.Implementations
                 else
                 {
                     // save access token
-                    Preferences.Set(AuthorizeConstants.IdKey, userModel.Id);
+                    Preferences.Set(AuthorizeConstants.UserIdKey, userModel.Id.ToString());
                     Preferences.Set(AuthorizeConstants.UserKey, userModel.Email);
                     Preferences.Set(AuthorizeConstants.PasswordKey, userModel.Password);
+                    Preferences.Set(AuthorizeConstants.UserTypeKey, userModel.UserType);
+                    Preferences.Set(AuthorizeConstants.IsLoggedInKey, userModel.IsLoggedIn.ToString());
                     await Task.Delay(MillisecondsDelay);
                 }
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             try
             {
-                var id = Preferences.Get(AuthorizeConstants.IdKey, string.Empty);
+                var id = Preferences.Get(AuthorizeConstants.UserIdKey, string.Empty);
                 var response = await JongSnamServices.LogoutWithHttpMessagesAsync(Convert.ToInt32(id));
 
                 // remove
@@ -61,7 +61,7 @@ namespace JongSnam.Mobile.Services.Implementations
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

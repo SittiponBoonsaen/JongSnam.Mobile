@@ -59,11 +59,9 @@ namespace JongSnam.Mobile.ViewModels
             {
                 Items.Clear();
                 var items = await _storeServices.GetStores(1, 6);
-                var aa = items;
                 foreach (var item in items)
                 {
-                    Items.Add(new StoreModel
-                    {
+                    Items.Add(new StoreModel { 
                         Id = item.Id,
                         Name = item.Name,
                         OfficeHours = item.OfficeHours,
@@ -92,7 +90,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private async void OnSearchItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(SearchItemPage));
+            await Shell.Current.Navigation.PushAsync(new SearchItemPage());
         }
 
         async void OnItemSelected(StoreDto storeDto)

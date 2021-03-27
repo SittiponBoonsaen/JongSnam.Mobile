@@ -12,11 +12,13 @@
             <Label Text="REGISTER" HorizontalOptions="EndAndExpand" />
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
-            <Entry Placeholder="Username" PlaceholderColor="Gray" />
-            <Entry Placeholder="Password" IsPassword="true" PlaceholderColor="Gray" />
+
+            <Entry Placeholder="Username" Text="{Binding UserName}" PlaceholderColor="Gray" />
+            <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
             <Button Text="Login"
                 VerticalOptions="CenterAndExpand"
                 BackgroundColor="RoyalBlue"
+                Command="{Binding LoginCommand}"    
                 />
         </StackLayout>
     </ContentPage.Content>
