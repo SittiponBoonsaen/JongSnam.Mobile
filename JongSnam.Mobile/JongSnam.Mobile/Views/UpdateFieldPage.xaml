@@ -27,33 +27,41 @@
                 </StackLayout>
             <Entry Placeholder="{Binding Name}" PlaceholderColor="Gray" />
                 <Entry Placeholder="{Binding Price}" PlaceholderColor="Gray" />
-                <Picker x:Name="SizeField" Title="{Binding Size}"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เหมาะสำหรับ 5คน</x:String>
-                    <x:String>เหมาะสำหรับ 7คน</x:String>
-                    <x:String>เหมาะสำหรับ 11คน</x:String>
-                </Picker.Items>
-            </Picker>
+                <Picker Title="ขนาดสนาม"
+                    ItemsSource="{Binding SizeFields}"
+                    SelectedItem="{Binding SizeField}"
+                    ItemDisplayBinding="{Binding Name}"/>
+                
+                <Picker Title="{Binding IsOpenString}"
+                    ItemsSource="{Binding Privacies}"
+                    SelectedItem="{Binding Privacy}"
+                    ItemDisplayBinding="{Binding Name}"/>
 
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
-            </Picker>
-            <Entry Placeholder="ส่วนลด(%)" PlaceholderColor="Gray" />
-            <Grid>
-                <DatePicker Grid.Column="0" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="06/21/2018"  />
-                <DatePicker Grid.Column="1" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="07/21/2018" />
-            </Grid>
-            <StackLayout Padding="20,0">
-                <Editor Placeholder="รายละเอียดส่วนลด" HeightRequest="70" />
+                <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}"  PlaceholderColor="Gray" />
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}" 
+                    MaximumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    Date="{Binding StartDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>
+                    <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    MaximumDate="12/25/2024"
+                    Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+                </Grid>
+                
+                <StackLayout Padding="20,0">
+                    <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>
             <Button Text="ลบสนามนี้"
                 VerticalOptions="CenterAndExpand" Command="{Binding DeleteFieldCommand}"
