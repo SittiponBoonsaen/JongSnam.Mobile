@@ -14,10 +14,10 @@ namespace JongSnam.Mobile.Views
     public partial class CommentPage : ContentPage
     {
         CommentViewModel _viewModel;
-        public CommentPage(ReviewDto reviewDto)
+        public CommentPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new CommentViewModel(reviewDto);
+            BindingContext = _viewModel = new CommentViewModel();
         }
 
         protected override void OnAppearing()

@@ -108,17 +108,17 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </RefreshView>
+
             <StackLayout>
                 <Entry
-                Placeholder="แสดงควาคิดเห็น"
-                IsEnabled="False"
-                TextColor="Black"
-                x:Name="phone"/>    
+        Placeholder="Enter Phone Number"
+        IsEnabled="False"
+        TextColor="Black"
+        x:Name="phone"/>
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReviewViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
+                    <TapGestureRecognizer
+            Tapped="StartCall"
+            NumberOfTapsRequired="1">
                     </TapGestureRecognizer>
                 </StackLayout.GestureRecognizers>
             </StackLayout>

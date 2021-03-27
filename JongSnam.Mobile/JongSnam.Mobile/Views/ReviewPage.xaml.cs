@@ -24,5 +24,9 @@ namespace JongSnam.Mobile.Views
             _viewModel.OnAppearing();
         }
 
+        async void StartCall(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PushAsync(new CommentPage());
+        }
     }
 }

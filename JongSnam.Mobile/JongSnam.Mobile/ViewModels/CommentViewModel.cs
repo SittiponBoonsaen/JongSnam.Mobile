@@ -7,7 +7,7 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class CommentViewModel : BaseViewModel
     {
-        public CommentViewModel(ReviewDto reviewDto)
+        public CommentViewModel()
         {
 
         }
