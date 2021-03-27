@@ -2,12 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -102,7 +100,7 @@ namespace JongSnam.Mobile.ViewModels
                                 StartTimePicker = item.StartTime.Value.TimeOfDay,
                                 StopTimePicker = item.StopTime.Value.TimeOfDay,
                                 ApprovalStatusString = "ไม่อนุมัติ"
-                               
+
                             });
                     }
 

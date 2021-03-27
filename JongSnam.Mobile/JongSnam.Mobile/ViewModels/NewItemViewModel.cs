@@ -1,8 +1,5 @@
-﻿using JongSnam.Mobile.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
+﻿using System;
+using JongSnam.Mobile.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels

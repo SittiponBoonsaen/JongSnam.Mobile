@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
@@ -46,7 +44,7 @@ namespace JongSnam.Mobile.ViewModels
                 int stopTimeDay = (int)EndDate.Day;
 
 
-                var items = await _reservationServices.GetReservationBySearch(4, startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
+                var items = await _reservationServices.GetReservationBySearch(4, startTimeYear, startTimeMonth, startTimeDay, 12, 0, 0, stopTimeYear, stopTimeMonth, stopTimeDay, 12, 0, 0, UserName, StoreName, 1, 12);
                 var data = items;
                 foreach (var item in items)
                 {

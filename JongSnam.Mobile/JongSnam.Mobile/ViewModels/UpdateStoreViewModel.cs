@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Acr.UserDialogs;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
@@ -51,7 +49,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command LoadSubDistrictCommand { get; private set; }
 
-        public ImageSource ImageProfile 
+        public ImageSource ImageProfile
         {
             get { return _imageProfile; }
             set
@@ -70,7 +68,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Name));
             }
         }
-        
+
         public string Address
         {
             get => _address;
@@ -79,7 +77,7 @@ namespace JongSnam.Mobile.ViewModels
                 _address = value;
                 OnPropertyChanged(nameof(Address));
             }
-        }        
+        }
         public string SubDistrict
         {
             get => _subDistrict;
@@ -99,7 +97,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-       public string Province
+        public string Province
         {
             get => _province;
             set
@@ -108,8 +106,8 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Province));
             }
         }
-        
-       public string ContactMobile
+
+        public string ContactMobile
         {
             get => _contactMobile;
             set
@@ -117,9 +115,9 @@ namespace JongSnam.Mobile.ViewModels
                 _contactMobile = value;
                 OnPropertyChanged(nameof(ContactMobile));
             }
-        } 
-        
-       public double Latitude
+        }
+
+        public double Latitude
         {
             get => _latitude;
             set
@@ -129,7 +127,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-       public double Longtitude
+        public double Longtitude
         {
             get => _longtitude;
             set
@@ -138,8 +136,8 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Longtitude));
             }
         }
-                        
-       public string Rules
+
+        public string Rules
         {
             get => _rules;
             set
@@ -147,8 +145,8 @@ namespace JongSnam.Mobile.ViewModels
                 _rules = value;
                 OnPropertyChanged(nameof(Rules));
             }
-        }                        
-       public string Image
+        }
+        public string Image
         {
             get => _image;
             set
@@ -156,8 +154,8 @@ namespace JongSnam.Mobile.ViewModels
                 _image = value;
                 OnPropertyChanged(nameof(Image));
             }
-        } 
-        
+        }
+
         public bool IsOpen
         {
             get => _isOpen;
@@ -167,7 +165,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(IsOpen));
             }
         }
-                
+
         public string OfficeHours
         {
             get => _officeHours;
@@ -267,8 +265,8 @@ namespace JongSnam.Mobile.ViewModels
 
             _enumServices = DependencyService.Get<IEnumServices>();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(idStore)); 
-            
+            Task.Run(async () => await ExecuteLoadItemsCommand(idStore));
+
             UploadImageCommand = new Command(async () =>
             {
 
@@ -318,37 +316,37 @@ namespace JongSnam.Mobile.ViewModels
             _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
             _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
 
-             UploadImageCommand = new Command(async () =>
-            {
-                if (IsBusy)
-                {
-                    return;
-                }
+            UploadImageCommand = new Command(async () =>
+           {
+               if (IsBusy)
+               {
+                   return;
+               }
 
-                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
+               var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
 
-                switch (actionSheet)
-                {
-                    case "Cancel":
+               switch (actionSheet)
+               {
+                   case "Cancel":
 
                         // Do Something when 'Cancel' Button is pressed
 
                         break;
 
-                    case "กล้อง":
+                   case "กล้อง":
 
-                        await TakePhotoAsync();
+                       await TakePhotoAsync();
 
-                        break;
+                       break;
 
-                    case "แกลลอรี่":
+                   case "แกลลอรี่":
 
-                        await PickPhotoAsync();
+                       await PickPhotoAsync();
 
-                        break;
+                       break;
 
-                }
-            });
+               }
+           });
         }
 
         async Task ExecuteLoadItemsCommand(int idStore)

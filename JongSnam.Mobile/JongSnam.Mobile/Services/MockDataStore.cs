@@ -1,8 +1,7 @@
-﻿using JongSnam.Mobile.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 
 namespace JongSnam.Mobile.Services
 {

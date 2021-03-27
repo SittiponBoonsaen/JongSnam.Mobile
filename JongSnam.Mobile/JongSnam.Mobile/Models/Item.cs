@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace JongSnam.Mobile.Models
+﻿namespace JongSnam.Mobile.Models
 {
     public class Item
     {

@@ -1,12 +1,12 @@
-﻿using JongSnam.Mobile.Services.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService;
 using Microsoft.Rest;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,13 +14,29 @@ namespace JongSnam.Mobile.Services.Base
 {
     public abstract class BaseServices
     {
-        protected const string AccessTokenKey = "AccessToken";
-
         protected readonly IConfigurationService ConfigurationService;
 
         protected readonly JongSnamServices JongSnamServices;
 
         protected readonly IConnectivityService ConnectivityService;
+
+        private string User
+        {
+            get
+            {
+                var user = Preferences.Get(AuthorizeConstants.UserKey, string.Empty);
+                return user;
+            }
+        }
+
+        private string Password
+        {
+            get
+            {
+                var password = Preferences.Get(AuthorizeConstants.PasswordKey, string.Empty);
+                return password;
+            }
+        }
 
         protected Dictionary<string, List<string>> CustomHeaders
         {
@@ -28,9 +44,9 @@ namespace JongSnam.Mobile.Services.Base
             {
                 var customHeaders = new Dictionary<string, List<string>>();
 
-                customHeaders.Add("Authorization", new List<string> { "test" });
-                customHeaders.Add("User", new List<string> { "p@m.com" });
-                customHeaders.Add("Password", new List<string> { "password" });
+                customHeaders.Add(AuthorizeConstants.AuthorizationKey, new List<string> { "test" });
+                customHeaders.Add(AuthorizeConstants.UserKey, new List<string> { User });
+                customHeaders.Add(AuthorizeConstants.PasswordKey, new List<string> { Password });
 
                 return customHeaders;
             }
@@ -46,7 +62,7 @@ namespace JongSnam.Mobile.Services.Base
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
-            JongSnamServices = new JongSnamServices(new Uri("http://172.17.92.177:8080/"), handler);
+            JongSnamServices = new JongSnamServices(new Uri("http://192.168.1.11:5545/"), handler);
         }
 
 

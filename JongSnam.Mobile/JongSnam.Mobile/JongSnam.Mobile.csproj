@@ -30,6 +30,7 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.22" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="OxyPlot.Xamarin.Forms" Version="1.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
@@ -105,6 +106,7 @@
 
   <ItemGroup>
     <Folder Include="Autorests\JongSnam.Services\" />
+    <Folder Include="SqliteRepository\" />
   </ItemGroup>
 
   <ItemGroup>

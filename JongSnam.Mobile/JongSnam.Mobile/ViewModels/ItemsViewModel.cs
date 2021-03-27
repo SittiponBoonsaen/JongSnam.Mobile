@@ -1,12 +1,12 @@
-﻿using JongSnam.Mobile.Models;
-using JongSnam.Mobile.Services.Interfaces;
-using JongSnam.Mobile.Views;
-using JongSnamService.Models;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -62,7 +62,8 @@ namespace JongSnam.Mobile.ViewModels
                 var aa = items;
                 foreach (var item in items)
                 {
-                    Items.Add(new StoreModel { 
+                    Items.Add(new StoreModel
+                    {
                         Id = item.Id,
                         Name = item.Name,
                         OfficeHours = item.OfficeHours,

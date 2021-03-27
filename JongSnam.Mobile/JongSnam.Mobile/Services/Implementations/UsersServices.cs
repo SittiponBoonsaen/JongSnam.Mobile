@@ -1,10 +1,9 @@
-﻿using JongSnam.Mobile.Services.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JongSnam.Mobile.Services.Implementations
 {
@@ -30,7 +29,7 @@ namespace JongSnam.Mobile.Services.Implementations
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -40,7 +39,7 @@ namespace JongSnam.Mobile.Services.Implementations
         {
             try
             {
-                var response = await JongSnamServices.UpdateUserWithHttpMessagesAsync(id , updateUserRequest, CustomHeaders);
+                var response = await JongSnamServices.UpdateUserWithHttpMessagesAsync(id, updateUserRequest, CustomHeaders);
 
                 return true;
             }

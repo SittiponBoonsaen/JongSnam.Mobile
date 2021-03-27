@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using Xamarin.Forms;
@@ -127,7 +123,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(PricePerHour));
             }
         }
-        
+
         public double AmountForPay
         {
             get => _amountForPay;
@@ -136,7 +132,7 @@ namespace JongSnam.Mobile.ViewModels
                 _amountForPay = value;
                 OnPropertyChanged(nameof(AmountForPay));
             }
-        }        
+        }
         public ImageSource ImageSource
         {
             get => _ImageSource;
@@ -191,7 +187,7 @@ namespace JongSnam.Mobile.ViewModels
                     DateTime = items.StartTime.Value.Date;
                     //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
                 }
-                else if(items.ApprovalStatus == false && items.IsFullAmount == false)
+                else if (items.ApprovalStatus == false && items.IsFullAmount == false)
                 {
                     Id = (int)items.Id;
                     UserName = items.UserName;

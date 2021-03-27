@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JongSnam.Mobile.Models;
-using JongSnam.Mobile.ViewModels;
+﻿using JongSnam.Mobile.ViewModels;
 using JongSnamService.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
