@@ -13,7 +13,7 @@
 
             <StackLayout>
                 <ActivityIndicator IsVisible="{Binding IsBusy}"
-                               IsRunning="{Binding IsBusy}"
+                              
                                AbsoluteLayout.LayoutFlags="All"
                                AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
                 <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />

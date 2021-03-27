@@ -1,4 +1,6 @@
-﻿using JongSnam.Mobile.Services.Interfaces;
+﻿using JongSnam.Mobile.Helpers;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
 using Plugin.Media;
@@ -19,6 +21,7 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IEnumServices _enumServices;
         public Command SaveCommand { get; }
         public Command LoadItemsCommand { get; }
+        public Command UploadImageCommand { get; private set; }
 
         public ValidatableObject<string> ImageValidata { get; set; }
         public ValidatableObject<string> NameValidata { get; set; }
@@ -53,7 +56,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _image;
         private bool _isOpen;
         private string _officeHours;
-        private ImageSource _imageStore;
+        private ImageSource _imageProfile;
 
         public ValidatableObject<EnumDto> SelectedProvince
         {
@@ -221,13 +224,32 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ImageSource ImageStore
+        public ImageSource ImageProfile
         {
-            get { return _imageStore; }
+            get { return _imageProfile; }
             set
             {
-                _imageStore = value;
-                OnPropertyChanged(nameof(ImageStore));
+                _imageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
+        public List<IsOpen> Privacies { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "เปิดบริการ",Value = true},
+        new IsOpen(){Name = "ปิดบริการ",Value = false}
+        };
+
+        private IsOpen _privacy;
+        public IsOpen Privacy
+        {
+            get
+            {
+                return _privacy;
+            }
+            set
+            {
+                _privacy = value;
+                OnPropertyChanged(nameof(Privacy));
             }
         }
 
@@ -307,7 +329,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public Command UploadImageCommand { get; }
+ 
 
         async Task LoadProvinceEnum()
         {
@@ -370,11 +392,11 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
-
+            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
             var request = new StoreRequest
             {
                 OwnerId = userId,
-                Image = Image,
+                Image = await GeneralHelper.GetBase64StringAsync(imageStream),
                 Name = Name,
                 Address = Address,
                 SubDistrictId = SelectedSubDistrict.Value.Id.Value,
@@ -384,7 +406,7 @@ namespace JongSnam.Mobile.ViewModels
                 Latitude = Latitude,
                 Longtitude = Longtitude,
                 OfficeHours = OfficeHours,
-                IsOpen = IsOpen,
+                IsOpen = Privacy.Value,
                 Rules = Rules
             };
 
@@ -431,7 +453,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                ImageStore = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
@@ -457,7 +479,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                ImageStore = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
