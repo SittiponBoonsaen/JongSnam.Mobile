@@ -33,7 +33,7 @@
                 <Picker ItemsSource="{Binding ListProvince}" 
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
-                                        Title="{Binding Province}">
+                                        Title="{Binding ProvinceString}">
                     <Picker.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedProvinceIndexChangedCommand}"/>
@@ -45,7 +45,7 @@
                 <Picker ItemsSource="{Binding ListDistrict}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
-                                        Title="{Binding District}">
+                                        Title="{Binding DistrictString}">
                     <Picker.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedDistrictIndexChangedCommand}"/>
@@ -56,7 +56,7 @@
                 <Picker ItemsSource="{Binding ListSubDistrict}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
-                                        Title="{Binding SubDistrict}">
+                                        Title="{Binding SubDistrictString}">
                     <Picker.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
@@ -81,7 +81,7 @@
                 <Label Text="เวลาทำการ"/>
                 <Entry Text="{Binding OfficeHours}" PlaceholderColor="Gray" />
                 <Label Text="สถานนะของสนาม"/>
-                <Picker x:Name="Status" Title="สถานนะของสนาม"
+                <Picker x:Name="Status" Title="{Binding IsOpen}"
             HorizontalOptions="FillAndExpand">
                     <Picker.Items>
                         <x:String>เปิดบริการ</x:String>

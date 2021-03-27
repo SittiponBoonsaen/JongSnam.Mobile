@@ -39,6 +39,10 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isOpen;
         private string _officeHours;
 
+        private int _distrctId;
+        private int _subDistrictId;
+        private int _provinceId;
+
         private List<EnumDto> _listprovince;
         private List<EnumDto> _listdistrict;
         private List<EnumDto> _listsubDistrict;
@@ -78,32 +82,32 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Address));
             }
         }
-        public string SubDistrict
+        public string SubDistrictString
         {
             get => _subDistrict;
             set
             {
                 _subDistrict = value;
-                OnPropertyChanged(nameof(SubDistrict));
+                OnPropertyChanged(nameof(SubDistrictString));
             }
         }
-        public string District
+        public string DistrictString
         {
             get => _district;
             set
             {
                 _district = value;
-                OnPropertyChanged(nameof(District));
+                OnPropertyChanged(nameof(DistrictString));
             }
         }
 
-        public string Province
+        public string ProvinceString
         {
             get => _province;
             set
             {
                 _province = value;
-                OnPropertyChanged(nameof(Province));
+                OnPropertyChanged(nameof(ProvinceString));
             }
         }
 
@@ -371,10 +375,14 @@ namespace JongSnam.Mobile.ViewModels
                 IsOpen = (bool)dataStore.IsOpen;
                 OfficeHours = dataStore.OfficeHours;
 
-                SubDistrict = subDistrict.Name;
-                District = district.Name;
-                Province = province.Name;
+                SubDistrictString = subDistrict.Name;
+                DistrictString = district.Name;
+                ProvinceString = province.Name;
                 ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataStore.Image)));
+
+                _distrctId = dataStore.DistrictId.Value;
+                _subDistrictId = dataStore.SubDistrictId.Value;
+                _provinceId = dataStore.ProvinceId.Value;
             }
             catch (Exception ex)
             {
@@ -403,20 +411,19 @@ namespace JongSnam.Mobile.ViewModels
 
                 var request = new UpdateStoreRequest
                 {
-                    Address = Address,
-                    ContactMobile = ContactMobile,
-                    District = SelectedDistrict.Value.Id.Value,// District,
                     Image = await GeneralHelper.GetBase64StringAsync(imageStream),
-                    IsOpen = IsOpen,
+                    Name = Name,
+                    Address = Address,
+                    SubDistrict = SelectedSubDistrict.Value == null ? _subDistrictId : SelectedSubDistrict.Value.Id.Value,//SubDistrict
+                    District = SelectedDistrict.Value == null ? _distrctId : SelectedDistrict.Value.Id.Value,// District,
+                    Province = SelectedProvince.Value == null ? _provinceId : SelectedProvince.Value.Id.Value,//Province,
+                    ContactMobile = ContactMobile,
                     Latitude = Latitude,
                     Longtitude = Longtitude,
-                    Name = Name,
                     OfficeHours = OfficeHours,
-                    Province = SelectedProvince.Value.Id.Value,//Province,
+                    IsOpen = IsOpen,
                     Rules = Rules,
-                    SubDistrict = SelectedSubDistrict.Value.Id.Value,//SubDistrict
                 };
-
                 var statusSaved = await _storeServices.UpdateStore(idStore, request);
 
                 if (statusSaved)

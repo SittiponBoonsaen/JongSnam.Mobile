@@ -26,7 +26,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command LoadReview { get; }
 
-        public Command<ReviewDto> ItemTapped { get; }
+        public Command ItemTapped { get; }
 
         private double _ratingsum;
         private double _textComment;
@@ -77,16 +77,16 @@ namespace JongSnam.Mobile.ViewModels
 
             LoadReview = new Command(async () => await LoadReviews(storeId));
 
-            ItemTapped = new Command<ReviewDto>(OnComment);
+            ItemTapped = new Command(async () => await OnComment(storeId));
         }
 
-        async void OnComment(ReviewDto reviewDto)
+        async Task OnComment(int storeId)
         {
-            if (reviewDto == null)
+            if (storeId == 0)
             {
                 return;
             }
-            await Shell.Current.Navigation.PushAsync(new CommentPage());
+            await Shell.Current.Navigation.PushAsync(new CommentPage(storeId));
         }
 
         async Task<SumaryRatingDto> LoadDetailReviews(int storeId, int page, int size)
