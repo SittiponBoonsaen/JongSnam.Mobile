@@ -216,7 +216,6 @@ namespace JongSnam.Mobile.ViewModels
                     IsOpenString = "ปิดบริการ";
                 }
                 
-                Percentage = data.Percentage.Value;
                 ImageFieldDto = data.ImageFieldDto;
             }
             catch (Exception ex)
