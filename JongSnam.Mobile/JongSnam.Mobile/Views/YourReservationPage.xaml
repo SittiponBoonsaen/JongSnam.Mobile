@@ -89,6 +89,33 @@
                             <Label Text="{Binding StopTimePicker,StringFormat='{}{0:hh\\:mm}'}"  Grid.Column="4" Grid.Row="0"
                                Style="{DynamicResource ListItemTextStyle}"  HorizontalOptions="Start"
                                FontSize="13"/>
+                            
+                              <Label  HorizontalTextAlignment="Center"  TextColor="#fdcc0d" HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span x:Name="MyStar1" FontSize="34"   FontFamily="MyIcon" >
+                                            <Span.GestureRecognizers>
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span x:Name="MyStar2" FontSize="34"   FontFamily="MyIcon">
+                                            <Span.GestureRecognizers>
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span x:Name="MyStar3" FontSize="34"   FontFamily="MyIcon">
+                                            <Span.GestureRecognizers>
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span x:Name="MyStar4" FontSize="34"   FontFamily="MyIcon">
+                                               <Span.GestureRecognizers>
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span x:Name="MyStar5"  FontSize="34"  FontFamily="MyIcon">
+                                        <Span.GestureRecognizers>
+                                        </Span.GestureRecognizers>
+                                        </Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                        </Label>
                         </Grid>
                         <BoxView HeightRequest="1" Color="Gray"></BoxView>
                         <StackLayout.GestureRecognizers>

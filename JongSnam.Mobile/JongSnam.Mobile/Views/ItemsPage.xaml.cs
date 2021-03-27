@@ -1,5 +1,4 @@
-﻿using JongSnam.Mobile.Icon;
-using JongSnam.Mobile.Models;
+﻿using JongSnam.Mobile.Models;
 using JongSnam.Mobile.ViewModels;
 using JongSnam.Mobile.Views;
 using System;
