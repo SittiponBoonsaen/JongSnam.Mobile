@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
@@ -138,8 +136,8 @@ namespace JongSnam.Mobile.ViewModels
 
                 RatingSum = Math.Round(resultRating, 1);
 
-                CategoryAxis xaxis = new CategoryAxis 
-                { 
+                CategoryAxis xaxis = new CategoryAxis
+                {
                     Position = AxisPosition.Left,
                     MajorGridlineStyle = LineStyle.Solid,
                     MinorGridlineStyle = LineStyle.Dot
@@ -150,11 +148,11 @@ namespace JongSnam.Mobile.ViewModels
                 xaxis.Labels.Add("4");
                 xaxis.Labels.Add("5");
 
-                LinearAxis yaxis = new LinearAxis 
-                { 
-                    Position = AxisPosition.Bottom, 
-                    MinimumPadding = 0, 
-                    MaximumPadding = 0.06, 
+                LinearAxis yaxis = new LinearAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    MinimumPadding = 0,
+                    MaximumPadding = 0.06,
                     AbsoluteMinimum = 0,
                     MajorGridlineStyle = LineStyle.Dot,
                     MinorGridlineStyle = LineStyle.Dot
@@ -166,7 +164,7 @@ namespace JongSnam.Mobile.ViewModels
                 s1.Items.Add(new BarItem { Value = items.TotalThree ?? 0 });
                 s1.Items.Add(new BarItem { Value = items.TotalFour ?? 0 });
                 s1.Items.Add(new BarItem { Value = items.TotalFive ?? 0 });
-                
+
                 BarModel.Series.Add(s1);
                 BarModel.Axes.Add(xaxis);
                 BarModel.Axes.Add(yaxis);

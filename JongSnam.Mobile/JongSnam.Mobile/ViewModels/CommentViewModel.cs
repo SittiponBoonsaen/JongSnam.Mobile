@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JongSnamService.Models;
-
-namespace JongSnam.Mobile.ViewModels
+﻿namespace JongSnam.Mobile.ViewModels
 {
     public class CommentViewModel : BaseViewModel
     {

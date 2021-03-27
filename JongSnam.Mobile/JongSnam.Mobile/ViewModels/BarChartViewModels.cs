@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OxyPlot;
+﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 
@@ -10,7 +7,8 @@ namespace JongSnam.Mobile.ViewModels
     public class BarChartViewModels
     {
         public PlotModel Model { get; set; }
-        public BarChartViewModels() {
+        public BarChartViewModels()
+        {
             Model = new PlotModel
             {
                 LegendPlacement = LegendPlacement.Outside,
@@ -44,7 +42,7 @@ namespace JongSnam.Mobile.ViewModels
             Model.Background = OxyColor.Parse("#f5f5f3");
 
             Model.Series.Add(s1);
-          
+
 
             Model.Axes.Add(xaxis);
             Model.Axes.Add(yaxis);
@@ -54,7 +52,7 @@ namespace JongSnam.Mobile.ViewModels
 
         internal void OnAppearing()
         {
-            
+
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using JongSnam.Mobile.Models;
 using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {

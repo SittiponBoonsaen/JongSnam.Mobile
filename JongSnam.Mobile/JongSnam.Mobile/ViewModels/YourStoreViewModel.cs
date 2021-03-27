@@ -1,13 +1,11 @@
-﻿using JongSnam.Mobile.Models;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels

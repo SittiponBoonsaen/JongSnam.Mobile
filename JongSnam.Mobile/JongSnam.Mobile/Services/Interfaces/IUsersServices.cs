@@ -1,8 +1,6 @@
-﻿using JongSnamService.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnamService.Models;
 
 namespace JongSnam.Mobile.Services.Interfaces
 {

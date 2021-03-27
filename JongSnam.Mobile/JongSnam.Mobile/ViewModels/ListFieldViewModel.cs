@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
@@ -33,7 +31,7 @@ namespace JongSnam.Mobile.ViewModels
             get => _storeName;
             set
             {
-                _storeName =  value;
+                _storeName = value;
                 OnPropertyChanged(nameof(StoreName));
             }
         }
@@ -80,7 +78,7 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<FieldDto>(OnItemSelected);
 
-            ReviewCommand = new Command(async() => await OnReview(storeDto.Id.Value));
+            ReviewCommand = new Command(async () => await OnReview(storeDto.Id.Value));
 
             Task.Run(async () => await ExecuteLoadFieldCommand(storeDto));
 

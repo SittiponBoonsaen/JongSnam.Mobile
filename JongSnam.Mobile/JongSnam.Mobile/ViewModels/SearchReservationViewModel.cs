@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Views;
 using Xamarin.Forms;
@@ -29,7 +27,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
         public DateTime EndDate
-        { 
+        {
             get => _enddate;
             set
             {

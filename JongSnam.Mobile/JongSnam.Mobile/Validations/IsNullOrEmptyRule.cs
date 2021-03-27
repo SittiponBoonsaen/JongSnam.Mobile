@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace JongSnam.Mobile.Validations
+﻿namespace JongSnam.Mobile.Validations
 {
     public class IsNullOrEmptyRule<T> : IValidationRule<T>
     {
@@ -16,7 +12,7 @@ namespace JongSnam.Mobile.Validations
             }
 
             var str = value as string;
-            return !string.IsNullOrWhiteSpace(str);   
+            return !string.IsNullOrWhiteSpace(str);
         }
     }
 }

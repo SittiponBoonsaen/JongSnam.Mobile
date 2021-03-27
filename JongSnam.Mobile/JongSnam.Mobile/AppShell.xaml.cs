@@ -1,7 +1,4 @@
-﻿using JongSnam.Mobile.ViewModels;
-using JongSnam.Mobile.Views;
-using System;
-using System.Collections.Generic;
+﻿using JongSnam.Mobile.Views;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile

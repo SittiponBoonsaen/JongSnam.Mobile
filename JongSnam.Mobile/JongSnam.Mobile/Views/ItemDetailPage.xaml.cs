@@ -1,5 +1,4 @@
 ﻿using JongSnam.Mobile.ViewModels;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Views

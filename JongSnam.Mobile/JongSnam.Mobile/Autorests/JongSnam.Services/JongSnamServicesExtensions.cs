@@ -170,6 +170,62 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='user'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            public static object Login(this IJongSnamServices operations, string user = default(string), string password = default(string))
+            {
+                return operations.LoginAsync(user, password).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='user'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> LoginAsync(this IJongSnamServices operations, string user = default(string), string password = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.LoginWithHttpMessagesAsync(user, password, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object Logout(this IJongSnamServices operations, int? id = default(int?))
+            {
+                return operations.LogoutAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> LogoutAsync(this IJongSnamServices operations, int? id = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.LogoutWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='enumName'>
             /// </param>
             /// <param name='id'>

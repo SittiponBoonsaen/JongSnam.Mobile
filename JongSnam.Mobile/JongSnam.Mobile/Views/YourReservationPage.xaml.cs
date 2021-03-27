@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using JongSnam.Mobile.ViewModels;
+﻿using JongSnam.Mobile.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace JongSnam.Mobile.Views
 {

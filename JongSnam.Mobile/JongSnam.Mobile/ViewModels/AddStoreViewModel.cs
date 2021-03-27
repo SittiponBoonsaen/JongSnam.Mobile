@@ -1,13 +1,11 @@
-﻿using JongSnam.Mobile.Services.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -317,7 +315,7 @@ namespace JongSnam.Mobile.ViewModels
 
                 Province = await _enumServices.GetProvinces();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

@@ -1,10 +1,10 @@
-﻿using Acr.UserDialogs;
-using JongSnam.Mobile.Models;
-using JongSnam.Mobile.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Acr.UserDialogs;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels

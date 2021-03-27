@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
@@ -68,7 +66,7 @@ namespace JongSnam.Mobile.Services.Implementations
 
             var response = await JongSnamServices.GetYourStoresWithHttpMessagesAsync(ownerId, currentPage, pageSize, CustomHeaders);
 
-            var respondModel =  await GetRespondDtoHandlerHttpStatus<YourStoreBasePagingDto>(response);
+            var respondModel = await GetRespondDtoHandlerHttpStatus<YourStoreBasePagingDto>(response);
 
             return respondModel.Collection;
 
