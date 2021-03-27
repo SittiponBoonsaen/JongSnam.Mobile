@@ -45,8 +45,8 @@ namespace JongSnam.Mobile.Services.Base
                 var customHeaders = new Dictionary<string, List<string>>();
 
                 customHeaders.Add(AuthorizeConstants.AuthorizationKey, new List<string> { "test" });
-                customHeaders.Add(AuthorizeConstants.UserKey, new List<string> { "p@m.com" });
-                customHeaders.Add(AuthorizeConstants.PasswordKey, new List<string> { "password" });
+                customHeaders.Add(AuthorizeConstants.UserKey, new List<string> { User });
+                customHeaders.Add(AuthorizeConstants.PasswordKey, new List<string> { Password });
 
                 return customHeaders;
             }
@@ -62,7 +62,7 @@ namespace JongSnam.Mobile.Services.Base
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
-            JongSnamServices = new JongSnamServices(new Uri("http://172.17.160.17:8080/"), handler);
+            JongSnamServices = new JongSnamServices(new Uri("http://192.168.1.11:5545/"), handler);
         }
 
 
