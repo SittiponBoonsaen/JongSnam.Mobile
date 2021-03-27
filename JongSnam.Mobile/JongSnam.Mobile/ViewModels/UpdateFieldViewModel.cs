@@ -54,6 +54,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private bool _isOpenbool;
         private string _detail;
+        private string _sizeFieldString;
 
         public string IsOpenString
         {
@@ -173,6 +174,15 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(SizeField));
             }
         }
+        public string SizeFieldString
+        {
+            get => _sizeFieldString;
+            set
+            {
+                _sizeFieldString = value;
+                OnPropertyChanged(nameof(SizeFieldString));
+            }
+        }
         public System.DateTime DateNow
         {
             get => _dateNow;
@@ -202,7 +212,6 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 DateNow = DateTime.Now;
-
                 var data = await _fieldServices.GetFieldById(fieldId);
                 Name = data.Name;
                 Price = data.Price.Value;
@@ -215,7 +224,11 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     IsOpenString = "ปิดบริการ";
                 }
-                
+
+                Percentage = data.DiscountModel.Percentage.Value;
+                StartDate = data.DiscountModel.StartDate.Value;
+                EndDate = data.DiscountModel.StartDate.Value;
+                Detail = data.DiscountModel.Detail;
                 ImageFieldDto = data.ImageFieldDto;
             }
             catch (Exception ex)
