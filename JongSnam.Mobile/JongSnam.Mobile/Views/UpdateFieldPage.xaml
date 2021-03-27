@@ -31,7 +31,7 @@
                     ItemsSource="{Binding SizeFields}"
                     SelectedItem="{Binding SizeField}"
                     ItemDisplayBinding="{Binding Name}"/>
-                
+
                 <Picker Title="{Binding IsOpenString}"
                     ItemsSource="{Binding Privacies}"
                     SelectedItem="{Binding Privacy}"
