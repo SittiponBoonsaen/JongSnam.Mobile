@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
@@ -55,6 +56,7 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isOpenbool;
         private string _detail;
         private string _sizeFieldString;
+        private ImageSource _imageProfile;
 
         public string IsOpenString
         {
@@ -194,7 +196,17 @@ namespace JongSnam.Mobile.ViewModels
         }
 
 
-        public ImageSource ImageProfile { get; private set; }
+        public ImageSource ImageProfile
+        {
+            get { return _imageProfile; }
+            set
+            {
+                _imageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
+
+        public Command UploadImageCommand { get; private set; }
 
         public UpdateFieldViewModel(FieldDto fieldDto)
         {
@@ -205,6 +217,38 @@ namespace JongSnam.Mobile.ViewModels
             SaveCommand = new Command(async () => await OnSaveCommandAlertYesNoClicked(fieldDto.Id.Value));
 
             Task.Run(async () => await ExecuteLoadItemsCommand(fieldDto.Id.Value));
+
+            UploadImageCommand = new Command(async () =>
+            {
+                if (IsBusy)
+                {
+                    return;
+                }
+
+                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
+
+                switch (actionSheet)
+                {
+                    case "Cancel":
+
+                        // Do Something when 'Cancel' Button is pressed
+
+                        break;
+
+                    case "กล้อง":
+
+                        await TakePhotoAsync();
+
+                        break;
+
+                    case "แกลลอรี่":
+
+                        await PickPhotoAsync();
+
+                        break;
+
+                }
+            });
         }
         async Task ExecuteLoadItemsCommand(int fieldId)
         {
@@ -229,7 +273,8 @@ namespace JongSnam.Mobile.ViewModels
                 StartDate = data.DiscountModel.StartDate.Value;
                 EndDate = data.DiscountModel.StartDate.Value;
                 Detail = data.DiscountModel.Detail;
-                ImageFieldDto = data.ImageFieldDto;
+                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(data.ImageFieldDto[0].Image)));
+
             }
             catch (Exception ex)
             {

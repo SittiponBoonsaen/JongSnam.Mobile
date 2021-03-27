@@ -8,7 +8,7 @@
              Title="{Binding StoreName}">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="เพิ่ม" Command="{Binding AddFieldCommand}"/>
+        <ToolbarItem Text="เพิ่มสนามของคุณ" Command="{Binding AddFieldCommand}"/>
     </ContentPage.ToolbarItems>
 
     <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
@@ -54,8 +54,6 @@
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
-                        
-                        
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

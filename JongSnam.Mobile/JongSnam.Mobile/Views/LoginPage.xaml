@@ -6,10 +6,12 @@
              mc:Ignorable="d"
              x:Class="JongSnam.Mobile.Views.LoginPage"
              Shell.NavBarIsVisible="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="REGISTER" Command="{Binding RegisterCommand}"/>
+    </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <Label Text="REGISTER" HorizontalOptions="EndAndExpand" />
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
 

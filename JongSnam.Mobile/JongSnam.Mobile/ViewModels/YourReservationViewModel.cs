@@ -75,7 +75,7 @@ namespace JongSnam.Mobile.ViewModels
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, string.Empty);
 
-                var items = await _reservationServices.GetYourReservation(Convert.ToInt32(userId), 1, 5);
+                var items = await _reservationServices.GetYourReservation(Convert.ToInt32(userId), 1, 20);
                 if (items == null)
                 {
                     IsBusy = false;
