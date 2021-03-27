@@ -21,6 +21,7 @@
                 <RadioButton  Grid.Column="0" Text="Customer" />
                 <RadioButton Grid.Column="1" Text="Owner" />
             </Grid>
+                
 
             <Button Text="Register"
                 VerticalOptions="CenterAndExpand"
