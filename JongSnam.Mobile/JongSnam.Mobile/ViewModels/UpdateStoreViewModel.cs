@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Helpers;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
@@ -36,7 +37,8 @@ namespace JongSnam.Mobile.ViewModels
         private double _longtitude;
         private string _rules;
         private string _image;
-        private bool _isOpen;
+        private string _isOpen;
+        private bool _isOpenbool;
         private string _officeHours;
 
         private int _distrctId;
@@ -160,13 +162,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public bool IsOpen
+        public string IsOpenString
         {
             get => _isOpen;
             set
             {
                 _isOpen = value;
-                OnPropertyChanged(nameof(IsOpen));
+                OnPropertyChanged(nameof(IsOpenString));
             }
         }
 
@@ -256,6 +258,27 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(SelectedSubDistrict));
             }
         }
+
+        public List<IsOpen> Privacies { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "เปิดบริการ",Value = true},
+        new IsOpen(){Name = "ปิดบริการ",Value = false}
+        };
+
+        private IsOpen _privacy;
+        public IsOpen Privacy
+        {
+            get
+            {
+                return _privacy;
+            }
+            set
+            {
+                _privacy = value;
+                OnPropertyChanged(nameof(Privacy));
+            }
+        }
+
 
 
 
@@ -372,7 +395,15 @@ namespace JongSnam.Mobile.ViewModels
                 Longtitude = (double)dataStore.Longtitude;
                 Rules = dataStore.Rules;
                 Image = dataStore.Image;
-                IsOpen = (bool)dataStore.IsOpen;
+                _isOpenbool = dataStore.IsOpen.Value;
+                if (dataStore.IsOpen.Value)
+                {
+                    IsOpenString = "เปิดบริการ";
+                }
+                else
+                {
+                    IsOpenString = "ปิดบริการ";
+                }
                 OfficeHours = dataStore.OfficeHours;
 
                 SubDistrictString = subDistrict.Name;
@@ -421,8 +452,9 @@ namespace JongSnam.Mobile.ViewModels
                     Latitude = Latitude,
                     Longtitude = Longtitude,
                     OfficeHours = OfficeHours,
-                    IsOpen = IsOpen,
+                    IsOpen = Privacy == null ? _isOpenbool : Privacy.Value,
                     Rules = Rules,
+                    
                 };
                 var statusSaved = await _storeServices.UpdateStore(idStore, request);
 

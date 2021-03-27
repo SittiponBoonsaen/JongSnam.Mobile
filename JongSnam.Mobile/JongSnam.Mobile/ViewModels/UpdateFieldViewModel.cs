@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using Plugin.Media;
@@ -18,8 +19,14 @@ namespace JongSnam.Mobile.ViewModels
         private string _name;
         private string _size;
         private double _price;
-        private bool _isOpen;
+        private string _isOpenString;
         private double _percentage;
+        private IsOpen _privacy;
+        private string _sizeField;
+        private DateTime _dateNow;
+        private DateTime _startDate;
+        private DateTime _endDate;
+
         private IEnumerable<ImageFieldDto> _imageFieldDto;
 
         public IEnumerable<UpdateDiscountRequest> _updateDiscountRequests;
@@ -44,13 +51,17 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Price));
             }
         }
-        public bool IsOpen
+
+        private bool _isOpenbool;
+        private string _detail;
+
+        public string IsOpenString
         {
-            get => _isOpen;
+            get => _isOpenString;
             set
             {
-                _isOpen = value;
-                OnPropertyChanged(nameof(IsOpen));
+                _isOpenString = value;
+                OnPropertyChanged(nameof(IsOpenString));
             }
         }
         public double Percentage
@@ -71,6 +82,34 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Size));
             }
         }
+        public System.DateTime StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                OnPropertyChanged(nameof(StartDate));
+            }
+        }
+        public System.DateTime EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged(nameof(EndDate));
+            }
+        }
+        public string Detail
+        {
+            get => _detail;
+            set
+            {
+                _detail = value;
+                OnPropertyChanged(nameof(Detail));
+            }
+        }
+
 
         public IEnumerable<ImageFieldDto> ImageFieldDto
         {
@@ -99,6 +138,51 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(UpdatePictureFieldRequest));
             }
         }
+        public List<IsOpen> Privacies { get; set; } = new List<IsOpen>()
+        {
+            new IsOpen(){Name = "เปิดบริการ",Value = true},
+            new IsOpen(){Name = "ปิดบริการ",Value = false}
+        };
+
+
+
+        public IsOpen Privacy
+        {
+            get
+            {
+                return _privacy;
+            }
+            set
+            {
+                _privacy = value;
+                OnPropertyChanged(nameof(Privacy));
+            }
+        }
+        public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
+        {
+            new IsOpen(){Name = "เหมาะสำหรับ 5คน"},
+            new IsOpen(){Name = "เหมาะสำหรับ 7คน"},
+            new IsOpen(){Name = "เหมาะสำหรับ 11คน"}
+        };
+        public string SizeField
+        {
+            get => _sizeField;
+            set
+            {
+                _sizeField = value;
+                OnPropertyChanged(nameof(SizeField));
+            }
+        }
+        public System.DateTime DateNow
+        {
+            get => _dateNow;
+            set
+            {
+                _dateNow = value;
+                OnPropertyChanged(nameof(DateNow));
+            }
+        }
+
 
         public ImageSource ImageProfile { get; private set; }
 
@@ -117,11 +201,22 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                DateNow = DateTime.Now;
+
                 var data = await _fieldServices.GetFieldById(fieldId);
                 Name = data.Name;
-                Price = (double)data.Price;
-                IsOpen = (bool)data.IsOpen;
-                Percentage = (double)data.Percentage;
+                Price = data.Price.Value;
+                _isOpenbool = data.IsOpen.Value;
+                if (data.IsOpen.Value)
+                {
+                    IsOpenString = "เปิดบริการ";
+                }
+                else
+                {
+                    IsOpenString = "ปิดบริการ";
+                }
+                
+                Percentage = data.Percentage.Value;
                 ImageFieldDto = data.ImageFieldDto;
             }
             catch (Exception ex)
@@ -172,7 +267,7 @@ namespace JongSnam.Mobile.ViewModels
             var request = new UpdateFieldRequest
             {
                 Name = Name,
-                IsOpen = IsOpen,
+                IsOpen = Privacy == null ? _isOpenbool : Privacy.Value,
                 Price = (int)Price,
                 Size = Size,
                 UpdateDiscountRequest = (UpdateDiscountRequest)UpdateDiscountRequest,

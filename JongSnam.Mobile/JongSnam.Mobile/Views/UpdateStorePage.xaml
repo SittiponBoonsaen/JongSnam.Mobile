@@ -81,13 +81,12 @@
                 <Label Text="เวลาทำการ"/>
                 <Entry Text="{Binding OfficeHours}" PlaceholderColor="Gray" />
                 <Label Text="สถานนะของสนาม"/>
-                <Picker x:Name="Status" Title="{Binding IsOpen}"
-            HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดบริการ</x:String>
-                        <x:String>ปิดบริการ</x:String>
-                    </Picker.Items>
-                </Picker>
+                <Picker Title="{Binding IsOpenString}"
+                    ItemsSource="{Binding Privacies}"
+                    SelectedItem="{Binding Privacy}"
+                    ItemDisplayBinding="{Binding Name}"/>
+
+                
                 <Editor Text="{Binding Rules}" HeightRequest="80" />
             </StackLayout>
         </ScrollView>

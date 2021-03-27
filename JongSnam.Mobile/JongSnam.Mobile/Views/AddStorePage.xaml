@@ -82,7 +82,7 @@
                            IsEnabled="false" />
                     </Grid>
             <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours}"/>
-                <Picker Title="Privacy"
+                <Picker Title="สถานะ"
                     ItemsSource="{Binding Privacies}"
                     SelectedItem="{Binding Privacy}"
                     ItemDisplayBinding="{Binding Name}"/>
