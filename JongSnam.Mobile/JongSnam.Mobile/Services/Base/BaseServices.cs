@@ -28,7 +28,9 @@ namespace JongSnam.Mobile.Services.Base
             {
                 var customHeaders = new Dictionary<string, List<string>>();
 
-                customHeaders.Add("Authorization", new List<string> { "Test Token" });
+                customHeaders.Add("Authorization", new List<string> { "test" });
+                customHeaders.Add("User", new List<string> { "p@m.com" });
+                customHeaders.Add("Password", new List<string> { "password" });
 
                 return customHeaders;
             }
