@@ -6,14 +6,13 @@
              xmlns:model="clr-namespace:JongSnam.Mobile.Models"
              x:Name="ThisPage"
              Title="ร้านของคุณ">
+    
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="เพิ่ม" Command="{Binding AddStoreCommand}"/>
+        <ToolbarItem Text="เพิ่มร้านของคุณ" Command="{Binding AddStoreCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <StackLayout>
-            
-            
             <RefreshView x:DataType="local:YourStoreViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
                 <CollectionView x:Name="ItemsListView"
                         ItemsSource="{Binding Items}"

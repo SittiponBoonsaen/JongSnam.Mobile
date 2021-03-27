@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.UpdateFieldPage"
+              BindingContext="{Binding UpdateFieldViewModel}"
              Title="แก้ไขสนาม">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
@@ -10,11 +11,12 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-                <ActivityIndicator IsVisible="{Binding IsBusy}"
-                               IsRunning="{Binding IsBusy}"
+
+                <StackLayout>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              
                                AbsoluteLayout.LayoutFlags="All"
                                AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
-                <StackLayout>
                     <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
                     <ImageButton Margin="3"
                              BackgroundColor="#f5f5f3"
@@ -25,7 +27,7 @@
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
-            <Entry Placeholder="{Binding Name}" PlaceholderColor="Gray" />
+                <Entry Placeholder="{Binding Name}" PlaceholderColor="Gray" />
                 <Entry Placeholder="{Binding Price}" PlaceholderColor="Gray" />
                 <Picker Title="ขนาดสนาม"
                     ItemsSource="{Binding SizeFields}"
@@ -37,6 +39,7 @@
                     SelectedItem="{Binding Privacy}"
                     ItemDisplayBinding="{Binding Name}"/>
 
+                <Label Text="ส่วนลด(%)"/>
                 <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}"  PlaceholderColor="Gray" />
                 
                 <Grid>
