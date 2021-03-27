@@ -88,7 +88,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
-            await Shell.Current.Navigation.PushAsync(new CommentPage(reviewDto));
+            await Shell.Current.Navigation.PushAsync(new CommentPage());
         }
 
         async Task<SumaryRatingDto> LoadDetailReviews(int storeId, int page, int size)

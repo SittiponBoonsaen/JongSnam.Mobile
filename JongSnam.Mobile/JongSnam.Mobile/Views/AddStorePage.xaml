@@ -76,7 +76,7 @@
                             <x:String>ปิดบริการ</x:String>
                         </Picker.Items>
                     </Picker>
-                    <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
+                <Editor Placeholder="กฏของร้าน" HeightRequest="80" Text="{Binding Rules}" />
                 </StackLayout>
         </ScrollView>
     </ContentPage.Content>
