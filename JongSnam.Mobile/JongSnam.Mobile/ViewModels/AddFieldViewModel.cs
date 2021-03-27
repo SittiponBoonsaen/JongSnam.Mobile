@@ -1,5 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
+using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
@@ -9,23 +14,136 @@ namespace JongSnam.Mobile.ViewModels
     public class AddFieldViewModel : BaseViewModel
     {
         private readonly IFieldServices _fieldServices;
-        private ImageSource _imageField;
 
-        public Command UploadImageCommand { get; }
+        public Command SaveCommand { get; }
 
-        public ImageSource ImageFiled
+        private ImageSource _imageProfile;
+
+        public Command UploadImageCommand { get; private set; }
+
+        public ValidatableObject<string> ImageValidata { get; set; }
+
+        private string _nameField;
+        private int _priceField;
+        private string _sizeField;
+        private bool _isOpen;
+        private double _percentage;
+        private System.DateTime _startDate;
+        private System.DateTime _endDate;
+        private System.DateTime _dateNow;
+        private string _detail;
+
+        public string NameField
         {
-            get { return _imageField; }
+            get => _nameField;
             set
             {
-                _imageField = value;
-                OnPropertyChanged(nameof(ImageFiled));
+                _nameField = value;
+                OnPropertyChanged(nameof(NameField));
+            }
+        }
+
+        public int PriceField
+        {
+            get => _priceField;
+            set
+            {
+                _priceField = value;
+                OnPropertyChanged(nameof(PriceField));
+            }
+        }
+        public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "เหมาะสำหรับ 5คน"},
+        new IsOpen(){Name = "เหมาะสำหรับ 7คน"},
+        new IsOpen(){Name = "เหมาะสำหรับ 11คน"}
+        };
+        public string SizeField
+        {
+            get => _sizeField;
+            set
+            {
+                _sizeField = value;
+                OnPropertyChanged(nameof(SizeField));
+            }
+        }
+        public bool IsOpen
+        {
+            get => _isOpen;
+            set
+            {
+                _isOpen = value;
+                OnPropertyChanged(nameof(IsOpen));
+            }
+        }
+        public double Percentage
+        {
+            get => _percentage;
+            set
+            {
+                _percentage = value;
+                OnPropertyChanged(nameof(Percentage));
+            }
+        }
+
+        public System.DateTime StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                OnPropertyChanged(nameof(StartDate));
+            }
+        }
+        public System.DateTime EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged(nameof(EndDate));
+            }
+        }
+        public System.DateTime DateNow
+        {
+            get => _dateNow;
+            set
+            {
+                _dateNow = value;
+                OnPropertyChanged(nameof(DateNow));
+            }
+        }
+        public string Detail
+        {
+            get => _detail;
+            set
+            {
+                _detail = value;
+                OnPropertyChanged(nameof(Detail));
+            }
+        }
+
+
+
+        public ImageSource ImageProfile
+        {
+            get { return _imageProfile; }
+            set
+            {
+                _imageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
             }
         }
 
         public AddFieldViewModel()
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
+
+            SaveCommand = new Command(async () => await OnSaveCommand());
+
+            InitValidation();
+
+            Task.Run(async () => await Loaditems());
 
             UploadImageCommand = new Command(async () =>
             {
@@ -58,13 +176,62 @@ namespace JongSnam.Mobile.ViewModels
 
                 }
             });
+            
         }
 
+        async Task Loaditems()
+        {
+            DateNow = DateTime.Now;
+        }
+
+        async Task OnSaveCommand()
+        {
+            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
+            if (!answer)
+            {
+                return;
+            }
+            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
+            var fieldRequest = new FieldRequest()
+            {
+                
+            };
+            var discountRequest = new DiscountRequest()
+            {
+                
+            };
+            var imageFieldRequest = new ImageFieldRequest()
+            {
+                
+            };
+            var request = new AddFieldRequest
+            {
+                DiscountRequest = discountRequest,
+                FieldRequest = fieldRequest,
+            };
+
+            var statusSaved = await _fieldServices.AddField(request);
+            if (statusSaved)
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+            }
+            await Shell.Current.GoToAsync("..");
+        }
 
 
         internal void OnAppearing()
         {
             IsBusy = true;
+        }
+        private void InitValidation()
+        {
+            ImageValidata = new ValidatableObject<string>();
+            ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
         }
 
 
@@ -98,7 +265,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                ImageFiled = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
@@ -124,7 +291,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                ImageFiled = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง

@@ -34,7 +34,7 @@ namespace JongSnam.Mobile.ViewModels
 
             Items = new ObservableCollection<YourStoreModel>();
 
-            LoadMoreCommand = new Command(async () => await ExecuteLoadItemsCommand(true));
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             AddStoreCommand = new Command(OnAddStore);
 
@@ -44,26 +44,26 @@ namespace JongSnam.Mobile.ViewModels
 
             _storeServices = DependencyService.Get<IStoreServices>();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand());
+            //Task.Run(async () => await ExecuteLoadItemsCommand());
         }
 
-        async Task ExecuteLoadItemsCommand(bool isLoadMore = false)
+        async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
 
             try
             {
-                if (isLoadMore)
-                {
-                    _currentPage++;
-                }
-                else
-                {
-                    Items.Clear();
-                    _currentPage = 1;
-                }
-
-                var data = await _storeServices.GetYourStores(4, _currentPage, _pageSize);
+                //if (isLoadMore)
+                //{
+                //    _currentPage++;
+                //}
+                //else
+                //{
+                //    Items.Clear();
+                //    _currentPage = 1;
+                //}
+                Items.Clear();
+                var data = await _storeServices.GetYourStores(4, 1, 10);
                 foreach (var item in data)
                 {
                     Items.Add(

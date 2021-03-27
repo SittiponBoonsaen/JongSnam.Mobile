@@ -1,52 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.AddFieldPage">
+             x:Class="JongSnam.Mobile.Views.AddFieldPage"
+             BindingContext="{Binding AddFieldViewModel}"
+             Title="เพิ่มสนาม">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <Grid>
-                <Label Text="เพิ่มสนาม" FontSize="Title" HorizontalOptions="Center" />
-            </Grid>
+        <ScrollView>
+            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
             <StackLayout>
-                <Image WidthRequest="150" HeightRequest="150" Source="C:\Users\Ping Sittipon\Documents\GitHub\FinalProjectComsic\FinalProjectComsic\assets\default-avatar.png"/>
-                <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
+                <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
+                <ImageButton Margin="3"
+                             BackgroundColor="#f5f5f3"
+                            HeightRequest="56" 
+                             WidthRequest="56"
+                            Padding="2"
+                            Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
+                            Command="{Binding UploadImageCommand}">
+                </ImageButton>
             </StackLayout>
-            <Entry Placeholder="ชื่อสนาม" PlaceholderColor="Gray" />
-            <Entry Placeholder="ราคาสนาม"  PlaceholderColor="Gray" />
-            <Picker x:Name="SizeField" Title="ขนาดสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เหมาะสำหรับ 5คน</x:String>
-                    <x:String>เหมาะสำหรับ 7คน</x:String>
-                    <x:String>เหมาะสำหรับ 11คน</x:String>
-                </Picker.Items>
-            </Picker>
 
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
-            </Picker>
-            <Entry Placeholder="ส่วนลด" PlaceholderColor="Gray" />
-            <Grid >
-                <DatePicker Grid.Column="0" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="06/21/2018"  />
-                <DatePicker Grid.Column="1" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="07/21/2018" />
+            <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+            <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
+            <Picker Title="ขนาดสนาม"
+                    ItemsSource="{Binding SizeFields}"
+                    SelectedItem="{Binding SizeField}"
+                    ItemDisplayBinding="{Binding Name}"/>
+
+            <Entry Placeholder="ส่วนลด" Text="{Binding Percentage}" PlaceholderColor="Gray" />
+                
+            <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}" 
+                    MaximumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    Date="{Binding StartDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>
+                    <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    MaximumDate="12/25/2024"
+                    Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
             </Grid>
-            <StackLayout>
-                <Editor Placeholder="รายละเอียดส่วนลด" HeightRequest="70" />
+                
+                <StackLayout>
+                <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>
 
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
