@@ -24,14 +24,15 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the FieldDetailDto class.
         /// </summary>
-        public FieldDetailDto(int? id = default(int?), string name = default(string), double? price = default(double?), bool? isOpen = default(bool?), IList<ImageFieldDto> imageFieldDto = default(IList<ImageFieldDto>), DiscountModel discountModel = default(DiscountModel), bool? active = default(bool?))
+        public FieldDetailDto(int? id = default(int?), string name = default(string), double? price = default(double?), string size = default(string), bool? isOpen = default(bool?), DiscountModel discountModel = default(DiscountModel), IList<ImageFieldModel> imageFieldModel = default(IList<ImageFieldModel>), bool? active = default(bool?))
         {
             Id = id;
             Name = name;
             Price = price;
+            Size = size;
             IsOpen = isOpen;
-            ImageFieldDto = imageFieldDto;
             DiscountModel = discountModel;
+            ImageFieldModel = imageFieldModel;
             Active = active;
             CustomInit();
         }
@@ -58,18 +59,23 @@ namespace JongSnamService.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "isOpen")]
         public bool? IsOpen { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "imageFieldDto")]
-        public IList<ImageFieldDto> ImageFieldDto { get; set; }
+        [JsonProperty(PropertyName = "discountModel")]
+        public DiscountModel DiscountModel { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "discountModel")]
-        public DiscountModel DiscountModel { get; set; }
+        [JsonProperty(PropertyName = "imageFieldModel")]
+        public IList<ImageFieldModel> ImageFieldModel { get; set; }
 
         /// <summary>
         /// </summary>
