@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -211,9 +213,14 @@ namespace JongSnam.Mobile.ViewModels
         {
             await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(DataUser.Id.Value));
         }
-        public void OnAppearing()
+        public async Task OnAppearingAsync()
         {
             IsBusy = true;
+            var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+            if (isLoggedIn != "True")
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
         }
 
         private async Task TakePhotoAsync()
@@ -248,6 +255,7 @@ namespace JongSnam.Mobile.ViewModels
                 // รูปได้ค่าตอนนี้เด้อ
                 ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
+            IsBusy = false;
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
         }
@@ -274,7 +282,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 ImageProfile = ImageSource.FromStream(() => file.GetStream());
             }
-
+            IsBusy = false;
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
             //_isBackFromChooseImage = false;
         }

@@ -20,7 +20,7 @@
                 <DataTemplate>
                     <StackLayout Padding="10" x:DataType="model:StoreModel">
                         
-                        <Grid>
+                    <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="*" />

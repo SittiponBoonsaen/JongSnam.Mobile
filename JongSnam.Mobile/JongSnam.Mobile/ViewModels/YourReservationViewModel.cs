@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -43,7 +45,7 @@ namespace JongSnam.Mobile.ViewModels
 
             YearGraphCommand = new Command(async () => await OnYearGraph(Items));
 
-
+            IsBusy = false;
         }
         async Task OnDayGraph(ObservableCollection<ReservationDto> items)
         {
@@ -70,7 +72,15 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await _reservationServices.GetYourReservation(4, 1, 5);
+
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, string.Empty);
+
+                var items = await _reservationServices.GetYourReservation(Convert.ToInt32(userId), 1, 5);
+                if (items == null)
+                {
+                    IsBusy = false;
+                    return;
+                }
                 foreach (var item in items)
                 {
                     if (item.ApprovalStatus == true)
@@ -111,6 +121,7 @@ namespace JongSnam.Mobile.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.GoToAsync("//LoginPage");
             }
             finally
             {
@@ -125,12 +136,17 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnSearchReservation()
         {
-            await Shell.Current.GoToAsync(nameof(SearchReservationPage));
+            await Shell.Current.Navigation.PushAsync(new SearchReservationPage());
         }
 
 
-        internal void OnAppearing()
+        internal async Task OnAppearingAsync()
         {
+            var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+            if (isLoggedIn != "True")
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
             IsBusy = true;
         }
     }

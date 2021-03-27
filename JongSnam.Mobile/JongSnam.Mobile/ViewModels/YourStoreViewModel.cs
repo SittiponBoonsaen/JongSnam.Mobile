@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -103,8 +105,14 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value, item.Name));
         }
 
-        public void OnAppearing()
+        public async void OnAppearingAsync()
         {
+            IsBusy = true;
+            var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+            if (isLoggedIn != "True")
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
         }
     }
 }
