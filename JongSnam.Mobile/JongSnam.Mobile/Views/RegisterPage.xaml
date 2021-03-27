@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JongSnam.Mobile.Views.RegisterPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+            <Label Text="REGISTER" FontSize="Title" HorizontalOptions="Center" />
+            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
+            <Entry Placeholder="Email" PlaceholderColor="Gray" />
+            <Entry Placeholder="Password" IsPassword="true" PlaceholderColor="Gray" />
+            <Entry Placeholder="ConfrimPassword" IsPassword="true" PlaceholderColor="Gray" />
+            <Grid>
+                <Editor Placeholder="FirstName" Grid.Column="0"/>
+                <Editor Placeholder="LastName" Grid.Column="1"/>
+            </Grid>
+            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
+            <Editor Placeholder="Address" HeightRequest="70" />
+            <Label Text="Select Role"></Label>
+            <Grid>
+                <RadioButton  Grid.Column="0" Text="Customer" />
+                <RadioButton Grid.Column="1" Text="Owner" />
+            </Grid>
+
+            <Button Text="Register"
+                VerticalOptions="CenterAndExpand"
+                
+                    BackgroundColor="RoyalBlue"/>
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
