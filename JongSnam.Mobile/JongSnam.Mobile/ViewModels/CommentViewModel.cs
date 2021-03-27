@@ -56,7 +56,7 @@ namespace JongSnam.Mobile.ViewModels
         {
             var request = new ReviewRequest
             {
-                StoreId = storeId,
+                StoreId = 5,
                 UserId = 5,
                 Message = Message,
                 Rating = Ratting.RattingValue
