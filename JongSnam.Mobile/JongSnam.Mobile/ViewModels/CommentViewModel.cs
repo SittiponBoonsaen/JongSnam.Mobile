@@ -45,14 +45,14 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public CommentViewModel(int storeId)
+        public CommentViewModel()
         {
             _reviewService = DependencyService.Get<IReviewServices>();
 
-            SaveCommand = new Command(async () => await OnSaveCommand(storeId));
+            SaveCommand = new Command(async () => await OnSaveCommand());
         }
 
-        async Task OnSaveCommand(int storeId)
+        async Task OnSaveCommand()
         {
             var request = new ReviewRequest
             {
