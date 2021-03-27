@@ -11,7 +11,7 @@
         <StackLayout BackgroundColor="#f5f5f3" Padding="20">
             <Label Text="REGISTER" HorizontalOptions="EndAndExpand" />
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
-            <Image Source="C:\Users\Ping Sittipon\Documents\GitHub\FinalProjectComsic\FinalProjectComsic\assets\Logo.png"/>
+            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
 
             <Entry Placeholder="Username" PlaceholderColor="Gray" />
             <Entry Placeholder="Password" IsPassword="true" PlaceholderColor="Gray" />
