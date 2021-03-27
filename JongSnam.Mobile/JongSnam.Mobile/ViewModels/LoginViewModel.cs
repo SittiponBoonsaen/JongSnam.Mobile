@@ -62,7 +62,8 @@ namespace JongSnam.Mobile.ViewModels
 
             if (userType == "Owner")
             {
-                await Shell.Current.Navigation.PushAsync(new YourReservationPage());
+                //await Shell.Current.GoToAsync("reservation", false);
+                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
             }
             else
             {
