@@ -22,12 +22,13 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the StoreDto class.
         /// </summary>
-        public StoreDto(int? id = default(int?), string name = default(string), double? rating = default(double?), string officeHours = default(string), string image = default(string))
+        public StoreDto(int? id = default(int?), string name = default(string), double? rating = default(double?), string officeHours = default(string), bool? isOpen = default(bool?), string image = default(string))
         {
             Id = id;
             Name = name;
             Rating = rating;
             OfficeHours = officeHours;
+            IsOpen = isOpen;
             Image = image;
             CustomInit();
         }
@@ -56,6 +57,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "officeHours")]
         public string OfficeHours { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isOpen")]
+        public bool? IsOpen { get; set; }
 
         /// <summary>
         /// </summary>

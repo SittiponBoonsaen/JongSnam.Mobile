@@ -24,13 +24,14 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the FieldDto class.
         /// </summary>
-        public FieldDto(int? id = default(int?), string name = default(string), int? price = default(int?), string storeName = default(string), bool? isOpen = default(bool?), IList<ImageFieldModel> imageFieldModel = default(IList<ImageFieldModel>))
+        public FieldDto(int? id = default(int?), string name = default(string), int? price = default(int?), string storeName = default(string), bool? isOpen = default(bool?), bool? active = default(bool?), IList<ImageFieldModel> imageFieldModel = default(IList<ImageFieldModel>))
         {
             Id = id;
             Name = name;
             Price = price;
             StoreName = storeName;
             IsOpen = isOpen;
+            Active = active;
             ImageFieldModel = imageFieldModel;
             CustomInit();
         }
@@ -64,6 +65,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "isOpen")]
         public bool? IsOpen { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "active")]
+        public bool? Active { get; set; }
 
         /// <summary>
         /// </summary>

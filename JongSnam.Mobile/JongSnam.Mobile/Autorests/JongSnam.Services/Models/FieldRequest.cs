@@ -23,13 +23,14 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the FieldRequest class.
         /// </summary>
-        public FieldRequest(int storeId, string name, string size, int price, bool? isOpen = default(bool?))
+        public FieldRequest(int storeId, string name, string size, int price, bool? isOpen = default(bool?), bool? active = default(bool?))
         {
             StoreId = storeId;
             Name = name;
             Size = size;
             Price = price;
             IsOpen = isOpen;
+            Active = active;
             CustomInit();
         }
 
@@ -62,6 +63,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "isOpen")]
         public bool? IsOpen { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "active")]
+        public bool? Active { get; set; }
 
         /// <summary>
         /// Validate the object.

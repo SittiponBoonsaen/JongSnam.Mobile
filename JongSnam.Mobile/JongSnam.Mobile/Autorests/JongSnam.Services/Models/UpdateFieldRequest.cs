@@ -25,13 +25,14 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the UpdateFieldRequest class.
         /// </summary>
-        public UpdateFieldRequest(int storeId, string name, string size, int price, bool? isOpen = default(bool?), UpdateDiscountRequest updateDiscountRequest = default(UpdateDiscountRequest), IList<UpdatePictureFieldRequest> updatePictureFieldRequest = default(IList<UpdatePictureFieldRequest>))
+        public UpdateFieldRequest(int storeId, string name, string size, int price, bool? isOpen = default(bool?), bool? active = default(bool?), UpdateDiscountRequest updateDiscountRequest = default(UpdateDiscountRequest), IList<UpdatePictureFieldRequest> updatePictureFieldRequest = default(IList<UpdatePictureFieldRequest>))
         {
             StoreId = storeId;
             Name = name;
             Size = size;
             Price = price;
             IsOpen = isOpen;
+            Active = active;
             UpdateDiscountRequest = updateDiscountRequest;
             UpdatePictureFieldRequest = updatePictureFieldRequest;
             CustomInit();
@@ -66,6 +67,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "isOpen")]
         public bool? IsOpen { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "active")]
+        public bool? Active { get; set; }
 
         /// <summary>
         /// </summary>
