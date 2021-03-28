@@ -123,8 +123,6 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-
-
         public ImageSource ImageProfile
         {
             get { return _imageProfile; }
@@ -139,9 +137,11 @@ namespace JongSnam.Mobile.ViewModels
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
+            InitValidation();
+
             SaveCommand = new Command(async () => await OnSaveCommand());
 
-            InitValidation();
+
 
             Task.Run(async () => await Loaditems());
 
@@ -176,7 +176,11 @@ namespace JongSnam.Mobile.ViewModels
 
                 }
             });
-            
+
+        }
+        internal void OnAppearing()
+        {
+            IsBusy = true;
         }
 
         async Task Loaditems()
@@ -223,17 +227,11 @@ namespace JongSnam.Mobile.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-
-        internal void OnAppearing()
-        {
-            IsBusy = true;
-        }
         private void InitValidation()
         {
             ImageValidata = new ValidatableObject<string>();
             ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
         }
-
 
         private async Task TakePhotoAsync()
         {

@@ -12,23 +12,24 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <StackLayout>
-                <ActivityIndicator IsVisible="{Binding IsBusy}"
+
+                <StackLayout>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
                               
                                AbsoluteLayout.LayoutFlags="All"
                                AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
-                <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
-                <ImageButton Margin="3"
+                    <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
+                    <ImageButton Margin="3"
                              BackgroundColor="#f5f5f3"
                             HeightRequest="56" 
                              WidthRequest="56"
                             Padding="2"
                             Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
                             Command="{Binding UploadImageCommand}">
-                </ImageButton>
-            </StackLayout>
+                    </ImageButton>
+                </StackLayout>
 
-            <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
             <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
             <Picker Title="ขนาดสนาม"
                     ItemsSource="{Binding SizeFields}"
@@ -57,7 +58,6 @@
                     MaximumDate="12/25/2024"
                     Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
             </Grid>
-                
                 <StackLayout>
                 <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>

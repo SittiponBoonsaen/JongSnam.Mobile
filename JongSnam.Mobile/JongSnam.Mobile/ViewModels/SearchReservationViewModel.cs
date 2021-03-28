@@ -13,6 +13,7 @@ namespace JongSnam.Mobile.ViewModels
         private DateTime _enddate;
 
         String myDate = DateTime.Now.ToString();
+        private DateTime _dateNow;
 
         public Command SearchCommand { get; }
         public Command LoadItemsCommand { get; }
@@ -56,14 +57,27 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StoreName));
             }
         }
-
+        public System.DateTime DateNow
+        {
+            get => _dateNow;
+            set
+            {
+                _dateNow = value;
+                OnPropertyChanged(nameof(DateNow));
+            }
+        }
 
 
         public SearchReservationViewModel()
         {
-
+            Task.Run(async () => await Loaditems());
             SearchCommand = new Command(async () => await OnSearch(UserName, StoreName, StartDate, EndDate));
 
+        }
+
+        async Task Loaditems()
+        {
+            DateNow = DateTime.Now;
         }
 
         async Task OnSearch(string UserName, string StoreName, DateTime StartDate, DateTime EndDate)
