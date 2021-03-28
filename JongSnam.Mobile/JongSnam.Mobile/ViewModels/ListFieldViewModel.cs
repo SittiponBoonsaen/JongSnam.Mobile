@@ -125,7 +125,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
-            await Shell.Current.Navigation.PushAsync(new FieldPage(fieldDto));
+            await Shell.Current.Navigation.PushAsync(new FieldPage(fieldDto, StoreName));
         }
 
         async Task OnReview(int storeId)
