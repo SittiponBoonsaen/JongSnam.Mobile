@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
@@ -18,15 +19,12 @@ namespace JongSnam.Mobile.ViewModels
 
         private readonly IReviewServices _reviewServices;
         private int _page = 1;
-        private int _pageSize = 2;
+        private int _pageSize = 20;
 
         public ObservableCollection<ReviewDto> Items { get; }
 
-        public Command LoadDetailReview { get; set; }
-
         public Command LoadReview { get; }
 
-        public Command<ReviewDto> ItemTapped { get; }
 
         private double _ratingsum;
         private double _textComment;
@@ -65,6 +63,7 @@ namespace JongSnam.Mobile.ViewModels
                 Background = OxyColor.Parse("#f5f5f3")
             };
 
+            
             //BarModel = CreateBarChart(storeId).Result;
 
             _reviewServices = DependencyService.Get<IReviewServices>();
@@ -73,30 +72,12 @@ namespace JongSnam.Mobile.ViewModels
 
             Task.Run(async () => await ExecuteLoadItemsCommand(storeId));
 
-            LoadDetailReview = new Command(async () => await LoadDetailReviews(storeId, _page, _pageSize));
 
             LoadReview = new Command(async () => await LoadReviews(storeId));
 
-            ItemTapped = new Command<ReviewDto>(OnComment);
         }
 
-        async void OnComment(ReviewDto reviewDto)
-        {
-            if (reviewDto == null)
-            {
-                return;
-            }
-            await Shell.Current.Navigation.PushAsync(new CommentPage());
-        }
 
-        async Task<SumaryRatingDto> LoadDetailReviews(int storeId, int page, int size)
-        {
-            var result = await _reviewServices.GetReviewByStoreId(storeId, page, size);
-
-            size = size + 2;
-
-            return result;
-        }
         async Task LoadReviews(int storeId)
         {
             if (storeId == 0)
@@ -104,12 +85,19 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                BarModel.InvalidatePlot(true);
+
                 Items.Clear();
                 var items = await _reviewServices.GetReviewByStoreId(storeId, _page, _pageSize);
 
                 foreach (var item in items.Collection)
                 {
-                    Items.Add(item);
+                    Items.Add(new ReviewDtoModel
+                    { 
+                        Message = item.Message,
+                        Name = item.Name,
+                        RatingString = GetRatting(item.Rating.Value),
+                    });
                 }
             }
             catch (Exception ex)
@@ -129,8 +117,8 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                var items = await _reviewServices.GetReviewByStoreId(storeId, _page, 100);
 
+                var items = await _reviewServices.GetReviewByStoreId(storeId, _page, 100);
 
                 var resultRating = (double)items.SummaryRating;
 
@@ -182,6 +170,34 @@ namespace JongSnam.Mobile.ViewModels
         internal void OnAppearing()
         {
             IsBusy = true;
+        }
+        string GetRatting(double Rating)
+        {
+            if (Rating == 5)
+            {
+                return "5 ดาว";
+            }
+            else if (Rating == 4)
+            {
+                return "4 ดาวว";
+            }
+            else if (Rating == 3)
+            {
+                return "3 ดาว";
+            }
+            else if (Rating ==2)
+            {
+                return "2 ดาว";
+            }
+            else if (Rating == 1)
+            {
+                return "1 ดาว";
+            }
+            else
+            {
+                return "ไม่ได้ลงคะแนน";
+            }
+
         }
     }
 }

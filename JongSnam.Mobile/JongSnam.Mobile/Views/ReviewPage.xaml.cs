@@ -9,10 +9,15 @@ namespace JongSnam.Mobile.Views
     public partial class ReviewPage : ContentPage
     {
         ReviewViewModel _viewModel;
+
+        private int _storeId;
+
         public ReviewPage(int storeId)
         {
             InitializeComponent();
             BindingContext = _viewModel = new ReviewViewModel(storeId);
+
+            _storeId = storeId;
         }
         protected override void OnAppearing()
         {
@@ -22,7 +27,7 @@ namespace JongSnam.Mobile.Views
 
         async void StartCall(object sender, EventArgs e)
         {
-            await Shell.Current.Navigation.PushAsync(new CommentPage());
+            await Shell.Current.Navigation.PushAsync(new CommentPage(_storeId));
         }
     }
 }

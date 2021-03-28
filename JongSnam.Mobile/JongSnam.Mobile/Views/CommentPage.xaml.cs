@@ -8,10 +8,10 @@ namespace JongSnam.Mobile.Views
     public partial class CommentPage : ContentPage
     {
         CommentViewModel _viewModel;
-        public CommentPage()
+        public CommentPage(int storeId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new CommentViewModel();
+            BindingContext = _viewModel = new CommentViewModel(storeId);
         }
 
         protected override void OnAppearing()

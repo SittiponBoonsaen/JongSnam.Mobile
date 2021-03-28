@@ -109,6 +109,10 @@ namespace JongSnam.Mobile.ViewModels
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
                     });
                 }
+
+
+
+
             }
             catch (Exception ex)
             {
