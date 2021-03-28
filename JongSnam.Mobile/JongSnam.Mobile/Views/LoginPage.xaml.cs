@@ -12,5 +12,6 @@ namespace JongSnam.Mobile.Views
             InitializeComponent();
             this.BindingContext = new LoginViewModel();
         }
+
     }
 }

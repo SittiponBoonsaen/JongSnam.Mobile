@@ -15,15 +15,10 @@
                 <Editor Placeholder="LastName" Text="{Binding LastName}" Grid.Column="1"/>
             </Grid>
             <Entry Placeholder="Phone" Text="{Binding Phone}" MaxLength="10" PlaceholderColor="Gray" />
-             <Editor Placeholder="Address" Text="{Binding Address}" HeightRequest="70" />
-            <Label Text="Select Role"></Label>
-            <Grid>
-                <RadioButton  Grid.Column="0" Text="Customer" />
-                <RadioButton Grid.Column="1" Text="Owner" />
-            </Grid>
-                
+            <Editor Placeholder="Address" Text="{Binding Address}" HeightRequest="70" />
 
-            <Button Text="Register"
+
+                <Button Text="Register"
                 VerticalOptions="CenterAndExpand"
                 
                     BackgroundColor="RoyalBlue"/>

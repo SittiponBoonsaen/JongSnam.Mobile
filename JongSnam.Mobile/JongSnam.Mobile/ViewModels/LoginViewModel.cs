@@ -15,7 +15,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _password;
 
         public Command LoginCommand { get; }
-        public Command RegisterCommand { get; }
+        public Command RegisterCommand { get; set; }
 
         public string UserName
         {
@@ -44,10 +44,9 @@ namespace JongSnam.Mobile.ViewModels
 
             LoginCommand = new Command(async () => await ExecuteLoginCommand());
 
-
-            RegisterCommand = new Command(OnRegisterCommand);
+            RegisterCommand = new Command(async () => await OnRegisterCommand());
         }
-        async void OnRegisterCommand()
+        async Task OnRegisterCommand()
         {
             await Shell.Current.Navigation.PushAsync(new RegisterPage());
         }

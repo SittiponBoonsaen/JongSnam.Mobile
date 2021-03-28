@@ -15,8 +15,8 @@
                     ItemDisplayBinding="{Binding Name}"/>
 
             <StackLayout Orientation="Horizontal">
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="แสดงความคิดเห็น..." Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="ยกเลิก" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -6,22 +6,21 @@
              mc:Ignorable="d"
              x:Class="JongSnam.Mobile.Views.LoginPage"
              Shell.NavBarIsVisible="False">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="REGISTER" Command="{Binding RegisterCommand}"/>
-    </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+            <Button Text="REGISTER" Command="{Binding RegisterCommand}" ></Button>
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
 
-            <Entry Placeholder="Username" Text="{Binding UserName}" PlaceholderColor="Gray" />
-            <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
+            <Entry Placeholder="Email" Text="{Binding UserName}" PlaceholderColor="Gray" Keyboard="Email" MaxLength="20" />
+            <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" MaxLength="20" />
             <Button Text="Login"
                 VerticalOptions="CenterAndExpand"
                 BackgroundColor="RoyalBlue"
                 Command="{Binding LoginCommand}"    
                 />
+            <Label Text="version1.0" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

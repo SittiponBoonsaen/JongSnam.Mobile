@@ -2,19 +2,26 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
     public class YearGraphViewModel : BaseViewModel
     {
+        private readonly IReservationServices _reservationServices;
+
         public PlotModel Model { get; set; }
 
         public YearGraphViewModel(ObservableCollection<ReservationDto> items)
         {
+            _reservationServices = DependencyService.Get<IReservationServices>();
 
             Model = new PlotModel
             {
@@ -34,6 +41,7 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+
                 var linearAxis1 = new LinearAxis();
                 linearAxis1.AbsoluteMinimum = 0;
                 linearAxis1.AbsoluteMaximum = 200;
@@ -46,6 +54,10 @@ namespace JongSnam.Mobile.ViewModels
 
 
                 };
+
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
+
+
 
                 barSeries.Items.Add(new ColumnItem
                 {

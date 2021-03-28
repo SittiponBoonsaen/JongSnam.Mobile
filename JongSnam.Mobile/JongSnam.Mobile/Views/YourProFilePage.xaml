@@ -32,7 +32,7 @@
             <Editor Text="{Binding LastName }" Grid.Column="1"/>
         </Grid>
         <Label Text="อีเมลล์"/>
-        <Entry Text="{Binding Email }"  PlaceholderColor="Gray" />
+        <Entry Text="{Binding Email }"  PlaceholderColor="Gray" IsEnabled="False" Keyboard="Email" />
         <Label Text="เบอร์โทร"/>
         <Entry Text="{Binding Phone }" MaxLength="10" PlaceholderColor="Gray" />
         <Label Text="ที่อยู่"/>

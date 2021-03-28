@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -45,33 +47,45 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public CommentViewModel()
+        public CommentViewModel(int storeId)
         {
             _reviewService = DependencyService.Get<IReviewServices>();
 
-            SaveCommand = new Command(async () => await OnSaveCommand());
+            SaveCommand = new Command(async () => await OnSaveCommand(storeId));
         }
 
-        async Task OnSaveCommand()
+        async Task OnSaveCommand(int storeId)
         {
-            var request = new ReviewRequest
+            try 
             {
-                StoreId = 5,
-                UserId = 5,
-                Message = Message,
-                Rating = Ratting.RattingValue
-            };
-            var statusSaved = await _reviewService.AddReview(request);
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
-            }
-            else
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
-            }
-            await Shell.Current.GoToAsync("..");
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
+                var request = new ReviewRequest
+                {
+                    StoreId = storeId,
+                    UserId = Convert.ToInt32(userId),
+                    Message = Message,
+                    Rating = Ratting.RattingValue
+                };
+                var statusSaved = await _reviewService.AddReview(request);
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+                await Shell.Current.Navigation.PopAsync();
 
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
 
         }
 

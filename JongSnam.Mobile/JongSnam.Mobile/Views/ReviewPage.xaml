@@ -4,7 +4,8 @@
              xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              x:Class="JongSnam.Mobile.Views.ReviewPage"
-             xmlns:model="clr-namespace:JongSnamService.Models">
+             xmlns:model="clr-namespace:JongSnamService.Models"
+             xmlns:model2="clr-namespace:JongSnam.Mobile.Models">
     <!--<AbsoluteLayout>
         <oxy:PlotView Model="{Binding BarModel}"  
                   AbsoluteLayout.LayoutBounds="20,0,.9,.9"  
@@ -12,11 +13,11 @@
     </AbsoluteLayout>-->
 
     <ContentPage.Content>
- 
+ <RefreshView x:DataType="local:ReviewViewModel" Command="{Binding LoadReview}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <StackLayout BackgroundColor="#f5f5f3">
                 <StackLayout>
 
-                    <Label Text="คะแนนและการรีวิว" HorizontalOptions="Start" FontSize="24" Padding="10"/>
+                <Label Text="คะแนนและการรีวิว" HorizontalOptions="Start" TextColor="Green"  FontAttributes="Bold" FontSize="24" Padding="10"/>
 
                 </StackLayout>
                 <Grid>
@@ -41,89 +42,68 @@
                                 BackgroundColor="Gray" 
                                 HorizontalOptions="FillAndExpand" />
 
-                <RefreshView x:DataType="local:ReviewViewModel" Command="{Binding LoadReview}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                
                     <CollectionView x:Name="ItemsListView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout Padding="10" x:DataType="model:ReviewDto">
+                            <StackLayout Padding="10" x:DataType="model2:ReviewDtoModel">
                                 <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50" ></RowDefinition>
-                                <RowDefinition Height="50" ></RowDefinition>
-                                <RowDefinition Height="*" ></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" ></ColumnDefinition>
-                                <ColumnDefinition Width="*" ></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <StackLayout  Grid.Row="0" Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" ></RowDefinition>
+                                    <RowDefinition Height="*" ></RowDefinition>
+                                    <RowDefinition Height="*" ></RowDefinition>
+                                </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" ></ColumnDefinition>
+                                        <ColumnDefinition Width="120" ></ColumnDefinition>
+                                        <ColumnDefinition Width="*" ></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout  Grid.Row="0" Grid.Column="0">
                                 <Image Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                            </StackLayout>
+                                  </StackLayout>
                                 
-                             <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center"></Label>
-                             
-                            <StackLayout  Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
 
-                                <Label  HorizontalTextAlignment="Center"  TextColor="Black" HorizontalOptions="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span x:Name="MyStar1" FontSize="20"   FontFamily="MyIcon" >
-                                                <Span.GestureRecognizers>
-                                                </Span.GestureRecognizers>
-                                            </Span>
-                                            <Span x:Name="MyStar2" FontSize="20"   FontFamily="MyIcon">
-                                                <Span.GestureRecognizers>
-                                                </Span.GestureRecognizers>
-                                            </Span>
-                                            <Span x:Name="MyStar3" FontSize="20"   FontFamily="MyIcon">
-                                                <Span.GestureRecognizers>
-                                                </Span.GestureRecognizers>
-                                            </Span>
-                                            <Span x:Name="MyStar4" FontSize="20"   FontFamily="MyIcon">
-                                                <Span.GestureRecognizers>
-                                                </Span.GestureRecognizers>
-                                            </Span>
-                                            <Span x:Name="MyStar5"  FontSize="20"  FontFamily="MyIcon">
-                                                <Span.GestureRecognizers>
-                                                </Span.GestureRecognizers>
-                                            </Span>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </StackLayout>
-                            <Label  Grid.Row="1"
+                             <Label Text="{Binding Name}" Grid.Column="1" FontSize="17" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start"></Label>
+                                   
+
+                                    <Label  Grid.Row="1" 
+                                            Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Grid.ColumnSpan="2"
                                     FontAttributes="Bold"
                                     IsEnabled="False"
-                                    HorizontalOptions="Start"
+                                    HorizontalOptions="Fill"
+                                             VerticalOptions="Start"
                                     Text="{Binding Message}"
                                     TextColor="Black"
                                     />
-                            </Grid>
+                                    
+                                    <Label Text="{Binding RatingString}" Grid.Column="0" Grid.Row="2" HorizontalOptions="Start" TextColor="Green" VerticalOptions="Start"></Label>
+                                </Grid>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </RefreshView>
+                
 
             <StackLayout>
                 <Entry
-        Placeholder="Enter Phone Number"
-        IsEnabled="False"
-        TextColor="Black"
-        x:Name="phone"/>
+                Placeholder="แสดงความคิดเห็น..."
+                HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                IsEnabled="False"
+                TextColor="Black"
+                x:Name="comment"/>
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer
-            Tapped="StartCall"
-            NumberOfTapsRequired="1">
+                    Tapped="StartCall"
+                    NumberOfTapsRequired="1">
                     </TapGestureRecognizer>
                 </StackLayout.GestureRecognizers>
             </StackLayout>
 
         </StackLayout>
-            
+            </RefreshView>
     </ContentPage.Content>
 </ContentPage>
