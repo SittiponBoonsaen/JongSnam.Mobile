@@ -24,10 +24,11 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the ReservationDetailDto class.
         /// </summary>
-        public ReservationDetailDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?), string fieldName = default(string), double? pricePerHour = default(double?), bool? isFullAmount = default(bool?), IList<PaymentModel> paymentModel = default(IList<PaymentModel>), double? amountForPay = default(double?))
+        public ReservationDetailDto(int? id = default(int?), bool? approvalStatus = default(bool?), string imageProfile = default(string), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?), string fieldName = default(string), double? pricePerHour = default(double?), bool? isFullAmount = default(bool?), IList<PaymentModel> paymentModel = default(IList<PaymentModel>), double? amountForPay = default(double?))
         {
             Id = id;
             ApprovalStatus = approvalStatus;
+            ImageProfile = imageProfile;
             UserName = userName;
             StoreName = storeName;
             ContactMobile = contactMobile;
@@ -55,6 +56,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "approvalStatus")]
         public bool? ApprovalStatus { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "imageProfile")]
+        public string ImageProfile { get; set; }
 
         /// <summary>
         /// </summary>

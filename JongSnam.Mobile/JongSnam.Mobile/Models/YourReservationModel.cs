@@ -12,5 +12,7 @@ namespace JongSnam.Mobile.Models
 
         public System.DateTime DateTime { get; set; }
         public ImageSource ImageSource { get; set; }
+        public bool IsApproved { get; set; }
+        public bool UnApproved { get; set; }
     }
 }
