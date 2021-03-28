@@ -57,9 +57,6 @@
     <EmbeddedResource Update="Views\FieldPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DayGraphPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\ListFieldPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -112,9 +109,6 @@
   <ItemGroup>
     <Compile Update="AppShellCustomer.xaml.cs">
       <DependentUpon>AppShellCustomer.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\DayGraphPage.xaml.cs">
-      <DependentUpon>DayGraphPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\YourReservationPage.xaml.cs">
       <DependentUpon>YourReservationPage.xaml</DependentUpon>

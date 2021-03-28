@@ -71,6 +71,7 @@ namespace JongSnam.Mobile.ViewModels
         public SearchReservationViewModel()
         {
             Task.Run(async () => await Loaditems());
+
             SearchCommand = new Command(async () => await OnSearch(UserName, StoreName, StartDate, EndDate));
 
         }
@@ -78,6 +79,7 @@ namespace JongSnam.Mobile.ViewModels
         async Task Loaditems()
         {
             DateNow = DateTime.Now;
+
         }
 
         async Task OnSearch(string UserName, string StoreName, DateTime StartDate, DateTime EndDate)

@@ -19,7 +19,6 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IReservationServices _reservationServices;
         public ObservableCollection<ReservationDto> Items { get; }
         public Command SearchReservationCommand { get; }
-        public Command DayGraphCommand { get; }
         public Command MonthGraphCommand { get; }
         public Command YearGraphCommand { get; }
         public Command LoadItemsCommand { get; }
@@ -40,18 +39,12 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<ReservationDto>(OnItemSelected);
 
-            DayGraphCommand = new Command(async () => await OnDayGraph(Items));
 
             MonthGraphCommand = new Command(async () => await OnMonthGraph(Items));
 
             YearGraphCommand = new Command(async () => await OnYearGraph(Items));
 
             IsBusy = false;
-        }
-        async Task OnDayGraph(ObservableCollection<ReservationDto> items)
-        {
-
-            await Shell.Current.Navigation.PushAsync(new DayGraphPage(items));
         }
 
         async Task OnMonthGraph(ObservableCollection<ReservationDto> items)
@@ -98,7 +91,7 @@ namespace JongSnam.Mobile.ViewModels
                             UnApproved = item.ApprovalStatus == false ? true : false,
                             ApprovalStatusString = GetApprovalStatus(item.ApprovalStatus.Value, item.CreatedDate.Value),
                             DateTime = item.StartTime.Value.Date,
-                            ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+                            //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
                         });
                 }
             }
