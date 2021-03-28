@@ -13,7 +13,7 @@
         <RefreshView>
             <ScrollView>
             <StackLayout>
-            <Label Text="สนามฟรีแมน" BackgroundColor="White" TextColor="Black" FontSize="20" HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding StoreName}" BackgroundColor="White" TextColor="DarkBlue" FontSize="24" HorizontalTextAlignment="Center"/>
             <StackLayout Orientation="Vertical">
             <Grid  Padding="10">
                 <Grid.RowDefinitions>
@@ -43,14 +43,14 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
-                            <Label Text="สนามที่ 1" TextColor="Black" FontSize="15"  Grid.Row="0" Grid.ColumnSpan="3"/>
+                            <Label Text="{Binding NameField}" TextColor="DarkBlue" FontSize="22"  Grid.Row="0" Grid.ColumnSpan="3"/>
                             <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
                             <Label Text="ขนาด7 คน" TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="1"/>
                             <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
-                            <Label Text="500" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="15"/>
-                            <Label Text="/ชม" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
+                            <Label Text="{Binding Price}" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="15"/>
+                            <Label Text="" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
                     <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
-                            <Label Text="เปิดบริการ" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="15"/>
+                            <Label Text="{Binding IsOpen}" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="15"/>
                  
                 </Grid>
             </StackLayout>
