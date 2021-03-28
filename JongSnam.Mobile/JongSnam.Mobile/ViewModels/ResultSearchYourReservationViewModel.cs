@@ -44,7 +44,7 @@ namespace JongSnam.Mobile.ViewModels
                 int stopTimeDay = (int)EndDate.Day;
 
 
-                var items = await _reservationServices.GetReservationBySearch(4, startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
+                var items = await _reservationServices.GetReservationBySearch(13, startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
                 var data = items;
                 foreach (var item in items)
                 {
