@@ -385,7 +385,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSaveCommand(int userId)
         {
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
+            bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "ต้องการเพิ่มร้านใช่หรือไม่ ?", "ใช่", "ไม่");
             if (!answer)
             {
                 return;
@@ -404,20 +404,22 @@ namespace JongSnam.Mobile.ViewModels
                 Latitude = Latitude,
                 Longtitude = Longtitude,
                 OfficeHours = OfficeHours,
-                IsOpen = Privacy.Value,
+                IsOpen = Privacy == null ? false : Privacy.Value,
                 Rules = Rules
             };
 
+            IsBusy = true;
             var statusSaved = await _storeServices.AddStore(request);
             if (statusSaved)
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                await Shell.Current.GoToAsync("..");
             }
             else
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
             }
-            await Shell.Current.GoToAsync("..");
+            IsBusy = false;
         }
 
 

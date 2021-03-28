@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -76,6 +78,9 @@ namespace JongSnam.Mobile.ViewModels
 
             //LoadFieldCommand = new Command(async () => await ExecuteLoadFieldCommand(storeDto));
 
+            Preferences.Set(AuthorizeConstants.StoreIdKey, storeDto.Id.ToString());
+
+            //write storeId to storage
             ItemTapped = new Command<FieldDto>(OnItemSelected);
 
             ReviewCommand = new Command(async () => await OnReview(storeDto.Id.Value));

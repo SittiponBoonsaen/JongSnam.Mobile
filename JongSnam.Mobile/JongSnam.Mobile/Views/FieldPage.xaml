@@ -43,46 +43,46 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
-                    <Label Text="สนามที่ 1" TextColor="Black" FontSize="20"  Grid.Row="0" Grid.ColumnSpan="3"/>
-                    <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="20"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
-                    <Label Text="ขนาด7 คน" TextColor="Black" FontSize="20"  Grid.Row="1" Grid.Column="1"/>
-                    <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="20" HorizontalOptions="End"/>
-                    <Label Text="500" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="20"/>
-                    <Label Text="/ชม" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="20" HorizontalOptions="Start"/>
-                    <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalOptions="End"/>
-                    <Label Text="เปิดบริการ" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="20"/>
+                            <Label Text="สนามที่ 1" TextColor="Black" FontSize="15"  Grid.Row="0" Grid.ColumnSpan="3"/>
+                            <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
+                            <Label Text="ขนาด7 คน" TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="1"/>
+                            <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
+                            <Label Text="500" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="15"/>
+                            <Label Text="/ชม" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
+                    <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
+                            <Label Text="เปิดบริการ" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="15"/>
                  
                 </Grid>
             </StackLayout>
             <BoxView HeightRequest="1" Color="Gray"></BoxView>
                     <StackLayout>
-                        <Label Text="เลือกวันที่"></Label>
-                        <DatePicker Date="{Binding SelectedDate}" />
-                    </StackLayout>
-                    <StackLayout>
                         <Grid >
-                            <Entry Grid.Column="0"
-                                   Text="{Binding FromTime}"
-                           Keyboard="Numeric"
-                           Placeholder="จองเวลา (ชม.)"/>
-
-                            <Entry Grid.Column="1"
-                                   Text="{Binding ToTime}"
-                           Keyboard="Numeric"
-                           Placeholder="จองเวลา (นาที)"/>
+                        <Label Grid.Column="0"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="End"
+                                   Text="เลือกวันที่"/>
+                            <DatePicker Grid.Column="1" Date="{Binding SelectedDate}" />
                         </Grid>
                     </StackLayout>
                     <StackLayout>
                         <Grid >
-                            <Entry Grid.Column="0"
-                                   Text="{Binding FromTime}"
-                           Keyboard="Numeric"
-                           Placeholder="ถึงเวลา (ชม.)"/>
+                            <Label Grid.Column="0"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="End"
+                                   Text="เวลาตั้งแต่" FontSize="Small"/>
 
-                            <Entry Grid.Column="1"
-                                   Text="{Binding ToTime}"
-                           Keyboard="Numeric"
-                           Placeholder="ถึงเวลา (นาที)"/>
+                            <TimePicker Grid.Column="1"
+                                   Time="{Binding FromTime}"/>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout>
+                        <Grid>
+                            <Label Grid.Column="0"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="End"
+                                   Text="ถึงเวลา"/>
+                            <TimePicker Grid.Column="1"
+                                   Time="{Binding ToTime}"/>
                         </Grid>
                     </StackLayout>
                 </StackLayout>

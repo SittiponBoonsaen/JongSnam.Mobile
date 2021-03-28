@@ -9,5 +9,6 @@
         public static string AuthorizationKey = "Authorization";
         public static string UserTypeKey = "UserType";
         public static string IsLoggedInKey = "LoggedIn";
+        public static string StoreIdKey = "StoreId";
     }
 }
