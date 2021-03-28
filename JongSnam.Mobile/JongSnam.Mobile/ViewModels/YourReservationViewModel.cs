@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
@@ -84,21 +85,20 @@ namespace JongSnam.Mobile.ViewModels
                 }
                 foreach (var item in items)
                 {
-                        Items.Add(
-                            new YourReservationModel
-                            {
-                                Id = item.Id,
-                                UserName = item.UserName,
-                                StoreName = item.StoreName,
-                                ContactMobile = item.ContactMobile,
-                                StartTimePicker = item.StartTime.Value.TimeOfDay,
-                                StopTimePicker = item.StopTime.Value.TimeOfDay,
-                                ApprovalStatusString = item.ApprovalStatus == true ? ApprovalStatusString ="อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ",
-                                DateTime = item.StartTime.Value.Date
-                            });
+                    Items.Add(
+                        new YourReservationModel
+                        {
+                            Id = item.Id,
+                            UserName = item.UserName,
+                            StoreName = item.StoreName,
+                            ContactMobile = item.ContactMobile,
+                            StartTimePicker = item.StartTime.Value.TimeOfDay,
+                            StopTimePicker = item.StopTime.Value.TimeOfDay,
+                            ApprovalStatusString = item.ApprovalStatus == true ? ApprovalStatusString ="อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ",
+                            DateTime = item.StartTime.Value.Date,
+                            ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+                        });
                 }
-
-
             }
             catch (Exception ex)
             {

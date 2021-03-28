@@ -1,5 +1,6 @@
 ﻿using System;
 using JongSnamService.Models;
+using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Models
 {
@@ -10,5 +11,6 @@ namespace JongSnam.Mobile.Models
         public TimeSpan StopTimePicker { get; set; }
 
         public System.DateTime DateTime { get; set; }
+        public ImageSource ImageSource { get; set; }
     }
 }

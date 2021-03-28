@@ -22,7 +22,7 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the ReservationDto class.
         /// </summary>
-        public ReservationDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?))
+        public ReservationDto(int? id = default(int?), bool? approvalStatus = default(bool?), string userName = default(string), string storeName = default(string), string contactMobile = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? stopTime = default(System.DateTime?), string image = default(string))
         {
             Id = id;
             ApprovalStatus = approvalStatus;
@@ -31,6 +31,7 @@ namespace JongSnamService.Models
             ContactMobile = contactMobile;
             StartTime = startTime;
             StopTime = stopTime;
+            Image = image;
             CustomInit();
         }
 
@@ -73,6 +74,11 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "stopTime")]
         public System.DateTime? StopTime { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "image")]
+        public string Image { get; set; }
 
     }
 }
