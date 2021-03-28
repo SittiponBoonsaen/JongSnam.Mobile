@@ -6,7 +6,7 @@
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
             <Label Text="REGISTER" FontSize="Title" HorizontalOptions="Center" />
-            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
+                <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
             <Entry Placeholder="Email" Text="{Binding Email}" PlaceholderColor="Gray" />
             <Entry Placeholder="รหัสผ่าน" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
              <Entry Placeholder="ยืนยันรหัสผ่าน" IsPassword="true" Text="{Binding ConfrimPassword}" PlaceholderColor="Gray" />
