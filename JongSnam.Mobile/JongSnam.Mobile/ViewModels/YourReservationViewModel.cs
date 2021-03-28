@@ -24,6 +24,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command YearGraphCommand { get; }
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
+        public string ApprovalStatusString { get; private set; }
 
         public YourReservationViewModel()
         {
@@ -83,8 +84,6 @@ namespace JongSnam.Mobile.ViewModels
                 }
                 foreach (var item in items)
                 {
-                    if (item.ApprovalStatus == true)
-                    {
                         Items.Add(
                             new YourReservationModel
                             {
@@ -94,26 +93,9 @@ namespace JongSnam.Mobile.ViewModels
                                 ContactMobile = item.ContactMobile,
                                 StartTimePicker = item.StartTime.Value.TimeOfDay,
                                 StopTimePicker = item.StopTime.Value.TimeOfDay,
-                                ApprovalStatusString = "อนุมัติ",
+                                ApprovalStatusString = item.ApprovalStatus == true ? ApprovalStatusString ="อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ",
                                 DateTime = item.StartTime.Value.Date
                             });
-                    }
-                    else
-                    {
-                        Items.Add(
-                            new YourReservationModel
-                            {
-                                Id = item.Id,
-                                UserName = item.UserName,
-                                StoreName = item.StoreName,
-                                ContactMobile = item.ContactMobile,
-                                StartTimePicker = item.StartTime.Value.TimeOfDay,
-                                StopTimePicker = item.StopTime.Value.TimeOfDay,
-                                ApprovalStatusString = "ไม่อนุมัติ"
-
-                            });
-                    }
-
                 }
 
 

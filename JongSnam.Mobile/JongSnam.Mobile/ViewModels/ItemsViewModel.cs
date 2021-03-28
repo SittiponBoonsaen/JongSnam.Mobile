@@ -17,7 +17,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private StoreDto _selectedItem;
 
-        public ObservableCollection<StoreModel> Items { get; }
+        public ObservableCollection<StoreDtoModel> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command SearchItemCommand { get; }
         public Command<StoreDto> ItemTapped { get; }
@@ -40,7 +40,7 @@ namespace JongSnam.Mobile.ViewModels
 
             _storeServices = DependencyService.Get<IStoreServices>();
 
-            Items = new ObservableCollection<StoreModel>();
+            Items = new ObservableCollection<StoreDtoModel>();
 
             //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
@@ -61,7 +61,7 @@ namespace JongSnam.Mobile.ViewModels
                 var items = await _storeServices.GetStores(1, 6);
                 foreach (var item in items)
                 {
-                    Items.Add(new StoreModel { 
+                    Items.Add(new StoreDtoModel { 
                         Id = item.Id,
                         Name = item.Name,
                         OfficeHours = item.OfficeHours,

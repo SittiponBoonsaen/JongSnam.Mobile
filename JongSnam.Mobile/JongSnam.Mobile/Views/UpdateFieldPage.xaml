@@ -27,9 +27,9 @@
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
-                <Entry Placeholder="{Binding Name}" PlaceholderColor="Gray" />
-                <Entry Placeholder="{Binding Price}" PlaceholderColor="Gray" />
-                <Picker Title="ขนาดสนาม"
+                <Entry Text="{Binding Name}" PlaceholderColor="Gray" />
+                <Entry Text="{Binding Price}" PlaceholderColor="Gray" />
+                <Picker Title="{Binding SizeFieldString}"
                     ItemsSource="{Binding SizeFields}"
                     SelectedItem="{Binding SizeField}"
                     ItemDisplayBinding="{Binding Name}"/>

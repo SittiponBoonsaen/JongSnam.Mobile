@@ -9,6 +9,9 @@ namespace JongSnam.Mobile.Models
 
         public ImageSource ImageSourceDF { get; set; }
 
+        public string IsOpenString { get; set; }
+
+        public StoreModel StoredtoModel { get; set; }
     }
 }
 

@@ -91,7 +91,6 @@ namespace JongSnam.Mobile.ViewModels
             {
                 Items.Clear();
                 StoreName = storeDto.Name;
-                Rating = (double)storeDto.Rating;
                 OfficeHours = storeDto.OfficeHours;
                 var items = await _fieldServices.GetFieldByStoreId(storeDto.Id.Value, 1, 20);
 

@@ -100,7 +100,7 @@ namespace JongSnam.Mobile.ViewModels
 
             set
             {
-                _selectedProvince = value;
+                _selectedProvince = value ;
                 OnPropertyChanged(nameof(SelectedProvince));
             }
         }
@@ -123,7 +123,7 @@ namespace JongSnam.Mobile.ViewModels
             _enumServices = DependencyService.Get<IEnumServices>();
             _fieldServices = DependencyService.Get<IFieldServices>();
 
-            InitValidation();
+            
 
             Items = new ObservableCollection<FieldDto>();
 
@@ -134,9 +134,11 @@ namespace JongSnam.Mobile.ViewModels
             LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
 
 
-            SearchItemCommand = new Command(async () => await OnSearchItemCommand(StartPrice, ToPrice, SelectedDistrict.Value.Id.Value, SelectedProvince.Value.Id.Value));
+            SearchItemCommand = new Command(async () => await OnSearchItemCommand());
 
             Task.Run(async () => await ExecuteLoadItemsCommand());
+
+            InitValidation();
 
         }
         public void checkvalue()
@@ -188,10 +190,25 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-        async Task OnSearchItemCommand(double startPrice, double toPrice, int districtId, int provinceId)
+        async Task OnSearchItemCommand()
         {
 
-            await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(startPrice, toPrice, districtId, provinceId));
+            double toPrice = ToPrice == 0 ? 10000 : ToPrice;
+
+            int? pro = SelectedProvince.Value == null ? 0 : SelectedProvince.Value.Id.Value;
+            if (pro == 0)
+            {
+                pro = null;
+            }
+
+            int? dis = SelectedDistrict.Value == null ? 0 : SelectedDistrict.Value.Id.Value;
+            if (dis == 0)
+            {
+                dis = null;
+            }
+
+
+            await Shell.Current.Navigation.PushAsync(new ResultSearchItemPage(StartPrice, toPrice, dis, pro));
         }
 
 

@@ -32,7 +32,7 @@
             <Picker ItemsSource="{Binding Province}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
-                                        Title="{Binding TargetNullValue}">
+                                        Title="กรุณาเลือก จังหวัด">
                 <Picker.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedProvinceIndexChangedCommand}"/>

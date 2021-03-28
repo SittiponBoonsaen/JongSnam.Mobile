@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
@@ -171,72 +172,20 @@ namespace JongSnam.Mobile.ViewModels
             {
                 var items = await _reservationServices.GetShowDetailYourReservation(reservationId);
                 var aa = Items;
-                if (items.ApprovalStatus == true && items.IsFullAmount == true)
-                {
-                    Id = (int)items.Id;
-                    UserName = items.UserName;
-                    StoreName = items.StoreName;
-                    ContactMobile = items.ContactMobile;
-                    StartTime = items.StartTime.Value.TimeOfDay;
-                    StopTime = items.StopTime.Value.TimeOfDay;
-                    ApprovalStatus = "อนุมัติ";
-                    FieldName = items.FieldName;
-                    IsFullAmount = "จ่ายเต็ม";
-                    PricePerHour = (double)items.PricePerHour;
-                    AmountForPay = (double)items.AmountForPay;
-                    DateTime = items.StartTime.Value.Date;
-                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
-                }
-                else if (items.ApprovalStatus == false && items.IsFullAmount == false)
-                {
-                    Id = (int)items.Id;
-                    UserName = items.UserName;
-                    StoreName = items.StoreName;
-                    ContactMobile = items.ContactMobile;
-                    StartTime = items.StartTime.Value.TimeOfDay;
-                    StopTime = items.StopTime.Value.TimeOfDay;
-                    ApprovalStatus = "ไม่อนุมัติ";
-                    FieldName = items.FieldName;
-                    IsFullAmount = "แบ่งจ่าย";
-                    PricePerHour = (double)items.PricePerHour;
-                    AmountForPay = (double)items.AmountForPay;
-                    DateTime = items.StartTime.Value.Date;
-                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
-                }
-                else if (items.ApprovalStatus == true && items.IsFullAmount == false)
-                {
-                    Id = (int)items.Id;
-                    UserName = items.UserName;
-                    StoreName = items.StoreName;
-                    ContactMobile = items.ContactMobile;
-                    StartTime = items.StartTime.Value.TimeOfDay;
-                    StopTime = items.StopTime.Value.TimeOfDay;
-                    ApprovalStatus = "อนุมัติ";
-                    FieldName = items.FieldName;
-                    IsFullAmount = "แบ่งจ่าย";
-                    PricePerHour = (double)items.PricePerHour;
-                    AmountForPay = (double)items.AmountForPay;
-                    DateTime = items.StartTime.Value.Date;
-                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
-                }
-                else if (items.ApprovalStatus == false && items.IsFullAmount == true)
-                {
-                    Id = (int)items.Id;
-                    UserName = items.UserName;
-                    StoreName = items.StoreName;
-                    ContactMobile = items.ContactMobile;
-                    StartTime = items.StartTime.Value.TimeOfDay;
-                    StopTime = items.StopTime.Value.TimeOfDay;
-                    ApprovalStatus = "ไม่อนุมัติ";
-                    FieldName = items.FieldName;
-                    IsFullAmount = "จ่ายเต็ม";
-                    PricePerHour = (double)items.PricePerHour;
-                    AmountForPay = (double)items.AmountForPay;
-                    DateTime = items.StartTime.Value.Date;
-                    //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.Image)));
-                }
 
-
+                    Id = items.Id.Value;
+                    UserName = items.UserName;
+                    StoreName = items.StoreName;
+                    ContactMobile = items.ContactMobile;
+                    StartTime = items.StartTime.Value.TimeOfDay;
+                    StopTime = items.StopTime.Value.TimeOfDay;
+                    ApprovalStatus = items.ApprovalStatus == true ? ApprovalStatus = "อนุมัติแล้ว" : ApprovalStatus = "ยังไม่ทำการอนุมัติ";
+                    FieldName = items.FieldName;
+                    IsFullAmount = items.IsFullAmount == true ? IsFullAmount = "จ่ายเต็มจำนวน" : IsFullAmount = "แบ่งจ่าย";
+                    PricePerHour = items.PricePerHour.Value;
+                    AmountForPay = items.AmountForPay.Value;
+                    DateTime = items.StartTime.Value.Date;
+                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.PaymentModel[0].Image)));
 
             }
             catch (Exception ex)

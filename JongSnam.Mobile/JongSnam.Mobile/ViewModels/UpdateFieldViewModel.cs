@@ -28,7 +28,6 @@ namespace JongSnam.Mobile.ViewModels
         private DateTime _startDate;
         private DateTime _endDate;
 
-        private IEnumerable<ImageFieldDto> _imageFieldDto;
 
         public IEnumerable<UpdateDiscountRequest> _updateDiscountRequests;
         public IEnumerable<UpdatePictureFieldRequest> _updatePictureFieldRequest;
@@ -76,15 +75,6 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Percentage));
             }
         }
-        public string Size
-        {
-            get => _size;
-            set
-            {
-                _size = value;
-                OnPropertyChanged(nameof(Size));
-            }
-        }
         public System.DateTime StartDate
         {
             get => _startDate;
@@ -114,15 +104,7 @@ namespace JongSnam.Mobile.ViewModels
         }
 
 
-        public IEnumerable<ImageFieldDto> ImageFieldDto
-        {
-            get => _imageFieldDto;
-            set
-            {
-                _imageFieldDto = value;
-                OnPropertyChanged(nameof(ImageFieldDto));
-            }
-        }
+
         public IEnumerable<UpdateDiscountRequest> UpdateDiscountRequest
         {
             get => _updateDiscountRequests;
@@ -259,6 +241,8 @@ namespace JongSnam.Mobile.ViewModels
                 var data = await _fieldServices.GetFieldById(fieldId);
                 Name = data.Name;
                 Price = data.Price.Value;
+                SizeFieldString = data.Size;
+                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(data.ImageFieldModel[0].Image)));
                 _isOpenbool = data.IsOpen.Value;
                 if (data.IsOpen.Value)
                 {
@@ -269,11 +253,11 @@ namespace JongSnam.Mobile.ViewModels
                     IsOpenString = "ปิดบริการ";
                 }
 
-                Percentage = data.DiscountModel.Percentage.Value;
-                StartDate = data.DiscountModel.StartDate.Value;
-                EndDate = data.DiscountModel.StartDate.Value;
-                Detail = data.DiscountModel.Detail;
-                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(data.ImageFieldDto[0].Image)));
+                Percentage = data.DiscountModel.Percentage == null ? 0 : data.DiscountModel.Percentage.Value;
+                StartDate = data.DiscountModel.StartDate == null ? DateNow : data.DiscountModel.StartDate.Value;
+                EndDate = data.DiscountModel.EndDate.Value == null ? data.DiscountModel.EndDate.Value : data.DiscountModel.EndDate.Value;
+                Detail = data.DiscountModel.Detail == null ? " ": data.DiscountModel.Detail;
+                
 
             }
             catch (Exception ex)
@@ -326,7 +310,6 @@ namespace JongSnam.Mobile.ViewModels
                 Name = Name,
                 IsOpen = Privacy == null ? _isOpenbool : Privacy.Value,
                 Price = (int)Price,
-                Size = Size,
                 UpdateDiscountRequest = (UpdateDiscountRequest)UpdateDiscountRequest,
                 UpdatePictureFieldRequest = (IList<UpdatePictureFieldRequest>)UpdatePictureFieldRequest
                 //ไม่มีสถานะร้าน
