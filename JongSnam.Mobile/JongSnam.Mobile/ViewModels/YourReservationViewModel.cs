@@ -98,6 +98,7 @@ namespace JongSnam.Mobile.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "เกิดข้อผิดพลาดบางอย่าง!!!", "ตกลง");
                 await Shell.Current.GoToAsync("//LoginPage");
             }
             finally

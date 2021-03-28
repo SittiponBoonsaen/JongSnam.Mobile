@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -43,8 +45,8 @@ namespace JongSnam.Mobile.ViewModels
                 int stopTimeMonth = (int)EndDate.Month;
                 int stopTimeDay = (int)EndDate.Day;
 
-
-                var items = await _reservationServices.GetReservationBySearch(4, startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
+                var items = await _reservationServices.GetReservationBySearch(Convert.ToInt32(userId), startTimeYear, startTimeMonth, startTimeDay, 12,0,0, stopTimeYear, stopTimeMonth, stopTimeDay, 12,0,0,UserName, StoreName, 1, 12);
                 var data = items;
                 foreach (var item in items)
                 {
