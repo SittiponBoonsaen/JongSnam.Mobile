@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JongSnam.Mobile.Models;
 
 namespace JongSnam.Mobile.ViewModels
 {
@@ -13,6 +14,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _firstName;
         private string _password;
         private string _confrimPassword;
+        private string _userType;
 
         public string FirstName
         {
@@ -78,6 +80,20 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _confrimPassword = value;
                 OnPropertyChanged(nameof(ConfrimPassword));
+            }
+        }
+        public List<IsOpen> UserTypes { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "เจ้าของร้าน", UserTypeId = 1},
+        new IsOpen(){Name = "ลูกค้า", UserTypeId = 2},
+        };
+        public string UserType
+        {
+            get => _userType;
+            set
+            {
+                _userType = value;
+                OnPropertyChanged(nameof(UserType));
             }
         }
 

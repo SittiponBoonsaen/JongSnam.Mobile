@@ -9,6 +9,7 @@ namespace JongSnam.Mobile.Models
         public string Name { get; set; }
         public bool Value { get; set; }
         public int RattingValue { get; set; }
+        public int UserTypeId { get; set; }
 
     }
 }

@@ -9,7 +9,9 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <Button Text="REGISTER" Command="{Binding RegisterCommand}" ></Button>
+            <Button HorizontalOptions="End"  Text="Register" TextColor="Gray" Image="Instagram/i759refresh2toolbarselected.png" BorderColor="Transparent" BackgroundColor="Transparent"
+            Command="{Binding RegisterCommand}"></Button>
+            
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
 

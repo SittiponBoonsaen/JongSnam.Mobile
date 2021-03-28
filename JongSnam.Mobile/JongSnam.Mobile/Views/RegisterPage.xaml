@@ -8,21 +8,25 @@
             <Label Text="REGISTER" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
             <Entry Placeholder="Email" Text="{Binding Email}" PlaceholderColor="Gray" />
-            <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
-             <Entry Placeholder="Password" IsPassword="true" Text="{Binding ConfrimPassword}" PlaceholderColor="Gray" />
+            <Entry Placeholder="รหัสผ่าน" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
+             <Entry Placeholder="ยืนยันรหัสผ่าน" IsPassword="true" Text="{Binding ConfrimPassword}" PlaceholderColor="Gray" />
             <Grid>
-                <Editor Placeholder="FirstName" Text="{Binding FirstName}" Grid.Column="0"/>
-                <Editor Placeholder="LastName" Text="{Binding LastName}" Grid.Column="1"/>
+                <Editor Placeholder="ชื่อ" Text="{Binding FirstName}" Grid.Column="0"/>
+                <Editor Placeholder="นามสกุล" Text="{Binding LastName}" Grid.Column="1"/>
             </Grid>
-            <Entry Placeholder="Phone" Text="{Binding Phone}" MaxLength="10" PlaceholderColor="Gray" />
-            <Editor Placeholder="Address" Text="{Binding Address}" HeightRequest="70" />
-
+            <Entry Placeholder="เบอร์โทรศัพท์" Text="{Binding Phone}" MaxLength="10" PlaceholderColor="Gray" />
+            <Editor Placeholder="ที่อยู่" Text="{Binding Address}" HeightRequest="70" />
+                
+                <Picker Title="กรุณาเลือก..."
+                    ItemsSource="{Binding UserTypes}"
+                    SelectedItem="{Binding UserType}"
+                    ItemDisplayBinding="{Binding Name}"/>
 
                 <Button Text="Register"
                 VerticalOptions="CenterAndExpand"
-                
+                 Command="{Binding RegisterCommand}"
                     BackgroundColor="RoyalBlue"/>
-        </StackLayout>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
