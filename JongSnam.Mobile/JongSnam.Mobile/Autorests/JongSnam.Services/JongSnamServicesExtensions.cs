@@ -588,6 +588,82 @@ namespace JongSnamService
             /// </param>
             /// <param name='userId'>
             /// </param>
+            /// <param name='month'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            public static object GetGraphReservation(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?))
+            {
+                return operations.GetGraphReservationAsync(userId, month, currentPage, pageSize).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='month'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetGraphReservationAsync(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetGraphReservationWithHttpMessagesAsync(userId, month, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='year'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            public static object GraphYearReservation(this IJongSnamServices operations, int userId, int year, int? currentPage = default(int?), int? pageSize = default(int?))
+            {
+                return operations.GraphYearReservationAsync(userId, year, currentPage, pageSize).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='year'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GraphYearReservationAsync(this IJongSnamServices operations, int userId, int year, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GraphYearReservationWithHttpMessagesAsync(userId, year, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
             /// <param name='startTimeYear'>
             /// </param>
             /// <param name='startTimeMonth'>

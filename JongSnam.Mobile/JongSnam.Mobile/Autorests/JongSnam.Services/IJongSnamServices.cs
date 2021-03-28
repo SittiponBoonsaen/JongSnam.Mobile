@@ -260,6 +260,38 @@ namespace JongSnamService
 
         /// <param name='userId'>
         /// </param>
+        /// <param name='month'>
+        /// </param>
+        /// <param name='currentPage'>
+        /// </param>
+        /// <param name='pageSize'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetGraphReservationWithHttpMessagesAsync(int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='userId'>
+        /// </param>
+        /// <param name='year'>
+        /// </param>
+        /// <param name='currentPage'>
+        /// </param>
+        /// <param name='pageSize'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GraphYearReservationWithHttpMessagesAsync(int userId, int year, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='userId'>
+        /// </param>
         /// <param name='startTimeYear'>
         /// </param>
         /// <param name='startTimeMonth'>
