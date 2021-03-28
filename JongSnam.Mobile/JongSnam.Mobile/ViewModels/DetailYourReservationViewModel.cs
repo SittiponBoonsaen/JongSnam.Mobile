@@ -22,15 +22,18 @@ namespace JongSnam.Mobile.ViewModels
         private string _userName;
         private string _storeName;
         private string _contactMobile;
-        private TimeSpan _startTime;
-        private TimeSpan _stopTime;
-        private string _approvalStatus;
+        private string _startTime;
+        private string _stopTime;
+        private string _approvalStatusString;
+        private bool _isApproved;
+        private bool _unApproved;
         private string _fieldName;
         private string _isFullAmount;
         private double _pricePerHour;
         private double _amountForPay;
-        private System.DateTime _dateTime;
-        private ImageSource _ImageSource;
+        private string _dateBook;
+        private ImageSource _receiptPayment;
+        private ImageSource _ImageProfile;
 
         public int Id
         {
@@ -68,16 +71,16 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ContactMobile));
             }
         }
-        public TimeSpan StartTime
+        public string StartTimes
         {
             get => _startTime;
             set
             {
                 _startTime = value;
-                OnPropertyChanged(nameof(StartTime));
+                OnPropertyChanged(nameof(StartTimes));
             }
         }
-        public TimeSpan StopTime
+        public string StopTime
         {
             get => _stopTime;
             set
@@ -86,13 +89,31 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StopTime));
             }
         }
-        public string ApprovalStatus
+        public bool IsApproved
         {
-            get => _approvalStatus;
+            get => _isApproved;
             set
             {
-                _approvalStatus = value;
-                OnPropertyChanged(nameof(ApprovalStatus));
+                _isApproved = value;
+                OnPropertyChanged(nameof(IsApproved));
+            }
+        }
+        public bool UnApproved
+        {
+            get => _unApproved;
+            set
+            {
+                _unApproved = value;
+                OnPropertyChanged(nameof(UnApproved));
+            }
+        }
+        public string ApprovalStatusString
+        {
+            get => _approvalStatusString;
+            set
+            {
+                _approvalStatusString = value;
+                OnPropertyChanged(nameof(ApprovalStatusString));
             }
         }
         public string FieldName
@@ -134,22 +155,33 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(AmountForPay));
             }
         }
-        public ImageSource ImageSource
+        public ImageSource ReceiptPayment
         {
-            get => _ImageSource;
+            get => _receiptPayment;
             set
             {
-                _ImageSource = value;
-                OnPropertyChanged(nameof(ImageSource));
+                _receiptPayment = value;
+                OnPropertyChanged(nameof(ReceiptPayment));
             }
         }
-        public System.DateTime DateTime
+
+        public ImageSource ImageProfile
         {
-            get => _dateTime;
+            get => _ImageProfile;
             set
             {
-                _dateTime = value;
-                OnPropertyChanged(nameof(DateTime));
+                _ImageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
+
+        public string DateBook
+        {
+            get => _dateBook;
+            set
+            {
+                _dateBook = value;
+                OnPropertyChanged(nameof(DateBook));
             }
         }
 
@@ -171,22 +203,23 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 var items = await _reservationServices.GetShowDetailYourReservation(reservationId);
-                var aa = Items;
 
-                    Id = items.Id.Value;
-                    UserName = items.UserName;
-                    StoreName = items.StoreName;
-                    ContactMobile = items.ContactMobile;
-                    StartTime = items.StartTime.Value.TimeOfDay;
-                    StopTime = items.StopTime.Value.TimeOfDay;
-                    ApprovalStatus = items.ApprovalStatus == true ? ApprovalStatus = "อนุมัติแล้ว" : ApprovalStatus = "ยังไม่ทำการอนุมัติ";
-                    FieldName = items.FieldName;
-                    IsFullAmount = items.IsFullAmount == true ? IsFullAmount = "จ่ายเต็มจำนวน" : IsFullAmount = "แบ่งจ่าย";
-                    PricePerHour = items.PricePerHour.Value;
-                    AmountForPay = items.AmountForPay.Value;
-                    DateTime = items.StartTime.Value.Date;
-                    ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.PaymentModel[0].Image)));
-
+                Id = items.Id.Value;
+                UserName = items.UserName;
+                StoreName = items.StoreName;
+                ContactMobile = items.ContactMobile;
+                StartTimes = items.StartTime.Value.TimeOfDay.ToString();
+                StopTime = items.StopTime.Value.TimeOfDay.ToString();
+                IsApproved = items.ApprovalStatus.Value ? true : false;
+                UnApproved = items.ApprovalStatus == false ? true : false;
+                ApprovalStatusString = items.ApprovalStatus == true ? ApprovalStatusString = "อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ";
+                FieldName = items.FieldName;
+                IsFullAmount = items.IsFullAmount == true ? IsFullAmount = "จ่ายเต็มจำนวน" : IsFullAmount = "แบ่งจ่าย";
+                PricePerHour = items.PricePerHour.Value;
+                AmountForPay = items.AmountForPay.Value;
+                DateBook = items.StartTime.Value.Date.ToLongDateString();
+                ReceiptPayment = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.PaymentModel[0].Image)));
+                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.ImageProfile)));
             }
             catch (Exception ex)
             {

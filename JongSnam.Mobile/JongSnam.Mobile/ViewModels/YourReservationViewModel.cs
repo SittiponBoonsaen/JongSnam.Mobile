@@ -15,10 +15,9 @@ namespace JongSnam.Mobile.ViewModels
 {
     public class YourReservationViewModel : BaseViewModel
     {
-        public ObservableCollection<ReservationDto> Items { get; }
 
         private readonly IReservationServices _reservationServices;
-
+        public ObservableCollection<ReservationDto> Items { get; }
         public Command SearchReservationCommand { get; }
         public Command MonthGraphCommand { get; }
         public Command YearGraphCommand { get; }
@@ -88,7 +87,9 @@ namespace JongSnam.Mobile.ViewModels
                             ContactMobile = item.ContactMobile,
                             StartTimePicker = item.StartTime.Value.TimeOfDay,
                             StopTimePicker = item.StopTime.Value.TimeOfDay,
-                            ApprovalStatusString = item.ApprovalStatus == true ? ApprovalStatusString ="อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ",
+                            IsApproved = item.ApprovalStatus.Value ? true : false,
+                            UnApproved = item.ApprovalStatus == false ? true : false,
+                            ApprovalStatusString = GetApprovalStatus(item.ApprovalStatus.Value, item.CreatedDate.Value),
                             DateTime = item.StartTime.Value.Date,
                             //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
                         });
@@ -124,6 +125,23 @@ namespace JongSnam.Mobile.ViewModels
                 await Shell.Current.GoToAsync("//LoginPage");
             }
             IsBusy = true;
+        }
+
+        string GetApprovalStatus(bool approvalStatus, DateTime createdDate)
+        {
+            if (DateTime.Now > createdDate.AddMinutes(30) && approvalStatus == false)
+            {
+                return "หมดเวลาการยืนยัน";
+            }
+
+            else if (approvalStatus)
+            {
+                return "อนุมัติแล้ว";
+            }
+            else
+            {
+                return "ยังไม่อนุมัติ";
+            }
         }
     }
 }
