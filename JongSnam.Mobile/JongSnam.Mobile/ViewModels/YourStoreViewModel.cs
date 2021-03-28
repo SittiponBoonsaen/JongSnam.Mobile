@@ -17,7 +17,6 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IStoreServices _storeServices;
         private int _currentPage = 1;
         private int _pageSize = 5;
-        private string userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
         public ObservableCollection<YourStoreModel> Items { get; }
 
@@ -64,6 +63,7 @@ namespace JongSnam.Mobile.ViewModels
                 //    _currentPage = 1;
                 //}
                 Items.Clear();
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
                 var data = await _storeServices.GetYourStores(Convert.ToInt32(userId), 1, 10);
 
                 if (data == null)
@@ -93,6 +93,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnAddStore(object obj)
         {
+            var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
             await Shell.Current.Navigation.PushAsync(new AddStorePage(Convert.ToInt32(userId)));
         }
 

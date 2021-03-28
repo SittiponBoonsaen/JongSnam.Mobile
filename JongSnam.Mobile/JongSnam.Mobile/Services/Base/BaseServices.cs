@@ -44,7 +44,7 @@ namespace JongSnam.Mobile.Services.Base
             {
                 var customHeaders = new Dictionary<string, List<string>>();
 
-                customHeaders.Add(AuthorizeConstants.AuthorizationKey, new List<string> { "test" });
+                customHeaders.Add(AuthorizeConstants.AuthorizationKey, new List<string> { "keyHere" });
                 customHeaders.Add(AuthorizeConstants.UserKey, new List<string> { User });
                 customHeaders.Add(AuthorizeConstants.PasswordKey, new List<string> { Password });
 

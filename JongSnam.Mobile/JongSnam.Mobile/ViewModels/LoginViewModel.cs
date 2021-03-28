@@ -39,6 +39,7 @@ namespace JongSnam.Mobile.ViewModels
 
         public LoginViewModel()
         {
+            Preferences.Clear();
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
             LoginCommand = new Command(async () => await ExecuteLoginCommand());
@@ -70,11 +71,14 @@ namespace JongSnam.Mobile.ViewModels
 
             if (userType == "Owner")
             {
+                IsCustomer = false;
                 //await Shell.Current.GoToAsync("reservation", false);
+                Application.Current.MainPage = new AppShell();
                 await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
             }
             else
             {
+                IsCustomer = true;
                 Application.Current.MainPage = new AppShellCustomer();
                 await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
             }

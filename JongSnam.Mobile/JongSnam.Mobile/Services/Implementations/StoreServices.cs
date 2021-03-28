@@ -71,7 +71,5 @@ namespace JongSnam.Mobile.Services.Implementations
             return respondModel.Collection;
 
         }
-
-
     }
 }

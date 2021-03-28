@@ -30,6 +30,8 @@ namespace JongSnam.Mobile.Services.Implementations
                 }
                 else
                 {
+                    Preferences.Clear();
+
                     // save access token
                     Preferences.Set(AuthorizeConstants.UserIdKey, userModel.Id.ToString());
                     Preferences.Set(AuthorizeConstants.UserKey, userModel.Email);
@@ -55,8 +57,7 @@ namespace JongSnam.Mobile.Services.Implementations
                 var response = await JongSnamServices.LogoutWithHttpMessagesAsync(Convert.ToInt32(id));
 
                 // remove
-                Preferences.Remove(AuthorizeConstants.UserKey);
-                Preferences.Remove(AuthorizeConstants.PasswordKey);
+                Preferences.Clear();
 
 
                 return true;

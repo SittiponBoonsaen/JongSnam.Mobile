@@ -37,7 +37,8 @@
         <Entry Text="{Binding Phone }" MaxLength="10" PlaceholderColor="Gray" />
         <Label Text="ที่อยู่"/>
         <Editor HeightRequest="80" Text="{Binding Address }" PlaceholderColor="Gray"/>
-            <Button Text="ChangePassword" BackgroundColor="Red" Command="{Binding ChangePasswordCommand}"></Button>
-    </StackLayout>
+            <Button Text="เปลี่ยนรหัสผ่าน" BackgroundColor="Green" Command="{Binding ChangePasswordCommand}"></Button>
+            <Button Text="ออกจากระบบ" BackgroundColor="Red" Command="{Binding LogoutCommand}"></Button>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -75,8 +75,9 @@ namespace JongSnam.Mobile.ViewModels
             {
                 Items.Clear();
 
-                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, string.Empty);
 
+
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
                 var items = await _reservationServices.GetYourReservation(Convert.ToInt32(userId), 1, 20);
                 if (items == null)
                 {

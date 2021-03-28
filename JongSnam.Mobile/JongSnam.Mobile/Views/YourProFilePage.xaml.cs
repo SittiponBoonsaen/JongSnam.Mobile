@@ -14,7 +14,7 @@ namespace JongSnam.Mobile.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new YourProFileViewModel(4);
+            BindingContext = _viewModel = new YourProFileViewModel();
 
         }
 

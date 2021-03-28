@@ -17,6 +17,9 @@ namespace JongSnam.Mobile.ViewModels
     {
 
         private readonly IUsersServices _usersServices;
+        private readonly IAuthenticationServices _authenticationServices;
+
+        private string userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
         private string _firstName;
         private string _lastName;
@@ -96,16 +99,18 @@ namespace JongSnam.Mobile.ViewModels
         public Command SaveCommand { get; }
 
         public Command UploadImageCommand { get; private set; }
+        public Command LogoutCommand { get; }
 
-        public YourProFileViewModel(int id)
+        public YourProFileViewModel()
         {
             _usersServices = DependencyService.Get<IUsersServices>();
+            _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
             DataUser = new UserDto();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(id));
+            Task.Run(async () => await ExecuteLoadItemsCommand(Convert.ToInt32(userId)));
 
-            SaveCommand = new Command(async () => await ExecuteSaveCommand(id));
+            SaveCommand = new Command(async () => await ExecuteSaveCommand(Convert.ToInt32(userId)));
 
             ChangePasswordCommand = new Command(OnChangePassword);
 
@@ -140,6 +145,8 @@ namespace JongSnam.Mobile.ViewModels
 
                 }
             });
+
+            LogoutCommand = new Command(async () => await ExecuteLogoutCommand());
         }
 
         async Task ExecuteLoadItemsCommand(int id)
@@ -285,6 +292,25 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = false;
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
             //_isBackFromChooseImage = false;
+        }
+
+        async Task ExecuteLogoutCommand()
+        {
+            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการออกจากระบบใช่หรือไม่ ?", "ใช่", "ไม่");
+            if (!answer)
+            {
+                return;
+            }
+            var result = await _authenticationServices.Logut();
+
+            if (result)
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถออกจากระบบได้ กรุณาลองใหม่ภายหลัง", "ตกลง");
+            }
         }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Acr.UserDialogs;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -14,6 +16,7 @@ namespace JongSnam.Mobile.ViewModels
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;
+
         public bool IsBusy
         {
             get { return isBusy; }
@@ -25,6 +28,13 @@ namespace JongSnam.Mobile.ViewModels
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        bool isCustomer = false;
+        public bool IsCustomer
+        {
+            get { return isCustomer; }
+            set { SetProperty(ref isCustomer, value); }
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
