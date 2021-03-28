@@ -79,20 +79,20 @@ namespace JongSnam.Mobile.ViewModels
                 foreach (var item in items)
                 {
                     Items.Add(
-                        new YourReservationModel
-                        {
-                            Id = item.Id,
-                            UserName = item.UserName,
-                            StoreName = item.StoreName,
-                            ContactMobile = item.ContactMobile,
-                            StartTimePicker = item.StartTime.Value.TimeOfDay,
-                            StopTimePicker = item.StopTime.Value.TimeOfDay,
-                            IsApproved = item.ApprovalStatus.Value ? true : false,
-                            UnApproved = item.ApprovalStatus == false ? true : false,
-                            ApprovalStatusString = GetApprovalStatus(item.ApprovalStatus.Value, item.CreatedDate.Value),
-                            DateTime = item.StartTime.Value.Date,
-                            //ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
-                        });
+                    new YourReservationModel
+                    {
+                        Id = item.Id,
+                        UserName = item.UserName,
+                        StoreName = item.StoreName,
+                        ContactMobile = item.ContactMobile,
+                        StartTimePicker = item.StartTime.Value.TimeOfDay,
+                        StopTimePicker = item.StopTime.Value.TimeOfDay,
+                        IsApproved = item.ApprovalStatus.Value ? true : false,
+                        UnApproved = item.ApprovalStatus == false ? true : false,
+                        ApprovalStatusString = GetApprovalStatus(item.ApprovalStatus.Value, item.CreatedDate.Value),
+                        DateTime = item.StartTime.Value.Date,
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+                    });
                 }
             }
             catch (Exception ex)

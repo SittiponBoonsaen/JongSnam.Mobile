@@ -30,11 +30,27 @@ namespace JongSnam.Mobile.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        bool isCustomer = false;
+        bool isOwner;
+        public bool IsOwner
+        {
+            get { return isOwner; }
+            set 
+            {
+                isOwner = value;
+                OnPropertyChanged(nameof(IsOwner));
+            }
+        }
+        
+
+        bool isCustomer;
         public bool IsCustomer
         {
             get { return isCustomer; }
-            set { SetProperty(ref isCustomer, value); }
+            set 
+            {
+                isCustomer = value;
+                OnPropertyChanged(nameof(IsCustomer));
+            }
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

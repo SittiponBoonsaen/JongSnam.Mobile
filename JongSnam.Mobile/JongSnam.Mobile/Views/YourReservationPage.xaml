@@ -47,7 +47,7 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="5" Source="https://img2.thaipng.com/20180421/wsq/kisspng-computer-icons-checklist-icon-design-list-vector-5adb655605cd48.7232715415243277660238.jpg" />
+                            <Image Grid.RowSpan="5" Source="{Binding ImageSource}" />
                             <Label Text="รหัสการจอง:" HorizontalOptions="End" Grid.Column="2" Grid.Row="0" ></Label>
                             <Label Text="{Binding Id}"  Grid.Column="3" Grid.Row="0" ></Label>
                             <Label Text="สถานะการจอง:" HorizontalOptions="End" Grid.Column="2" Grid.Row="1" ></Label>

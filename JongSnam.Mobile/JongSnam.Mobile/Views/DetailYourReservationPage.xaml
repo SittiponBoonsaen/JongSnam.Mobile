@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
-             xmlns:model="clr-namespace:JongSnam.Mobile.Models"
+             xmlns:model="clr-namespace:JongSnam.Mobile.Models" xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
              x:Class="JongSnam.Mobile.Views.DetailYourReservationPage"
              BindingContext="{Binding DetailYourReservationViewModel}">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+    
         <ScrollView>
             <StackLayout>
                 <Label             
@@ -66,48 +69,48 @@
                 <Label Text="{Binding PricePerHour}" TextColor="Black" Grid.Row="8" Grid.Column="2" HorizontalOptions="Start"/>
             </Grid>
 
-
-
-                
                 <Label BackgroundColor="Black" FontSize="0.5" />
-                
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+
                     <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" Padding="10" 
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"/>
-                <Label Text="{Binding IsFullAmount}" FontSize="15" TextColor="White" Padding="10" 
-                   Background="black" Grid.Row="1" Grid.Column="0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-                </Grid>
+            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" />
+            <Picker ItemsSource="{Binding PaymentMethodList}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedPayment.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก วิธีการชำระเงิน">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedPaymentIndexChangedCommand}"/>
 
-            <Image Source="{Binding ImageSource}" WidthRequest="200" HeightRequest="200"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                </Picker.Behaviors>
+            </Picker>
 
-                <Button Grid.Row="0" Grid.Column="1"  Text="ไม่อนุมัติ"  Command="{Binding CancelApprovalStatusCommand}" BackgroundColor="Red" />
-                <Button Grid.Row="0" Grid.Column="2"  Text="อนุมัติ"   Command="{Binding CommitApprovalStatusCommand}" BackgroundColor="GreenYellow" />
-                </Grid>
-            </StackLayout>
+            <Image Source="{Binding ReceiptPayment}" WidthRequest="200" HeightRequest="200"/>
+            <Grid  IsVisible="{Binding IsOwner}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="1"  Text="ไม่อนุมัติ"  Command="{Binding CancelApprovalStatusCommand}" BackgroundColor="Red" />
+            <Button Grid.Row="0" Grid.Column="2"  Text="อนุมัติ"   Command="{Binding CommitApprovalStatusCommand}" BackgroundColor="GreenYellow" />
+            </Grid>
+
+            <Grid IsVisible="{Binding IsCustomer}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Center" Text="อัปโหลดหลักฐานการชำระเงิน" Command="{Binding UploadReceiptCommand}" BackgroundColor="Green" />
+            </Grid>
+        </StackLayout>
         </ScrollView>
 </ContentPage>
