@@ -6,7 +6,7 @@
              x:Class="JongSnam.Mobile.Views.DetailYourReservationPage"
              BindingContext="{Binding DetailYourReservationViewModel}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}" />
+        <ToolbarItem Text="{Binding SaveTitle}" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
     
         <ScrollView>
@@ -75,11 +75,11 @@
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"/>
-            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" />
+            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" IsEnabled="{Binding IsCustomer}"/>
             <Picker ItemsSource="{Binding PaymentMethodList}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedPayment.Value, Mode=TwoWay}"
-                                        Title="กรุณาเลือก วิธีการชำระเงิน">
+                                        Title="กรุณาเลือก วิธีการชำระเงิน" IsEnabled="{Binding IsCustomer}">
                 <Picker.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding SelectedPaymentIndexChangedCommand}"/>

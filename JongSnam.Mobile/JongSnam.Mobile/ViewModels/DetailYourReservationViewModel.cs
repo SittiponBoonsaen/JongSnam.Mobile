@@ -47,7 +47,17 @@ namespace JongSnam.Mobile.ViewModels
         private ImageSource _ImageProfile;
         private string _paymentName;
         private ValidatableObject<EnumDto> _selectedPayment;
+        private string _saveTitle;
 
+        public string SaveTitle
+        {
+            get => _saveTitle;
+            set
+            {
+                _saveTitle = value;
+                OnPropertyChanged(nameof(SaveTitle));
+            }
+        }
         public int Id
         {
             get => _id;
@@ -251,10 +261,19 @@ namespace JongSnam.Mobile.ViewModels
 
             try
             {
-                if (Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty) == "Owner")
+                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+                if (userType == "Owner")
+                {
                     IsOwner = true;
+                    IsCustomer = false;
+                    SaveTitle = "";
+                }
                 else
+                {
+                    IsOwner = false;
                     IsCustomer = true;
+                    SaveTitle = "บันทึก";
+                }
 
                 var items = await _reservationServices.GetShowDetailYourReservation(reservationId);
 
@@ -273,7 +292,8 @@ namespace JongSnam.Mobile.ViewModels
                 SelectedPayment.Value = PaymentMethodList.Where(w => w.Id.Value == paymentId).FirstOrDefault();
                 Amount = items.AmountForPay.Value;
                 PricePerHour = items.PricePerHour.Value;
-                DateBook = items.StartTime.Value.Date.ToLongDateString();
+
+                DateBook = items.StartTime.Value.Date.ToString("dd/MMMM/yyyy");
                 ReceiptPayment =
                     items.PaymentModel.Count > 0 ? ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.PaymentModel[0].Image)))
                     : null;
@@ -398,6 +418,11 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteSaveCommandCommand(int reservationId)
         {
+            if (IsOwner)
+            {
+                return;
+            }
+
             bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการบันทึกการชำระเงินใช่หรือไม่ ?", "ใช่", "ไม่");
             if (!answer)
             {
