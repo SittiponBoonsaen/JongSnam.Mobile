@@ -48,7 +48,7 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await _fieldServices.GetFieldBySearch(startPrice, toPrice, districtId, provinceId, 1, 10);
+                var items = await _fieldServices.GetFieldBySearch(startPrice, toPrice, districtId, provinceId, 1, 6);
                 foreach (var item in items)
                 {
                     Items.Add(new YourFieldModel

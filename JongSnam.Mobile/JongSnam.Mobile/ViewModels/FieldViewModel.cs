@@ -205,6 +205,7 @@ namespace JongSnam.Mobile.ViewModels
                 var result = await _reservationServices.CreateReservation(request);
                 if(result)
                 {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ทำรายการจองเรียบร้อยแล้ว", "ตกลง");
                     await Shell.Current.Navigation.PopAsync();
                 }
                 else

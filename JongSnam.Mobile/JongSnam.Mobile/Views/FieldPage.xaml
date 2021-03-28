@@ -45,7 +45,7 @@
                         </Grid.ColumnDefinitions>
                             <Label Text="{Binding NameField}" TextColor="DarkBlue" FontSize="22"  Grid.Row="0" Grid.ColumnSpan="3"/>
                             <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
-                            <Label Text="ขนาด7 คน" TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="1"/>
+                            <Label Text="{Binding SizeField}" TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="1"/>
                             <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
                             <Label Text="{Binding Price}" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="15"/>
                             <Label Text="" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
