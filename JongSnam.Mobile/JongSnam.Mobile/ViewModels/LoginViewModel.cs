@@ -75,7 +75,8 @@ namespace JongSnam.Mobile.ViewModels
             }
             else
             {
-
+                Application.Current.MainPage = new AppShellCustomer();
+                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
             }
         }
     }

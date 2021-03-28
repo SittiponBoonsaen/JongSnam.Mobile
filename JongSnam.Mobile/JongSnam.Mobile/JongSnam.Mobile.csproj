@@ -110,6 +110,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AppShellCustomer.xaml.cs">
+      <DependentUpon>AppShellCustomer.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DayGraphPage.xaml.cs">
       <DependentUpon>DayGraphPage.xaml</DependentUpon>
     </Compile>
