@@ -399,7 +399,7 @@ namespace JongSnam.Mobile.ViewModels
                 Address = Address,
                 SubDistrictId = SelectedSubDistrict.Value.Id.Value,
                 DistrictId = SelectedDistrict.Value.Id.Value,
-                ProvinceId = SelectedDistrict.Value.Id.Value,
+                ProvinceId = SelectedProvince.Value.Id.Value,
                 ContactMobile = ContactMobile,
                 Latitude = Latitude,
                 Longtitude = Longtitude,
