@@ -17,9 +17,6 @@ namespace JongSnam.Mobile.ViewModels
     public class YearGraphViewModel : BaseViewModel
     {
         private readonly IReservationServices _reservationServices;
-
-        public ObservableCollection<GrahpDto> Items { get; }
-
         public PlotModel Model { get; set; }
 
         public YearGraphViewModel(ObservableCollection<ReservationDto> items)
@@ -38,86 +35,58 @@ namespace JongSnam.Mobile.ViewModels
 
             Task.Run(async () => await ExecuteLoadItemsCommand());
 
+
         }
         async Task ExecuteLoadItemsCommand()
         {
             IsBusy = true;
             try
             {
+                Model.InvalidatePlot(true);
 
                 var linearAxis1 = new LinearAxis();
                 linearAxis1.AbsoluteMinimum = 0;
                 linearAxis1.AbsoluteMaximum = 200;
-
 
                 var barSeries = new ColumnSeries
                 {
                     LabelPlacement = LabelPlacement.Inside,
                     LabelFormatString = "{0}",
 
-
                 };
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
-                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId),  2021 ,1 , 100);
+                var data = await _reservationServices.GraphMonthReservation(Convert.ToInt32(userId), 3, 1, 100);
 
-                int[] CountArrays = new int[32];
+                int[] CountArrays = new int[13];
 
                 foreach (var item in data)
                 {
-                    for(int i = 1; i <= 31; i++)
+                    for (int i = 1; i <= 12; i++)
                     {
-                        if (i == item.Days.Value)
+                        if (i == item.Months.Value)
                         {
-                            CountArrays[item.Days.Value] = CountArrays[item.Days.Value] + 1;
+                            CountArrays[item.Months.Value] = CountArrays[item.Months.Value] + 1;
                         }
                         else
                         {
-                            CountArrays[item.Days.Value] = CountArrays[item.Days.Value] + 0;
+                            CountArrays[item.Months.Value] = CountArrays[item.Months.Value] + 0;
                         }
                     }
                 }
 
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(33),
-                    Color = OxyColor.Parse("#3498db")
-                });
-
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(196),
-                    Color = OxyColor.Parse("#2ecc71")
-                });
-
-
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(152),
-                    Color = OxyColor.Parse("#9b59b6")
-                });
-
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(62),
-                    Color = OxyColor.Parse("#34495e")
-                });
-
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(68),
-                    Color = OxyColor.Parse("#e74c3c")
-                });
-
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(101),
-                    Color = OxyColor.Parse("#f1c40f")
-                });
-                Model.Series.Add(barSeries);
                 String[] strNames = new String[] { "ม.ค", "ก.พ", "มี.ค", "เม.ย", "พ.ค", "มิ.ย",
                 "ก.ค", "ส.ค", "ก.ย", "ต.ค", "พ.ย", "ธ.ค" };
+
+                for (int i = 2; i <= 13; i++)
+                {
+                    barSeries.Items.Add(new ColumnItem
+                    {
+                        Value = Convert.ToDouble(CountArrays[i - 1]),
+                        Color = OxyColor.Parse("#f1c40f")
+                    });
+                }
                 Model.Axes.Add(new CategoryAxis
                 {
                     Position = AxisPosition.Bottom,
@@ -128,7 +97,7 @@ namespace JongSnam.Mobile.ViewModels
                     Selectable = false,
                 });
                 Model.Axes.Add(linearAxis1);
-
+                Model.Series.Add(barSeries);
             }
             catch (Exception ex)
             {
@@ -137,6 +106,7 @@ namespace JongSnam.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
+                Model.InvalidatePlot(true);
             }
         }
 
