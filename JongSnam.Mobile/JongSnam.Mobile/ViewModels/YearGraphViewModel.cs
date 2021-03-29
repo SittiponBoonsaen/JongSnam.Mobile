@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -39,7 +40,12 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(selectYear));
             }
         }
+
         private IsOpen _selectMonth;
+
+        public Command SelectedIndexChangedCommand { get; private set; }
+
+        public Command LoadGraphCommand { get; private set; }
 
         public List<IsOpen> selectMonths { get; set; } = new List<IsOpen>()
         {
@@ -58,7 +64,8 @@ namespace JongSnam.Mobile.ViewModels
         };
         public IsOpen selectMonth
         {
-            get => _selectMonth;
+            get { return _selectMonth; }
+
             set
             {
                 _selectMonth = value;
@@ -80,15 +87,25 @@ namespace JongSnam.Mobile.ViewModels
 
             };
 
+            //InitValidation();
+
             Task.Run(async () => await ExecuteLoadItemsCommand());
 
 
+            LoadGraphCommand = new Command(async () => await OnLoadGraphCommand(selectMonth.Month));
+
         }
-        async Task ExecuteLoadItemsCommand()
+        //private void InitValidation()
+        //{
+        //    _selectMonth = new ValidatableObject<IsOpen>();
+        //    _selectMonth.Validations.Add(new IsSelectedItemRule<IsOpen>() { ValidationMessage = "กรุณาเลือกเดือน" });
+        //}
+        async Task OnLoadGraphCommand(int? Month)
         {
-            IsBusy = true;
             try
             {
+                IsBusy = true;
+
                 Model.InvalidatePlot(true);
 
                 var linearAxis1 = new LinearAxis();
@@ -101,11 +118,21 @@ namespace JongSnam.Mobile.ViewModels
                     LabelFormatString = "{0}",
 
                 };
+                int? month = Month == 0 || Month == null ? 0 : Month;
+                if (month == 0)
+                {
+                    month = 0;
+                }
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
-                var data = await _reservationServices.GraphMonthReservation(Convert.ToInt32(userId), selectMonth.Month, 1, 100);
-
+                var data = await _reservationServices.GraphMonthReservation(Convert.ToInt32(userId), (int)month, 1, 100);
+                if (data == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่มีช้อมูลที่คุณเลือก", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                    return;
+                }
                 int[] CountArrays = new int[13];
 
                 foreach (var item in data)
@@ -145,6 +172,25 @@ namespace JongSnam.Mobile.ViewModels
                 });
                 Model.Axes.Add(linearAxis1);
                 Model.Series.Add(barSeries);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+                Model.InvalidatePlot(true);
+            }
+        }
+        async Task ExecuteLoadItemsCommand()
+        {
+            IsBusy = true;
+            try
+            {
+
+                
             }
             catch (Exception ex)
             {
@@ -153,7 +199,6 @@ namespace JongSnam.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
-                Model.InvalidatePlot(true);
             }
         }
 
