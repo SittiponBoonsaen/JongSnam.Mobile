@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using OxyPlot;
@@ -16,6 +17,8 @@ namespace JongSnam.Mobile.ViewModels
     public class YearGraphViewModel : BaseViewModel
     {
         private readonly IReservationServices _reservationServices;
+
+        public ObservableCollection<GrahpDto> Items { get; }
 
         public PlotModel Model { get; set; }
 
@@ -57,7 +60,24 @@ namespace JongSnam.Mobile.ViewModels
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
+                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId),  2021 ,1 , 100);
 
+                int[] CountArrays = new int[32];
+
+                foreach (var item in data)
+                {
+                    for(int i = 1; i <= 31; i++)
+                    {
+                        if (i == item.Days.Value)
+                        {
+                            CountArrays[item.Days.Value] = CountArrays[item.Days.Value] + 1;
+                        }
+                        else
+                        {
+                            CountArrays[item.Days.Value] = CountArrays[item.Days.Value] + 0;
+                        }
+                    }
+                }
 
                 barSeries.Items.Add(new ColumnItem
                 {

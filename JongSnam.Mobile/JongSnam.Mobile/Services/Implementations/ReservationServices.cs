@@ -85,6 +85,24 @@ namespace JongSnam.Mobile.Services.Implementations
             }
         }
 
+        public async Task<IEnumerable<GrahpDto>> GraphYearReservation(int userId,int year, int currentPage, int pageSize)
+        {
+            var response = await JongSnamServices.GraphYearReservationWithHttpMessagesAsync(userId, year, currentPage, pageSize, CustomHeaders);
+
+            var ReservationDto = await GetRespondDtoHandlerHttpStatus<GrahpDtoBasePagingDto>(response);
+
+            return ReservationDto.Collection;
+        }
+
+        public async Task<IEnumerable<GrahpDto>> GraphMonthReservation(int userId,int month, int currentPage, int pageSize)
+        {
+            var response = await JongSnamServices.GetGraphReservationWithHttpMessagesAsync(userId, month, currentPage, pageSize, CustomHeaders);
+
+            var ReservationDto = await GetRespondDtoHandlerHttpStatus<GrahpDtoBasePagingDto>(response);
+
+            return ReservationDto.Collection;
+        }
+
 
     }
 }
