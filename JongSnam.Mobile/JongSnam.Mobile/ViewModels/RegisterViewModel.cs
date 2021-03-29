@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
+        private readonly IAuthenticationServices _authenticationServices;
         private string _phone;
         private string _address;
         private string _emailName;
@@ -109,6 +113,7 @@ namespace JongSnam.Mobile.ViewModels
         {
             _usersServices = DependencyService.Get<IUsersServices>();
 
+            _authenticationServices = DependencyService.Get<IAuthenticationServices>();
             RegisterCommand = new Command(async () => await OnRegisterCommand());
 
         }
@@ -145,7 +150,36 @@ namespace JongSnam.Mobile.ViewModels
             if (statusSaved)
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ท่านได้สมัครสมาชิกเรียบร้อยแล้ว", "ตกลง");
-                await Shell.Current.Navigation.PopAsync();
+
+                if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                {
+                    return;
+                }
+
+                var statusLogin = await _authenticationServices.Login(request.Email, request.Password);
+
+                if (!statusLogin)
+                {
+                    await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
+                    return;
+                }
+
+                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+
+                if (userType == "Owner")
+                {
+                    IsOwner = true;
+                    IsCustomer = false;
+                    Application.Current.MainPage = new AppShell();
+                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                }
+                else
+                {
+                    IsCustomer = true;
+                    IsOwner = false;
+                    Application.Current.MainPage = new AppShellCustomer();
+                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                }
             }
             else
             {
