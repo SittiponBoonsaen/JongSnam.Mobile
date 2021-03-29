@@ -30,9 +30,9 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="สนาม" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="ประวัติการจอง" Icon="icon_about.png" Route="YourReservationPage" ContentTemplate="{DataTemplate local:YourReservationPage}" />
-        <ShellContent Title="โปรไฟล์" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:YourProFilePage}" />
+        <ShellContent Title="สนาม" Icon="icon_soccer.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="ประวัติการจอง" Icon="icon_calendar.png" Route="YourReservationPage" ContentTemplate="{DataTemplate local:YourReservationPage}" />
+        <ShellContent Title="โปรไฟล์" Icon="icon_user.png" ContentTemplate="{DataTemplate local:YourProFilePage}" />
     </TabBar>
 
     <!--

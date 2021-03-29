@@ -28,12 +28,14 @@
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
-
-            <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                
+                <Label Text="ชื่อสนาม"/>
+                <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                <Label Text="ราคาสนาม"/>
             <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
                 <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
-
-            <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
+                <Label Text="ส่วนลด %"/>
+                <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
                 
             <Grid>
                     <Grid.RowDefinitions>
