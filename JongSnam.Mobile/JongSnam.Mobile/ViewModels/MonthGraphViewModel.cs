@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using OxyPlot;
@@ -23,6 +25,26 @@ namespace JongSnam.Mobile.ViewModels
         public PlotModel Model { get; set; }
 
         private Random rnd = new Random();
+
+        private IsOpen _selectYear;
+
+
+        public List<IsOpen> selectYears { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "แสดงปี คส.2020" , Year = 2020},
+        new IsOpen(){Name = "แสดงปี คส.2021", Year = 2021},
+        new IsOpen(){Name = "แสดงปี คส.2022", Year = 2022},
+        new IsOpen(){Name = "แสดงปี คส.2023", Year = 2023}
+        };
+        public IsOpen selectYear
+        {
+            get => _selectYear;
+            set
+            {
+                _selectYear = value;
+                OnPropertyChanged(nameof(selectYear));
+            }
+        }
 
         public MonthGraphViewModel(ObservableCollection<ReservationDto> items)
         {
@@ -64,7 +86,7 @@ namespace JongSnam.Mobile.ViewModels
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
-                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId), 2021, 1, 100);
+                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId), selectYear.Year, 1, 100);
 
                 int[] CountArrays = new int[32];
 

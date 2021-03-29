@@ -10,6 +10,8 @@ namespace JongSnam.Mobile.Models
         public bool Value { get; set; }
         public int RattingValue { get; set; }
         public int UserTypeId { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
 
     }
 }
