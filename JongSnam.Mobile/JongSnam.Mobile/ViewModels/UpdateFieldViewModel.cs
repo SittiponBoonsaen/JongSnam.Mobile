@@ -272,6 +272,7 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
                 }
+
             }
             catch (Exception ex)
             {

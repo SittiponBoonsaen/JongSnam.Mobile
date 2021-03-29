@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using OxyPlot;
@@ -24,6 +26,35 @@ namespace JongSnam.Mobile.ViewModels
 
         private Random rnd = new Random();
 
+        public Command LoadGraphCommand { get; private set; }
+
+        private IsOpen _selectMonth;
+
+        public List<IsOpen> selectMonths { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "แสดงปี เดือน มกราคม" , Month = 1},
+        new IsOpen(){Name = "แสดงปี เดือน กุมภาพันธ์", Month = 2},
+        new IsOpen(){Name = "แสดงปี เดือน มีนาคม", Month = 3},
+        new IsOpen(){Name = "แสดงปี เดือน เมษายน", Month = 4},
+        new IsOpen(){Name = "แสดงปี เดือน พฤษภาคม " , Month = 5},
+        new IsOpen(){Name = "แสดงปี เดือน มิถุนายน", Month = 6},
+        new IsOpen(){Name = "แสดงปี เดือน กรกฎาคม", Month = 7},
+        new IsOpen(){Name = "แสดงปี เดือน สิงหาคม", Month = 8},
+        new IsOpen(){Name = "แสดงปี เดือน กันยายน" , Month = 9},
+        new IsOpen(){Name = "แสดงปี เดือน ตุลาคม", Month = 10},
+        new IsOpen(){Name = "แสดงปี เดือน พฤศจิกายน", Month = 11},
+        new IsOpen(){Name = "แสดงปี เดือน ธันวาคม", Month = 12}
+        };
+        public IsOpen selectMonth
+        {
+            get { return _selectMonth; }
+
+            set
+            {
+                _selectMonth = value;
+                OnPropertyChanged(nameof(selectMonth));
+            }
+        }
         public MonthGraphViewModel(ObservableCollection<ReservationDto> items)
         {
             _reservationServices = DependencyService.Get<IReservationServices>();
@@ -38,17 +69,20 @@ namespace JongSnam.Mobile.ViewModels
 
             };
 
-            Task.Run(async () => await ExecuteLoadItemsCommand());
+            LoadGraphCommand = new Command(async () => await OnLoadGraphCommand(selectMonth.Month));
 
 
         }
 
 
-        async Task ExecuteLoadItemsCommand()
+        async Task OnLoadGraphCommand(int? Month)
         {
-            IsBusy = true;
+            
             try
             {
+                IsBusy = true;
+
+                Model.InvalidatePlot(true);
 
                 var linearAxis1 = new LinearAxis();
                 linearAxis1.AbsoluteMinimum = 0;
@@ -61,11 +95,22 @@ namespace JongSnam.Mobile.ViewModels
                     LabelFormatString = "{0}",
 
                 };
+                int? month = Month == 0 || Month == null ? 0 : Month;
+                if (month == 0)
+                {
+                    month = 0;
+                }
+
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
-                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId), 2021, 1, 100);
-
+                var data = await _reservationServices.GraphMonthReservation(Convert.ToInt32(userId), (int)month, 1, 100);
+                if (data == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่มีช้อมูลที่คุณเลือก", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                    return;
+                }
                 int[] CountArrays = new int[32];
 
                 foreach (var item in data)

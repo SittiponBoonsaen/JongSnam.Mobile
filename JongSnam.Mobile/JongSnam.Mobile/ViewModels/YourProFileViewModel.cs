@@ -161,7 +161,16 @@ namespace JongSnam.Mobile.ViewModels
                 Phone = dataUser.ContactMobile;
                 Address = dataUser.Address;
                 DataUser = dataUser;
-                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
+
+                if (!(String.IsNullOrEmpty(dataUser.Image)))
+                {
+                    ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
+                }
+                else
+                {
+                    ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                }
+
             }
             catch (Exception ex)
             {

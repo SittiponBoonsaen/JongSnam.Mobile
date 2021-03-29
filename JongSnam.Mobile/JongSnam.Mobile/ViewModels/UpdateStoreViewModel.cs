@@ -409,7 +409,15 @@ namespace JongSnam.Mobile.ViewModels
                 SubDistrictString = subDistrict.Name;
                 DistrictString = district.Name;
                 ProvinceString = province.Name;
-                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataStore.Image)));
+                if (!(String.IsNullOrEmpty(dataStore.Image)))
+                {
+                    ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataStore.Image)));
+                }
+                else
+                {
+                    ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                }
+
 
                 _distrctId = dataStore.DistrictId.Value;
                 _subDistrictId = dataStore.SubDistrictId.Value;
