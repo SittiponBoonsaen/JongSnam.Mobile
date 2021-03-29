@@ -32,7 +32,7 @@
                 <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
                 <Picker
                     ItemsSource="{Binding IsOpenValues}"
-                    SelectedItem="{Binding SelectedIsOpen}"
+                    SelectedItem="{Binding SelectedIsOpen.Value}"
                     ItemDisplayBinding="{Binding Name}" TextColor="Black" TitleColor="Black"/>
 
                 <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}" />

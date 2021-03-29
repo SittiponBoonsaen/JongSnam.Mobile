@@ -21,7 +21,22 @@ namespace JongSnam.Mobile.ViewModels
 
         private FieldDetailDto _fieldDto { get; set; }
 
-        public ValidatableObject<EnumDto> SelectedIsOpen { get; set; }
+        private ValidatableObject<EnumDto> _selectedIsOpen;
+
+        public ValidatableObject<EnumDto> SelectedIsOpen
+        {
+            get
+            {
+                return _selectedIsOpen;
+            }
+
+            set
+            {
+                _selectedIsOpen = value;
+                OnPropertyChanged(nameof(SelectedIsOpen));
+            }
+        }
+        public Command SelectedIsOpenIndexChangedCommand { get; private set; }
         public List<EnumDto> IsOpenValues { get; set; }
 
         private string _name;
@@ -194,8 +209,7 @@ namespace JongSnam.Mobile.ViewModels
                 }
             };
 
-            SelectedIsOpen = new ValidatableObject<EnumDto>();
-
+            _selectedIsOpen = new ValidatableObject<EnumDto>();
             _fieldServices = DependencyService.Get<IFieldServices>();
 
             DeleteFieldCommand = new Command(async () => await OnDeleteFieldCommandAlertYesNoClicked(fieldDto.Id.Value));

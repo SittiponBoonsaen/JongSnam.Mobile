@@ -98,7 +98,10 @@ namespace JongSnam.Mobile.ViewModels
                 StoreName = storeDto.Name;
                 OfficeHours = storeDto.OfficeHours;
                 var items = await _fieldServices.GetFieldByStoreId(storeDto.Id.Value, 1, 20);
-
+                if (items == null)
+                {
+                    return;
+                }
                 foreach (var item in items)
                 {
                     Items.Add(new ListFieldModel
