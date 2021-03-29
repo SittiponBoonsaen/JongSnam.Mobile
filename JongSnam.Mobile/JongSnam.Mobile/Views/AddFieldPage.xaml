@@ -21,19 +21,21 @@
                     <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
                     <ImageButton Margin="3"
                              BackgroundColor="#f5f5f3"
-                            HeightRequest="56" 
-                             WidthRequest="56"
+                             HeightRequest="64" 
+                             WidthRequest="64"
                             Padding="2"
-                            Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
+                            Source="add_photo.png"
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
-
-            <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                
+                <Label Text="ชื่อสนาม"/>
+                <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                <Label Text="ราคาสนาม"/>
             <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
                 <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
-
-            <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
+                <Label Text="ส่วนลด %"/>
+                <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
                 
             <Grid>
                     <Grid.RowDefinitions>

@@ -22,10 +22,10 @@
                     <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" />
                     <ImageButton Margin="3"
                              BackgroundColor="#f5f5f3"
-                            HeightRequest="56" 
-                             WidthRequest="56"
+                             HeightRequest="64" 
+                             WidthRequest="64"
                             Padding="2"
-                            Source="https://cdn0.iconfinder.com/data/icons/communication-2-5/98/59-512.png"
+                            Source="add_photo.png"
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
