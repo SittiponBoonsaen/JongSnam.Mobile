@@ -331,6 +331,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task LoadProvinceEnum()
         {
+
             try
             {
                 IsBusy = true;
