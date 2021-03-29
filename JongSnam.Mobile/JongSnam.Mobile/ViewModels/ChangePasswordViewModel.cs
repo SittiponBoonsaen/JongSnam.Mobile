@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
 using Xamarin.Forms;
@@ -55,27 +56,50 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSave(int idUser)
         {
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
-            if (!answer)
+            try
             {
+                bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
+                if (!answer)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(OldPassword) || string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmNewPassword))
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    return;
+                }
+                else if (NewPassword != ConfirmNewPassword)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "รหัสผ่านไม่ตรงกัน", "ตกลง");
+                    return;
+                }
+                var request = new ChangePasswordRequest
+                {
+                    OldPassword = OldPassword,
+                    NewPassword = NewPassword,
+                    ConfirmNewPassword = ConfirmNewPassword
+                };
+                var statusSaved = await _usersServices.ChangePassword(idUser, request);
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                 return;
             }
-            var request = new ChangePasswordRequest
+            finally
             {
-                OldPassword = OldPassword,
-                NewPassword = NewPassword,
-                ConfirmNewPassword = ConfirmNewPassword
-            };
-            var statusSaved = await _usersServices.ChangePassword(idUser, request);
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                IsBusy = true;
             }
-            else
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
-            }
-            await Shell.Current.GoToAsync("..");
 
         }
 

@@ -55,6 +55,12 @@ namespace JongSnam.Mobile.ViewModels
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
             {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
+            }
+            if (!IsValidEmail(UserName))
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
                 return;
             }
 
@@ -81,6 +87,18 @@ namespace JongSnam.Mobile.ViewModels
                 IsOwner = false;
                 Application.Current.MainPage = new AppShellCustomer();
                 await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+            }
+        }
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

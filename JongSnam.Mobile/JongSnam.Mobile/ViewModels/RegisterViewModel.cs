@@ -120,72 +120,97 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnRegisterCommand()
         {
-            if (Password != ConfrimPassword)
+            IsBusy = true;
+            try
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "รหัสผ่านไม่ตรงกัน", "ตกลง");
-                return;
-            }
-            var request = new UserRequest
-            {
-                Email = Email,
-                Password = Password,
-                ConfirmPassword = ConfrimPassword,
-                FirstName = FirstName,
-                LastName = LastName,
-                ContactMobile = Phone,
-                Address = Address,
-                ImageProfile = null,
-                UserTypeId = UserType.UserTypeId,
+                if (string.IsNullOrWhiteSpace(Address) || UserType.UserTypeId == 0 || UserType == null || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Phone))
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    return;
+                }
+                else if (Phone.Length < 10)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
+                    return;
+                }
 
-            };
+                else if (Password != ConfrimPassword)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "รหัสผ่านไม่ตรงกัน", "ตกลง");
+                    return;
+                }
 
-            bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "คุณแน่ใจที่จะสมัครสมาชิกใช่ไหม ?", "ใช่", "ไม่");
-            if (!answer)
-            {
-                return;
-            }
+                var request = new UserRequest
+                {
+                    Email = Email,
+                    Password = Password,
+                    ConfirmPassword = ConfrimPassword,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    ContactMobile = Phone,
+                    Address = Address,
+                    ImageProfile = null,
+                    UserTypeId = UserType.UserTypeId,
+                };
 
-            var statusSaved = await _usersServices.CreateUser(request);
 
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ท่านได้สมัครสมาชิกเรียบร้อยแล้ว", "ตกลง");
-
-                if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "คุณแน่ใจที่จะสมัครสมาชิกใช่ไหม ?", "ใช่", "ไม่");
+                if (!answer)
                 {
                     return;
                 }
 
-                var statusLogin = await _authenticationServices.Login(request.Email, request.Password);
+                var statusSaved = await _usersServices.CreateUser(request);
 
-                if (!statusLogin)
+                if (statusSaved)
                 {
-                    await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
-                    return;
-                }
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ท่านได้สมัครสมาชิกเรียบร้อยแล้ว", "ตกลง");
 
-                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+                    if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                    {
+                        return;
+                    }
 
-                if (userType == "Owner")
-                {
-                    IsOwner = true;
-                    IsCustomer = false;
-                    Application.Current.MainPage = new AppShell();
-                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                    var statusLogin = await _authenticationServices.Login(request.Email, request.Password);
+
+                    if (!statusLogin)
+                    {
+                        await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
+                        return;
+                    }
+
+                    var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+
+                    if (userType == "Owner")
+                    {
+                        IsOwner = true;
+                        IsCustomer = false;
+                        Application.Current.MainPage = new AppShell();
+                        await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                    }
+                    else
+                    {
+                        IsCustomer = true;
+                        IsOwner = false;
+                        Application.Current.MainPage = new AppShellCustomer();
+                        await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                    }
                 }
                 else
                 {
-                    IsCustomer = true;
-                    IsOwner = false;
-                    Application.Current.MainPage = new AppShellCustomer();
-                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "เกิดข้อผิดพลาดบางอย่าง!!!!", "ตกลง");
                 }
+
             }
-            else
+            catch(Exception ex)
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "เกิดข้อผิดพลาดบางอย่าง!!!!", "ตกลง");
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
             }
-           
+            finally
+            {
+                IsBusy = true;
+            }
             
         }
 

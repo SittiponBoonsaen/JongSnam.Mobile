@@ -386,41 +386,66 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSaveCommand(int userId)
         {
-            bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "ต้องการเพิ่มร้านใช่หรือไม่ ?", "ใช่", "ไม่");
-            if (!answer)
+            try
             {
+                bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "ต้องการเพิ่มร้านใช่หรือไม่ ?", "ใช่", "ไม่");
+                if (!answer)
+                {
+                    return;
+                }
+                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
+                if (imageStream == null || string.IsNullOrWhiteSpace(Name) || SelectedDistrict.Value == null || SelectedProvince.Value == null || SelectedSubDistrict.Value == null || string.IsNullOrWhiteSpace(ContactMobile) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(OfficeHours) || string.IsNullOrWhiteSpace(Rules))
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    return;
+                }
+
+                if (ContactMobile.Length < 10)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกให้ครบ10หลัก", "ตกลง");
+                    return;
+                }
+
+                var request = new StoreRequest
+                {
+                    OwnerId = userId,
+                    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
+                    Name = Name,
+                    Address = Address,
+                    SubDistrictId = SelectedSubDistrict.Value.Id.Value,
+                    DistrictId = SelectedDistrict.Value.Id.Value,
+                    ProvinceId = SelectedProvince.Value.Id.Value,
+                    ContactMobile = ContactMobile,
+                    Latitude = Latitude,
+                    Longtitude = Longtitude,
+                    OfficeHours = OfficeHours,
+                    IsOpen = Privacy == null ? false : Privacy.Value,
+                    Rules = Rules
+                };
+
+                IsBusy = true;
+                var statusSaved = await _storeServices.AddStore(request);
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                 return;
             }
-            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
-            var request = new StoreRequest
+            finally
             {
-                OwnerId = userId,
-                Image = await GeneralHelper.GetBase64StringAsync(imageStream),
-                Name = Name,
-                Address = Address,
-                SubDistrictId = SelectedSubDistrict.Value.Id.Value,
-                DistrictId = SelectedDistrict.Value.Id.Value,
-                ProvinceId = SelectedProvince.Value.Id.Value,
-                ContactMobile = ContactMobile,
-                Latitude = Latitude,
-                Longtitude = Longtitude,
-                OfficeHours = OfficeHours,
-                IsOpen = Privacy == null ? false : Privacy.Value,
-                Rules = Rules
-            };
-
-            IsBusy = true;
-            var statusSaved = await _storeServices.AddStore(request);
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
-                await Shell.Current.GoToAsync("..");
+                IsBusy = false;
             }
-            else
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
-            }
-            IsBusy = false;
         }
 
 

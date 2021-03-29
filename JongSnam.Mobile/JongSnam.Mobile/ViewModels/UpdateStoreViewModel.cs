@@ -478,7 +478,8 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                throw ex;
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
             }
             finally
             {

@@ -310,32 +310,35 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSaveCommandAlertYesNoClicked(int fieldId, int storeId)
         {
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการที่จะแก้ไขข้อมูลใช่ไหม ?", "ใช่", "ไม่");
-            if (!answer)
+            try 
             {
-                return;
-            }
-            IsBusy = true;
-
-            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
-
-            var request = new UpdateFieldRequest
-            {
-                Active = _fieldDto.Active,
-                Name = Name,
-                IsOpen = SelectedIsOpen.Value.Id.Value == 1 ? true : false,
-                Price = (int)Price,
-                Size = SizeField,
-                UpdateDiscountRequest = new UpdateDiscountRequest
+                IsBusy = true;
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการที่จะแก้ไขข้อมูลใช่ไหม ?", "ใช่", "ไม่");
+                if (!answer)
                 {
-                    Detail = Detail,
-                    Percentage = Percentage,
-                    StartDate = StartDate,
-                    EndDate = EndDate,
-                    Id = _fieldDto.DiscountModel.Id
-                },
-                
-                UpdatePictureFieldRequest = new List<UpdatePictureFieldRequest>
+                    return;
+                }
+                IsBusy = true;
+
+                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
+                var request = new UpdateFieldRequest
+                {
+                    Active = _fieldDto.Active,
+                    Name = Name,
+                    IsOpen = SelectedIsOpen.Value.Id.Value == 1 ? true : false,
+                    Price = (int)Price,
+                    Size = SizeField,
+                    UpdateDiscountRequest = new UpdateDiscountRequest
+                    {
+                        Detail = Detail,
+                        Percentage = Percentage,
+                        StartDate = StartDate,
+                        EndDate = EndDate,
+                        Id = _fieldDto.DiscountModel.Id
+                    },
+
+                    UpdatePictureFieldRequest = new List<UpdatePictureFieldRequest>
                 {
                     new UpdatePictureFieldRequest
                     {
@@ -343,20 +346,31 @@ namespace JongSnam.Mobile.ViewModels
                         Image = await GeneralHelper.GetBase64StringAsync(imageStream)
                     }
                 },
-                StoreId = storeId
-                //ไม่มีสถานะร้าน
-            };
-            var statusSaved = await _fieldServices.UpdateField(fieldId, request);
+                    StoreId = storeId
+                    //ไม่มีสถานะร้าน
+                };
+                var statusSaved = await _fieldServices.UpdateField(fieldId, request);
 
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
-                await Shell.Current.Navigation.PopAsync();
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
             }
+            finally
+            {
+                IsBusy = false;
+            }
+            
         }
 
         private async Task TakePhotoAsync()

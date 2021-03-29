@@ -184,53 +184,88 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnSaveCommand(int storeId)
         {
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการบันทึกใช่ไหม ?", "ใช่", "ไม่");
-            if (!answer)
+            try
             {
-                return;
-            }
-            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+                IsBusy = true;
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการบันทึกใช่ไหม ?", "ใช่", "ไม่");
+                if (!answer)
+                {
+                    return;
+                }
+                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
 
-            var fieldRequest = new FieldRequest()
-            {
-                Active = true,
-                IsOpen = true,
-                Name = NameField,
-                Price = PriceField,
-                Size = SizeField,
-                StoreId = storeId
-            };
-            var discountRequest = new DiscountRequest()
-            {
-                StartDate = StartDate,
-                EndDate = EndDate,
-                Detail = Detail,
-                Percentage = Percentage
-            };
-            var imageFieldRequest = new ImageFieldRequest()
-            {
-                Image = await GeneralHelper.GetBase64StringAsync(imageStream)
-            };
-            var request = new AddFieldRequest
-            {
-                DiscountRequest = discountRequest,
-                FieldRequest = fieldRequest,
-                PictureFieldRequest = new List<ImageFieldRequest>
+                if (imageStream == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพ", "ตกลง");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(NameField))
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลชือสนาม", "ตกลง");
+                    return;
+                }
+                if (PriceField == 0)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลราคาสนาม", "ตกลง");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(SizeField))
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลขนาดสนาม", "ตกลง");
+                    return;
+                }
+                var fieldRequest = new FieldRequest()
+                {
+                    Active = true,
+                    IsOpen = true,
+                    Name = NameField,
+                    Price = PriceField,
+                    Size = SizeField,
+                    StoreId = storeId
+                };
+                var discountRequest = new DiscountRequest()
+                {
+                    StartDate = StartDate,
+                    EndDate = EndDate,
+                    Detail = Detail,
+                    Percentage = Percentage
+                };
+                var imageFieldRequest = new ImageFieldRequest()
+                {
+                    Image = await GeneralHelper.GetBase64StringAsync(imageStream)
+                };
+                var request = new AddFieldRequest
+                {
+                    DiscountRequest = discountRequest,
+                    FieldRequest = fieldRequest,
+                    PictureFieldRequest = new List<ImageFieldRequest>
                 {
                     imageFieldRequest
                 }
-            };
+                };
 
-            var statusSaved = await _fieldServices.AddField(request);
-            if (statusSaved)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
-                await Shell.Current.Navigation.PopAsync();
+                var statusSaved = await _fieldServices.AddField(request);
+                if (statusSaved)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+
             }
-            else
+            catch (Exception ex) 
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
             }
+            finally
+            {
+                IsBusy = false;
+            }
+           
         }
 
         private void InitValidation()
