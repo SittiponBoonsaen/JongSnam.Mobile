@@ -58,7 +58,7 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await _storeServices.GetStores(1, 6);
+                var items = await _storeServices.GetStores(1, 20);
                 foreach (var item in items)
                 {
                     Items.Add(new StoreDtoModel { 
