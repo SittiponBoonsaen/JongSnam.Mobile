@@ -86,7 +86,7 @@
                     SelectedItem="{Binding Privacy}"
                     ItemDisplayBinding="{Binding Name}"/>
 
-                
+                <Label Text="กฏของร้าน"/>
                 <Editor Text="{Binding Rules}" HeightRequest="80" />
             </StackLayout>
         </ScrollView>
