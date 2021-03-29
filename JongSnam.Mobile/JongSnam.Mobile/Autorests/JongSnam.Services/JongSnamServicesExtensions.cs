@@ -7,6 +7,8 @@
 namespace JongSnamService
 {
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -218,6 +220,32 @@ namespace JongSnamService
             public static async Task<object> LogoutAsync(this IJongSnamServices operations, int? id = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.LogoutWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object CreateUser(this IJongSnamServices operations, UserRequest body = default(UserRequest))
+            {
+                return operations.CreateUserAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> CreateUserAsync(this IJongSnamServices operations, UserRequest body = default(UserRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateUserWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -594,9 +622,9 @@ namespace JongSnamService
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetGraphReservation(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GraphMonthReservation(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetGraphReservationAsync(userId, month, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GraphMonthReservationAsync(userId, month, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -613,9 +641,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetGraphReservationAsync(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GraphMonthReservationAsync(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetGraphReservationWithHttpMessagesAsync(userId, month, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GraphMonthReservationWithHttpMessagesAsync(userId, month, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1088,32 +1116,6 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='body'>
-            /// </param>
-            public static object CreateUser(this IJongSnamServices operations, UserRequest body = default(UserRequest))
-            {
-                return operations.CreateUserAsync(body).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='body'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> CreateUserAsync(this IJongSnamServices operations, UserRequest body = default(UserRequest), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateUserWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='id'>
             /// </param>
             public static object GetUserById(this IJongSnamServices operations, int id)
@@ -1192,6 +1194,28 @@ namespace JongSnamService
             public static async Task<object> UpdateUserAsync(this IJongSnamServices operations, int id, UpdateUserRequest body = default(UpdateUserRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateUserWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IList<WeatherForecast> Get(this IJongSnamServices operations)
+            {
+                return operations.GetAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<WeatherForecast>> GetAsync(this IJongSnamServices operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

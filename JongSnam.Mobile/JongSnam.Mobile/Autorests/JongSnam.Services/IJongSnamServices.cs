@@ -114,6 +114,16 @@ namespace JongSnamService
         /// </param>
         Task<HttpOperationResponse<object>> LogoutWithHttpMessagesAsync(int? id = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> CreateUserWithHttpMessagesAsync(UserRequest body = default(UserRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='enumName'>
         /// </param>
         /// <param name='id'>
@@ -272,7 +282,7 @@ namespace JongSnamService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetGraphReservationWithHttpMessagesAsync(int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GraphMonthReservationWithHttpMessagesAsync(int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='userId'>
         /// </param>
@@ -464,16 +474,6 @@ namespace JongSnamService
         /// </param>
         Task<HttpOperationResponse<object>> GetUsersWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='body'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> CreateUserWithHttpMessagesAsync(UserRequest body = default(UserRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <param name='id'>
         /// </param>
         /// <param name='customHeaders'>
@@ -507,6 +507,14 @@ namespace JongSnamService
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(int id, UpdateUserRequest body = default(UpdateUserRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<WeatherForecast>>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
