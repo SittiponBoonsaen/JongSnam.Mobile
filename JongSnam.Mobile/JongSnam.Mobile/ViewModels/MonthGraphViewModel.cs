@@ -42,56 +42,67 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     LabelPlacement = LabelPlacement.Inside,
                     LabelFormatString = "{0}",
-
-
                 };
 
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(33),
-                    Color = OxyColor.Parse("#3498db")
-                });
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.Parse("#3498db")
+                //});
 
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(196),
-                    Color = OxyColor.Parse("#2ecc71")
-                });
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(152),
-                    Color = OxyColor.Parse("#9b59b6")
-                });
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.Parse("#2ecc71")
+                //});
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.Parse("#9b59b6")
+                //});
 
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(62),
-                    Color = OxyColor.Parse("#34495e")
-                });
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.Parse("#34495e")
+                //});
 
-                barSeries.Items.Add(new ColumnItem
-                {
-                    Value = Convert.ToDouble(68),
-                    Color = OxyColor.Parse("#e74c3c")
-                });
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.Parse("#e74c3c")
+                //});
 
-                barSeries.Items.Add(new ColumnItem
+                //barSeries.Items.Add(new ColumnItem
+                //{
+                //    Color = OxyColor.FromRgb
+                //});
+
+                string[] n = new string[31];
+                Random rnd = new Random();
+                for (int i = 0; i < n.Length; i++)
                 {
-                    Value = Convert.ToDouble(101),
-                    Color = OxyColor.Parse("#f1c40f")
-                });
+                    int random = rnd.Next(1, 51);
+
+                    byte r = (byte)rnd.Next(256);
+                    byte g = (byte)rnd.Next(256);
+                    byte b = (byte)rnd.Next(256);
+
+                    barSeries.Items.Add(new ColumnItem
+                    {
+                        Value = Convert.ToDouble(random),
+                        Color = OxyColor.FromRgb(r, g, b),
+                    });
+                }
+                barSeries.IsStacked = false;
                 Model.Series.Add(barSeries);
-
-                String[] strNames = new String[] { "ม.ค", "ก.พ", "มี.ค", "เม.ย", "พ.ค", "มิ.ย",
-                "ก.ค", "ส.ค", "ก.ย", "ต.ค", "พ.ย", "ธ.ค" };
+              String[] strNames = new String[] { "1", "2", "3", "4", "5", "6",
+                "7", "8", "9", "10", "11", "12","13", "14", "15", "16", "17", "18",
+                "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30",
+                "31"};
 
                 Model.Axes.Add(new CategoryAxis
                 {
                     Position = AxisPosition.Bottom,
                     Key = "Sample Data",
                     ItemsSource = strNames,
-                    IsPanEnabled = false,
                     IsZoomEnabled = false,
+                    IsPanEnabled = true,
                     Selectable = false,
                 });
                 Model.Axes.Add(linearAxis1);
