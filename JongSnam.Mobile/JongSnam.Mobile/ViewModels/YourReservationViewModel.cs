@@ -69,10 +69,6 @@ namespace JongSnam.Mobile.ViewModels
 
                 YearGraphCommand = new Command(async () => await OnYearGraph(Items));
             }
-            else
-            {
-
-            }
 
             IsBusy = false;
         }

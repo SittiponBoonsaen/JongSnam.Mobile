@@ -74,7 +74,7 @@ namespace JongSnam.Mobile.ViewModels
         private async void OnItemSelected(YourFieldModel yourFieldModel)
         {
            
-            var data = new StoreDto
+            var data = new StoreDtoModel
             {
                 Id = yourFieldModel.StoredtoModel.Id,
                 Name = yourFieldModel.StoredtoModel.Name,

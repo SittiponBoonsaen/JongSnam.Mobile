@@ -32,10 +32,10 @@ namespace JongSnam.Mobile.ViewModels
 
         public List<IsOpen> selectYears { get; set; } = new List<IsOpen>()
         {
-        new IsOpen(){Name = "แสดงปี คส.2020" , Year = 2020},
-        new IsOpen(){Name = "แสดงปี คส.2021", Year = 2021},
-        new IsOpen(){Name = "แสดงปี คส.2022", Year = 2022},
-        new IsOpen(){Name = "แสดงปี คส.2023", Year = 2023}
+        new IsOpen(){Name = "แสดงปี 2020" , Year = 2020},
+        new IsOpen(){Name = "แสดงปี 2021", Year = 2021},
+        new IsOpen(){Name = "แสดงปี 2022", Year = 2022},
+        new IsOpen(){Name = "แสดงปี 2023", Year = 2023}
         };
         public IsOpen selectYear
         {

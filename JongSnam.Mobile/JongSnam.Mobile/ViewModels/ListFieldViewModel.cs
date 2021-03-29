@@ -21,6 +21,7 @@ namespace JongSnam.Mobile.ViewModels
         private double _rating;
         private string _officeHours;
         private FieldDto _selectedItem;
+        private ImageSource _imageStore;
 
         public Command LoadFieldCommand { get; }
         public Command<FieldDto> ItemTapped { get; }
@@ -67,8 +68,19 @@ namespace JongSnam.Mobile.ViewModels
                 OnItemSelected(value);
             }
         }
+        public ImageSource ImageStore
+        {
+            get { return _imageStore; }
+            set
+            {
+                _imageStore = value;
+                OnPropertyChanged(nameof(ImageStore));
+            }
+        }
 
-        public ListFieldViewModel(StoreDto storeDto)
+        public Command LoadItemsCommand { get; }
+
+        public ListFieldViewModel(StoreDtoModel storeDto)
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
@@ -85,9 +97,11 @@ namespace JongSnam.Mobile.ViewModels
 
             Task.Run(async () => await ExecuteLoadFieldCommand(storeDto));
 
+            LoadItemsCommand = new Command(async () => await ExecuteLoadFieldCommand(storeDto));
+
         }
 
-        async Task ExecuteLoadFieldCommand(StoreDto storeDto)
+        async Task ExecuteLoadFieldCommand(StoreDtoModel storeDto)
         {
             IsBusy = true;
             try
@@ -95,6 +109,7 @@ namespace JongSnam.Mobile.ViewModels
                 Items.Clear();
                 StoreName = storeDto.Name;
                 OfficeHours = storeDto.OfficeHours;
+                ImageStore = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(storeDto.Image)));
                 var items = await _fieldServices.GetFieldByStoreId(storeDto.Id.Value, 1, 20);
                 if (items == null)
                 {

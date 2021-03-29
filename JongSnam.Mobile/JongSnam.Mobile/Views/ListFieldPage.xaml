@@ -9,11 +9,13 @@
         <ToolbarItem Text="ดูรีวิว" Command="{Binding ReviewCommand}"/>
     </ContentPage.ToolbarItems>
     
+    
     <ContentPage.Content>
-        <ScrollView>
+        <RefreshView x:DataType="local:ListFieldViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <ScrollView>
             <StackLayout>
                 <StackLayout>
-                    <Image Source="https://1.bp.blogspot.com/-MW5gK4oMhuk/XYxY4i5ETkI/AAAAAAAAMLM/J8SwuY-HyPE3mVuhfHjOX9ETrTLOiifAgCLcBGAsYHQ/s1600/DJI_0041.JPG" />
+                    <Image Source="{Binding ImageStore}" Aspect="Fill"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80" />
@@ -87,5 +89,6 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

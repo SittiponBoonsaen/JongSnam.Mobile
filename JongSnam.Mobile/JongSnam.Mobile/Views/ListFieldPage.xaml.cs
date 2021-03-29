@@ -1,5 +1,5 @@
-﻿using JongSnam.Mobile.ViewModels;
-using JongSnamService.Models;
+﻿using JongSnam.Mobile.Models;
+using JongSnam.Mobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,7 +9,7 @@ namespace JongSnam.Mobile.Views
     public partial class ListFieldPage : ContentPage
     {
         ListFieldViewModel _viewModel;
-        public ListFieldPage(StoreDto storeDto)
+        public ListFieldPage(StoreDtoModel storeDto)
         {
             InitializeComponent();
             BindingContext = _viewModel = new ListFieldViewModel(storeDto);
