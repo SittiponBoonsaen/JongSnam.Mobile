@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
@@ -9,6 +10,7 @@ using JongSnamService.Models;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -28,6 +30,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private double _ratingsum;
         private double _textComment;
+        private bool _visible;
 
         public double RatingSum
         {
@@ -46,6 +49,15 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _textComment = value;
                 OnPropertyChanged(nameof(TextComment));
+            }
+        }
+        public bool Visible
+        {
+            get => _visible;
+            set
+            {
+                _visible = value;
+                OnPropertyChanged(nameof(Visible));
             }
         }
 
@@ -117,6 +129,11 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+                if (userType != "Owner")
+                {
+                    Visible = true;
+                }
 
                 var items = await _reviewServices.GetReviewByStoreId(storeId, _page, 100);
 

@@ -22,6 +22,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _price;
         private string _isOpen;
         private string _storeName;
+        private bool _isEnabled;
 
         public Command BookCommand { get; private set; }
 
@@ -133,10 +134,20 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StoreName));
             }
         }
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                OnPropertyChanged(nameof(IsEnabled));
+            }
+        }
 
 
 
-    public FieldViewModel(FieldDto fieldDto, string StoreName)
+
+        public FieldViewModel(FieldDto fieldDto, string StoreName)
         {
             _reservationServices = DependencyService.Get<IReservationServices>();
             _fieldServices = DependencyService.Get<IFieldServices>();
@@ -156,6 +167,12 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+                if (userType != "Owner")
+                {
+                    IsEnabled = true;
+                }
+
                 var data = await _fieldServices.GetFieldById(fieldDto.Id.Value);
 
                 NameField = data.Name;

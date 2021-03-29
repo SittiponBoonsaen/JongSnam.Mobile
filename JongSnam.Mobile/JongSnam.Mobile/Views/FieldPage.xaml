@@ -4,7 +4,7 @@
              x:Class="JongSnam.Mobile.Views.FieldPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="จองทันที" 
+        <ToolbarItem Text="จองทันที" IsEnabled="{Binding IsEnabled}"
                  Order="Primary"
                  Priority="0"  Command="{Binding BookCommand}"/>
     </ContentPage.ToolbarItems>

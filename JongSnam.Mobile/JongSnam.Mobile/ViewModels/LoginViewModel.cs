@@ -68,7 +68,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (!statusLogin)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
+                await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
                 return;
             }
 

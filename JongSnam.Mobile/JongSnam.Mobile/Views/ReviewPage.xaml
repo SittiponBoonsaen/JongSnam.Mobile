@@ -85,9 +85,9 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                
 
-            <StackLayout>
+
+                <StackLayout IsVisible="{Binding Visible}">
                 <Entry
                 Placeholder="แสดงความคิดเห็น..."
                 HorizontalOptions="Fill"
