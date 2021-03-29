@@ -38,10 +38,13 @@
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 
-                            <Button Text="แก้ไข" Grid.Column="3" Grid.RowSpan="2" 
-                                    HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"
-                                    Command="{Binding BindingContext.UpdateStoreCommand, Source={x:Reference ThisPage}}"
-                                    CommandParameter="{Binding .}"/>
+                            <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="32" Grid.Column="3" Grid.RowSpan="2" 
+                             WidthRequest="32"
+                                Padding="5"
+                                Source="icon_edit.png"
+                                 Command="{Binding BindingContext.UpdateStoreCommand, Source={x:Reference ThisPage}}" 
+                                         CommandParameter="{Binding .}"/>
                     </Grid>
                         <BoxView HeightRequest="1" Color="Gray"></BoxView>
                         <StackLayout.GestureRecognizers>

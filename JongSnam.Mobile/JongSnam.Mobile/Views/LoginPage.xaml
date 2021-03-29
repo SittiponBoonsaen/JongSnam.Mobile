@@ -13,7 +13,7 @@
             Command="{Binding RegisterCommand}"></Button>
             
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
-            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
+            <Image Source="icon_logo.png"/>
 
             <Entry Placeholder="Email" Text="{Binding UserName}" PlaceholderColor="Gray" Keyboard="Email" MaxLength="20" />
             <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" MaxLength="20" />

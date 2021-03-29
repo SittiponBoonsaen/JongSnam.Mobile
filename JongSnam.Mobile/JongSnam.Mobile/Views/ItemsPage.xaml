@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.ItemsPage"
-             Title="{Binding Title}"
+             Title="{Binding Title}" 
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
             xmlns:model="clr-namespace:JongSnam.Mobile.Models">
 
