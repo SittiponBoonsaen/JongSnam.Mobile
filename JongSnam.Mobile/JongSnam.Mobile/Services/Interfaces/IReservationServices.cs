@@ -18,5 +18,9 @@ namespace JongSnam.Mobile.Services.Interfaces
 
         Task<bool> DeleteReservation(int id);
 
+        Task<IEnumerable<GrahpDto>> GraphYearReservation(int userId, int year, int currentPage, int pageSize);
+
+        Task<IEnumerable<GrahpDto>> GraphMonthReservation(int userId, int month, int currentPage, int pageSize);
+
     }
 }
