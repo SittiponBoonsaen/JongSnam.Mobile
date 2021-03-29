@@ -24,6 +24,12 @@ namespace JongSnam.Mobile.ViewModels
 
         public PlotModel Model { get; set; }
 
+       
+
+        public Command SelectedIndexChangedCommand { get; private set; }
+
+        public Command LoadGraphCommand { get; private set; }
+
         public List<IsOpen> selectYears { get; set; } = new List<IsOpen>()
         {
         new IsOpen(){Name = "แสดงปี คส.2020" , Year = 2020},
@@ -33,43 +39,11 @@ namespace JongSnam.Mobile.ViewModels
         };
         public IsOpen selectYear
         {
-            get => _selectYear;
+            get { return _selectYear; }
             set
             {
                 _selectYear = value;
                 OnPropertyChanged(nameof(selectYear));
-            }
-        }
-
-        private IsOpen _selectMonth;
-
-        public Command SelectedIndexChangedCommand { get; private set; }
-
-        public Command LoadGraphCommand { get; private set; }
-
-        public List<IsOpen> selectMonths { get; set; } = new List<IsOpen>()
-        {
-        new IsOpen(){Name = "แสดงปี เดือน มกราคม" , Month = 1},
-        new IsOpen(){Name = "แสดงปี เดือน กุมภาพันธ์", Month = 2},
-        new IsOpen(){Name = "แสดงปี เดือน มีนาคม", Month = 3},
-        new IsOpen(){Name = "แสดงปี เดือน เมษายน", Month = 4},
-        new IsOpen(){Name = "แสดงปี เดือน พฤษภาคม " , Month = 5},
-        new IsOpen(){Name = "แสดงปี เดือน มิถุนายน", Month = 6},
-        new IsOpen(){Name = "แสดงปี เดือน กรกฎาคม", Month = 7},
-        new IsOpen(){Name = "แสดงปี เดือน สิงหาคม", Month = 8},
-        new IsOpen(){Name = "แสดงปี เดือน กันยายน" , Month = 9},
-        new IsOpen(){Name = "แสดงปี เดือน ตุลาคม", Month = 10},
-        new IsOpen(){Name = "แสดงปี เดือน พฤศจิกายน", Month = 11},
-        new IsOpen(){Name = "แสดงปี เดือน ธันวาคม", Month = 12}
-        };
-        public IsOpen selectMonth
-        {
-            get { return _selectMonth; }
-
-            set
-            {
-                _selectMonth = value;
-                OnPropertyChanged(nameof(selectMonth));
             }
         }
 
@@ -87,20 +61,14 @@ namespace JongSnam.Mobile.ViewModels
 
             };
 
-            //InitValidation();
-
-            Task.Run(async () => await ExecuteLoadItemsCommand());
 
 
-            LoadGraphCommand = new Command(async () => await OnLoadGraphCommand(selectMonth.Month));
+
+            LoadGraphCommand = new Command(async () => await OnLoadGraphCommand(selectYear.Year));
 
         }
-        //private void InitValidation()
-        //{
-        //    _selectMonth = new ValidatableObject<IsOpen>();
-        //    _selectMonth.Validations.Add(new IsSelectedItemRule<IsOpen>() { ValidationMessage = "กรุณาเลือกเดือน" });
-        //}
-        async Task OnLoadGraphCommand(int? Month)
+
+        async Task OnLoadGraphCommand(int? Year)
         {
             try
             {
@@ -118,15 +86,15 @@ namespace JongSnam.Mobile.ViewModels
                     LabelFormatString = "{0}",
 
                 };
-                int? month = Month == 0 || Month == null ? 0 : Month;
-                if (month == 0)
+                int? year = Year == 0 || Year == null ? 0 : Year;
+                if (year == 0)
                 {
-                    month = 0;
+                    year = 0;
                 }
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
 
-                var data = await _reservationServices.GraphMonthReservation(Convert.ToInt32(userId), (int)month, 1, 100);
+                var data = await _reservationServices.GraphYearReservation(Convert.ToInt32(userId), (int)year, 1, 100);
                 if (data == null)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่มีช้อมูลที่คุณเลือก", "ตกลง");
@@ -182,23 +150,6 @@ namespace JongSnam.Mobile.ViewModels
             {
                 IsBusy = false;
                 Model.InvalidatePlot(true);
-            }
-        }
-        async Task ExecuteLoadItemsCommand()
-        {
-            IsBusy = true;
-            try
-            {
-
-                
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
 
