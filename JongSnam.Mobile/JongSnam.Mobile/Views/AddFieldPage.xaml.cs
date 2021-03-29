@@ -8,10 +8,10 @@ namespace JongSnam.Mobile.Views
     public partial class AddFieldPage : ContentPage
     {
         AddFieldViewModel _viewModel;
-        public AddFieldPage()
+        public AddFieldPage(int storeId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new AddFieldViewModel();
+            BindingContext = _viewModel = new AddFieldViewModel(storeId);
         }
         protected override void OnAppearing()
         {
