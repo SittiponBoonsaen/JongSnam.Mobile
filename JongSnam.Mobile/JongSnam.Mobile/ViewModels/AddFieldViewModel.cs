@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
@@ -28,8 +29,8 @@ namespace JongSnam.Mobile.ViewModels
         private string _sizeField;
         private bool _isOpen;
         private double _percentage;
-        private System.DateTime _startDate;
-        private System.DateTime _endDate;
+        private System.DateTime _startDate = DateTime.Now;
+        private System.DateTime _endDate = DateTime.Now;
         private System.DateTime _dateNow;
         private string _detail;
 
@@ -133,24 +134,21 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public AddFieldViewModel()
+        public AddFieldViewModel(int storeId)
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
 
             InitValidation();
 
-            SaveCommand = new Command(async () => await OnSaveCommand());
+            SaveCommand = new Command(async () => await OnSaveCommand(storeId));
 
 
 
-            Task.Run(async () => await Loaditems());
+            InitPage();
 
             UploadImageCommand = new Command(async () =>
             {
-                if (IsBusy)
-                {
-                    return;
-                }
+
 
                 var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
 
@@ -177,20 +175,23 @@ namespace JongSnam.Mobile.ViewModels
                 }
             });
 
+            IsBusy = false;
         }
         internal void OnAppearing()
         {
             IsBusy = true;
         }
 
-        async Task Loaditems()
+        void InitPage()
         {
             DateNow = DateTime.Now;
+
+            IsBusy = false;
         }
 
-        async Task OnSaveCommand()
+        async Task OnSaveCommand(int storeId)
         {
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "Yes", "No");
+            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการบันทึกใช่ไหม ?", "ใช่", "ไม่");
             if (!answer)
             {
                 return;
@@ -199,32 +200,44 @@ namespace JongSnam.Mobile.ViewModels
 
             var fieldRequest = new FieldRequest()
             {
-                
+                Active = true,
+                IsOpen = true,
+                Name = NameField,
+                Price = PriceField,
+                Size = SizeField,
+                StoreId = storeId
             };
             var discountRequest = new DiscountRequest()
             {
-                
+                StartDate = StartDate,
+                EndDate = EndDate,
+                Detail = Detail,
+                Percentage = Percentage
             };
             var imageFieldRequest = new ImageFieldRequest()
             {
-                
+                Image = await GeneralHelper.GetBase64StringAsync(imageStream)
             };
             var request = new AddFieldRequest
             {
                 DiscountRequest = discountRequest,
                 FieldRequest = fieldRequest,
+                PictureFieldRequest = new List<ImageFieldRequest>
+                {
+                    imageFieldRequest
+                }
             };
 
             var statusSaved = await _fieldServices.AddField(request);
             if (statusSaved)
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                await Shell.Current.Navigation.PopAsync();
             }
             else
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
             }
-            await Shell.Current.GoToAsync("..");
         }
 
         private void InitValidation()

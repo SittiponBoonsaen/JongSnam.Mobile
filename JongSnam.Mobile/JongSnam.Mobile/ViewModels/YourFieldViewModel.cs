@@ -22,6 +22,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command AddFieldCommand { get; }
 
         private string _storeName;
+        private int _storeId;
 
         public Command<FieldDto> ItemTapped { get; }
 
@@ -49,6 +50,7 @@ namespace JongSnam.Mobile.ViewModels
             AddFieldCommand = new Command(OnAddFieldAsync);
 
             ItemTapped = new Command<FieldDto>(OnItemSelected);
+            _storeId = storeId;
         }
 
 
@@ -94,7 +96,7 @@ namespace JongSnam.Mobile.ViewModels
         //}
         async void OnAddFieldAsync(object obj)
         {
-            await Shell.Current.Navigation.PushAsync(new AddFieldPage());
+            await Shell.Current.Navigation.PushAsync(new AddFieldPage(_storeId));
         }
         private async void OnItemSelected(FieldDto fieldDto)
         {

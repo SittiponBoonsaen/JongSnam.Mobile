@@ -29,14 +29,11 @@
                     </ImageButton>
                 </StackLayout>
 
-                <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+            <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
             <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
-            <Picker Title="ขนาดสนาม"
-                    ItemsSource="{Binding SizeFields}"
-                    SelectedItem="{Binding SizeField}"
-                    ItemDisplayBinding="{Binding Name}"/>
+                <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
 
-            <Entry Placeholder="ส่วนลด" Text="{Binding Percentage}" PlaceholderColor="Gray" />
+            <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
                 
             <Grid>
                     <Grid.RowDefinitions>
@@ -49,13 +46,13 @@
                         <ColumnDefinition Width="35"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                
                     <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
-                    <DatePicker  Grid.Column="1" Grid.Row="1" MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}" 
-                    MaximumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
-                    Date="{Binding StartDate,StringFormat='{0:dd MMMM, yyyy}'}" />
-                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" 
+                        Date="{Binding StartDate}" />
+                
+                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>                
                     <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
-                    MaximumDate="12/25/2024"
                     Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
             </Grid>
                 <StackLayout>
