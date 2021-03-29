@@ -59,6 +59,7 @@
                     <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
                     Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
             </Grid>
+                
                 <StackLayout>
                 <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>

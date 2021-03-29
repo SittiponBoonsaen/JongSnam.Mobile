@@ -8,13 +8,13 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
-        
-        <ToolbarItem Text="ดูกราฟรายเดือน"
+
+        <ToolbarItem Text="{Binding TextMonth}"
                  IconImageSource="https://img2.thaipng.com/20180402/rew/kisspng-chart-graph-of-a-function-circle-graph-computer-ic-graph-5ac2efc9bd4482.3381432315227248097753.jpg"
                  Order="Secondary" 
                  Priority="1"  Command="{Binding MonthGraphCommand}"/>
-        
-        <ToolbarItem Text="ดูกราฟรายปี"
+
+        <ToolbarItem Text="{Binding TextYear}"
                  IconImageSource="https://img2.thaipng.com/20180402/rew/kisspng-chart-graph-of-a-function-circle-graph-computer-ic-graph-5ac2efc9bd4482.3381432315227248097753.jpg"
                  Order="Secondary" 
                  Priority="1"  Command="{Binding YearGraphCommand}"/>

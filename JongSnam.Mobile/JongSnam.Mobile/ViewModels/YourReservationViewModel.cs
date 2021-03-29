@@ -17,6 +17,9 @@ namespace JongSnam.Mobile.ViewModels
     {
 
         private readonly IReservationServices _reservationServices;
+        private string _textMonth;
+        private string _textYear;
+
         public ObservableCollection<ReservationDto> Items { get; }
         public Command SearchReservationCommand { get; }
         public Command MonthGraphCommand { get; }
@@ -24,7 +27,24 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadItemsCommand { get; }
         public Command<ReservationDto> ItemTapped { get; }
         public string ApprovalStatusString { get; private set; }
-
+        public string TextMonth
+        {
+            get => _textMonth;
+            set
+            {
+                _textMonth = value;
+                OnPropertyChanged(nameof(TextMonth));
+            }
+        }
+        public string TextYear
+        {
+            get => _textYear;
+            set
+            {
+                _textYear = value;
+                OnPropertyChanged(nameof(TextYear));
+            }
+        }
         public YourReservationViewModel()
         {
             Title = "การจองของคุณ";
@@ -39,10 +59,20 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<ReservationDto>(OnItemSelected);
 
+            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+            if (userType == "Owner")
+            {
+                TextMonth = "ดูกราฟรายเดือน";
+                TextYear = "ดูกราฟรายปี";
 
-            MonthGraphCommand = new Command(async () => await OnMonthGraph(Items));
+                MonthGraphCommand = new Command(async () => await OnMonthGraph(Items));
 
-            YearGraphCommand = new Command(async () => await OnYearGraph(Items));
+                YearGraphCommand = new Command(async () => await OnYearGraph(Items));
+            }
+            else
+            {
+
+            }
 
             IsBusy = false;
         }

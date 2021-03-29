@@ -1,9 +1,11 @@
-﻿using JongSnam.Mobile.Models;
+﻿using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services;
 using JongSnam.Mobile.Services.Implementations;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.SqliteRepository;
 using JongSnam.Mobile.SqliteRepository.Interfaces;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: ExportFont("fa-solid-900.ttf")]
@@ -31,7 +33,16 @@ namespace JongSnam.Mobile
             DependencyService.Register<IAuthenticationServices, AuthenticationServices>();
             DependencyService.Register<MockDataStore>();
 
-            MainPage = new AppShell();
+            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+            if (userType == "Owner")
+            {
+                MainPage = new AppShell();
+            }
+            else
+            {
+                MainPage = new AppShellCustomer();
+            }
+            
         }
 
         protected override void OnStart()
