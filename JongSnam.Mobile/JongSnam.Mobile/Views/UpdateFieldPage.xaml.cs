@@ -10,10 +10,10 @@ namespace JongSnam.Mobile.Views
     public partial class UpdateFieldPage : ContentPage
     {
         UpdateFieldViewModel _viewModel;
-        public UpdateFieldPage(FieldDto fieldDto)
+        public UpdateFieldPage(FieldDto fieldDto,int storeId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new UpdateFieldViewModel(fieldDto);
+            BindingContext = _viewModel = new UpdateFieldViewModel(fieldDto, storeId);
         }
         protected override void OnAppearing()
         {

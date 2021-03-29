@@ -51,6 +51,8 @@ namespace JongSnam.Mobile.ViewModels
 
             ItemTapped = new Command<FieldDto>(OnItemSelected);
             _storeId = storeId;
+
+            Task.Run(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
         }
 
 
@@ -104,7 +106,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
-            await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto));
+            await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto, _storeId));
         }
 
 

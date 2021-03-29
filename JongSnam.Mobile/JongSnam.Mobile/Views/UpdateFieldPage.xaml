@@ -27,20 +27,15 @@
                             Command="{Binding UploadImageCommand}">
                     </ImageButton>
                 </StackLayout>
-                <Entry Text="{Binding Name}" PlaceholderColor="Gray" />
-                <Entry Text="{Binding Price}" PlaceholderColor="Gray" />
-                <Picker Title="{Binding SizeFieldString}"
-                    ItemsSource="{Binding SizeFields}"
-                    SelectedItem="{Binding SizeField}"
-                    ItemDisplayBinding="{Binding Name}"/>
+                <Entry Text="{Binding Name}" />
+                <Entry Text="{Binding Price}"/>
+                <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
+                <Picker
+                    ItemsSource="{Binding IsOpenValues}"
+                    SelectedItem="{Binding SelectedIsOpen}"
+                    ItemDisplayBinding="{Binding Name}" TextColor="Black" TitleColor="Black"/>
 
-                <Picker Title="{Binding IsOpenString}"
-                    ItemsSource="{Binding Privacies}"
-                    SelectedItem="{Binding Privacy}"
-                    ItemDisplayBinding="{Binding Name}"/>
-
-                <Label Text="ส่วนลด(%)"/>
-                <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}"  PlaceholderColor="Gray" />
+                <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}" />
                 
                 <Grid>
                     <Grid.RowDefinitions>

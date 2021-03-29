@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -17,12 +19,17 @@ namespace JongSnam.Mobile.ViewModels
         public Command DeleteFieldCommand { get; }
         public Command SaveCommand { get; }
 
+        private FieldDetailDto _fieldDto { get; set; }
+
+        public ValidatableObject<EnumDto> SelectedIsOpen { get; set; }
+        public List<EnumDto> IsOpenValues { get; set; }
+
         private string _name;
         private string _size;
         private double _price;
         private string _isOpenString;
         private double _percentage;
-        private IsOpen _privacy;
+        private List<EnumDto> _privacy;
         private string _sizeField;
         private DateTime _dateNow;
         private DateTime _startDate;
@@ -54,7 +61,6 @@ namespace JongSnam.Mobile.ViewModels
 
         private bool _isOpenbool;
         private string _detail;
-        private string _sizeFieldString;
         private ImageSource _imageProfile;
 
         public string IsOpenString
@@ -123,15 +129,10 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(UpdatePictureFieldRequest));
             }
         }
-        public List<IsOpen> Privacies { get; set; } = new List<IsOpen>()
-        {
-            new IsOpen(){Name = "เปิดบริการ",Value = true},
-            new IsOpen(){Name = "ปิดบริการ",Value = false}
-        };
 
 
 
-        public IsOpen Privacy
+        public List<EnumDto> Privacy
         {
             get
             {
@@ -143,12 +144,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Privacy));
             }
         }
-        public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
-        {
-            new IsOpen(){Name = "เหมาะสำหรับ 5คน"},
-            new IsOpen(){Name = "เหมาะสำหรับ 7คน"},
-            new IsOpen(){Name = "เหมาะสำหรับ 11คน"}
-        };
+
         public string SizeField
         {
             get => _sizeField;
@@ -158,15 +154,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(SizeField));
             }
         }
-        public string SizeFieldString
-        {
-            get => _sizeFieldString;
-            set
-            {
-                _sizeFieldString = value;
-                OnPropertyChanged(nameof(SizeFieldString));
-            }
-        }
+
         public System.DateTime DateNow
         {
             get => _dateNow;
@@ -190,13 +178,29 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command UploadImageCommand { get; private set; }
 
-        public UpdateFieldViewModel(FieldDto fieldDto)
+        public UpdateFieldViewModel(FieldDto fieldDto, int storeId)
         {
+            IsOpenValues = new List<EnumDto>
+            {
+                new EnumDto
+                {
+                    Id = 1,
+                    Name = "เปิดบริการ"
+                },
+                new EnumDto
+                {
+                    Id = 2,
+                    Name = "ปิดบริการ"
+                }
+            };
+
+            SelectedIsOpen = new ValidatableObject<EnumDto>();
+
             _fieldServices = DependencyService.Get<IFieldServices>();
 
             DeleteFieldCommand = new Command(async () => await OnDeleteFieldCommandAlertYesNoClicked(fieldDto.Id.Value));
 
-            SaveCommand = new Command(async () => await OnSaveCommandAlertYesNoClicked(fieldDto.Id.Value));
+            SaveCommand = new Command(async () => await OnSaveCommandAlertYesNoClicked(fieldDto.Id.Value, storeId));
 
             Task.Run(async () => await ExecuteLoadItemsCommand(fieldDto.Id.Value));
 
@@ -238,27 +242,16 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 DateNow = DateTime.Now;
-                var data = await _fieldServices.GetFieldById(fieldId);
-                Name = data.Name;
-                Price = data.Price.Value;
-                SizeFieldString = data.Size;
-                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(data.ImageFieldModel[0].Image)));
-                _isOpenbool = data.IsOpen.Value;
-                if (data.IsOpen.Value)
-                {
-                    IsOpenString = "เปิดบริการ";
-                }
-                else
-                {
-                    IsOpenString = "ปิดบริการ";
-                }
-
-                Percentage = data.DiscountModel.Percentage == null ? 0 : data.DiscountModel.Percentage.Value;
-                StartDate = data.DiscountModel.StartDate == null ? DateNow : data.DiscountModel.StartDate.Value;
-                EndDate = data.DiscountModel.EndDate.Value == null ? data.DiscountModel.EndDate.Value : data.DiscountModel.EndDate.Value;
-                Detail = data.DiscountModel.Detail == null ? " ": data.DiscountModel.Detail;
-                
-
+                _fieldDto = await _fieldServices.GetFieldById(fieldId);
+                Name = _fieldDto.Name;
+                Price = _fieldDto.Price.Value;
+                SizeField = _fieldDto.Size;
+                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(_fieldDto.ImageFieldModel[0].Image)));
+                SelectedIsOpen.Value = _fieldDto.IsOpen.Value ? IsOpenValues.Find(f => f.Id.Value == 1) : IsOpenValues.Find(f => f.Id.Value == 2);
+                Percentage = _fieldDto.DiscountModel.Percentage == null ? 0 : _fieldDto.DiscountModel.Percentage.Value;
+                StartDate = _fieldDto.DiscountModel.StartDate == null ? DateNow : _fieldDto.DiscountModel.StartDate.Value;
+                EndDate = _fieldDto.DiscountModel.EndDate.Value == null ? _fieldDto.DiscountModel.EndDate.Value : _fieldDto.DiscountModel.EndDate.Value;
+                Detail = _fieldDto.DiscountModel.Detail == null ? " ": _fieldDto.DiscountModel.Detail;
             }
             catch (Exception ex)
             {
@@ -270,14 +263,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-
         public void OnAppearing()
         {
             IsBusy = true;
         }
         async Task OnDeleteFieldCommandAlertYesNoClicked(int fieldId)
         {
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะลบจริงๆใช่ไหม ?", "ใช่", "ไม่");
+            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่ลบสนามนี้ใช่หรือไม่ ?", "ใช่", "ไม่");
             if (!answer)
             {
                 return;
@@ -293,25 +285,44 @@ namespace JongSnam.Mobile.ViewModels
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถลบข้อมูลได้", "ตกลง");
             }
-            await Shell.Current.GoToAsync("..");
         }
 
-        async Task OnSaveCommandAlertYesNoClicked(int fieldId)
+        async Task OnSaveCommandAlertYesNoClicked(int fieldId, int storeId)
         {
-            bool answer = await Shell.Current.DisplayAlert("Question?", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการที่จะแก้ไขข้อมูลใช่ไหม ?", "ใช่", "ไม่");
             if (!answer)
             {
                 return;
             }
             IsBusy = true;
 
+            var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+
             var request = new UpdateFieldRequest
             {
+                Active = _fieldDto.Active,
                 Name = Name,
-                IsOpen = Privacy == null ? _isOpenbool : Privacy.Value,
+                IsOpen = SelectedIsOpen.Value.Id.Value == 1 ? true : false,
                 Price = (int)Price,
-                UpdateDiscountRequest = (UpdateDiscountRequest)UpdateDiscountRequest,
-                UpdatePictureFieldRequest = (IList<UpdatePictureFieldRequest>)UpdatePictureFieldRequest
+                Size = SizeField,
+                UpdateDiscountRequest = new UpdateDiscountRequest
+                {
+                    Detail = Detail,
+                    Percentage = Percentage,
+                    StartDate = StartDate,
+                    EndDate = EndDate,
+                    Id = _fieldDto.DiscountModel.Id
+                },
+                
+                UpdatePictureFieldRequest = new List<UpdatePictureFieldRequest>
+                {
+                    new UpdatePictureFieldRequest
+                    {
+                        Id = _fieldDto.ImageFieldModel[0].Id,
+                        Image = await GeneralHelper.GetBase64StringAsync(imageStream)
+                    }
+                },
+                StoreId = storeId
                 //ไม่มีสถานะร้าน
             };
             var statusSaved = await _fieldServices.UpdateField(fieldId, request);
@@ -325,8 +336,6 @@ namespace JongSnam.Mobile.ViewModels
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
             }
-
-            await Shell.Current.GoToAsync("..");
         }
 
         private async Task TakePhotoAsync()
