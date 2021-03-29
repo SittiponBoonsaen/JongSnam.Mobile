@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Helpers;
-using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
@@ -260,12 +259,19 @@ namespace JongSnam.Mobile.ViewModels
                 Name = _fieldDto.Name;
                 Price = _fieldDto.Price.Value;
                 SizeField = _fieldDto.Size;
-                ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(_fieldDto.ImageFieldModel[0].Image)));
                 SelectedIsOpen.Value = _fieldDto.IsOpen.Value ? IsOpenValues.Find(f => f.Id.Value == 1) : IsOpenValues.Find(f => f.Id.Value == 2);
                 Percentage = _fieldDto.DiscountModel.Percentage == null ? 0 : _fieldDto.DiscountModel.Percentage.Value;
                 StartDate = _fieldDto.DiscountModel.StartDate == null ? DateNow : _fieldDto.DiscountModel.StartDate.Value;
                 EndDate = _fieldDto.DiscountModel.EndDate.Value == null ? _fieldDto.DiscountModel.EndDate.Value : _fieldDto.DiscountModel.EndDate.Value;
                 Detail = _fieldDto.DiscountModel.Detail == null ? " ": _fieldDto.DiscountModel.Detail;
+                if (_fieldDto.ImageFieldModel.Count > 0)
+                {
+                    ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(_fieldDto.ImageFieldModel[0].Image)));
+                }
+                else
+                {
+                    ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                }
             }
             catch (Exception ex)
             {
