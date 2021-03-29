@@ -11,7 +11,7 @@
         <ToolbarItem Text="เพิ่มสนามของคุณ" Command="{Binding AddFieldCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <RefreshView  x:DataType="local:YourFieldViewModel"  Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ItemsListView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="None">
@@ -29,7 +29,7 @@
                                 <RowDefinition Height="80" />
                             </Grid.RowDefinitions>
 
-                            <Image Source="{Binding ImageSource, FallbackValue={Binding ImageSourceDF},TargetNullValue={Binding ImageSourceDF}}"   HeightRequest="60" WidthRequest="50"  Aspect="Fill"
+                            <Image Source="{Binding ImageSource}"   HeightRequest="60" WidthRequest="50"  Aspect="Fill"
                                    Grid.Column="0" Grid.RowSpan="2"/>
 
                             <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"

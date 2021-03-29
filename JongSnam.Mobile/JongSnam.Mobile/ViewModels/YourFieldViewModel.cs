@@ -53,6 +53,7 @@ namespace JongSnam.Mobile.ViewModels
             _storeId = storeId;
 
             Task.Run(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
+            IsBusy = false;
         }
 
 
@@ -63,7 +64,6 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 Items.Clear();
-
                 var items = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
 
                 StoreName = nameStore;
@@ -75,12 +75,9 @@ namespace JongSnam.Mobile.ViewModels
                         Id = item.Id,
                         Name = item.Name,
                         Price = item.Price,
-                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image))),
-                        ImageSourceDF = ImageSource.FromUri(new Uri("https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg"))
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
                     });
                 }
-
-
             }
             catch
             {

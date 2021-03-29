@@ -53,12 +53,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(PriceField));
             }
         }
-        public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
-        {
-        new IsOpen(){Name = "เหมาะสำหรับ 5คน"},
-        new IsOpen(){Name = "เหมาะสำหรับ 7คน"},
-        new IsOpen(){Name = "เหมาะสำหรับ 11คน"}
-        };
+
         public string SizeField
         {
             get => _sizeField;
@@ -142,8 +137,6 @@ namespace JongSnam.Mobile.ViewModels
 
             SaveCommand = new Command(async () => await OnSaveCommand(storeId));
 
-
-
             InitPage();
 
             UploadImageCommand = new Command(async () =>
@@ -185,7 +178,7 @@ namespace JongSnam.Mobile.ViewModels
         void InitPage()
         {
             DateNow = DateTime.Now;
-
+            ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
             IsBusy = false;
         }
 
