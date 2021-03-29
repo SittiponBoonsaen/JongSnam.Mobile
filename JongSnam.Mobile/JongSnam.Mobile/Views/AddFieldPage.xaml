@@ -58,7 +58,9 @@
                     MaximumDate="12/25/2024"
                     Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
             </Grid>
-            <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
+                <StackLayout>
+                <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
+            </StackLayout>
 
         </StackLayout>
         </ScrollView>

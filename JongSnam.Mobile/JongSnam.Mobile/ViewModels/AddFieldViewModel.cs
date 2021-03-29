@@ -17,6 +17,8 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command SaveCommand { get; }
 
+        private ImageSource _imageProfile;
+
         public Command UploadImageCommand { get; private set; }
 
         public ValidatableObject<string> ImageValidata { get; set; }
@@ -30,7 +32,6 @@ namespace JongSnam.Mobile.ViewModels
         private System.DateTime _endDate;
         private System.DateTime _dateNow;
         private string _detail;
-        private ImageSource _imageProfile;
 
         public string NameField
         {
@@ -231,14 +232,6 @@ namespace JongSnam.Mobile.ViewModels
             ImageValidata = new ValidatableObject<string>();
             ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
         }
-        private bool IsValid
-        {
-            get
-            {
-                return ImageValidata.Validate();
-            }
-        }
-
 
         private async Task TakePhotoAsync()
         {

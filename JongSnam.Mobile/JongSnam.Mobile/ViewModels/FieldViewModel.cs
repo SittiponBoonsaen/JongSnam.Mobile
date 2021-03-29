@@ -22,7 +22,6 @@ namespace JongSnam.Mobile.ViewModels
         private string _price;
         private string _isOpen;
         private string _storeName;
-        private DateTime _dateNow;
 
         public Command BookCommand { get; private set; }
 
@@ -134,19 +133,10 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StoreName));
             }
         }
-        public System.DateTime DateNow
-        {
-            get => _dateNow;
-            set
-            {
-                _dateNow = value;
-                OnPropertyChanged(nameof(DateNow));
-            }
-        }
 
 
 
-        public FieldViewModel(FieldDto fieldDto, string StoreName)
+    public FieldViewModel(FieldDto fieldDto, string StoreName)
         {
             _reservationServices = DependencyService.Get<IReservationServices>();
             _fieldServices = DependencyService.Get<IFieldServices>();
@@ -166,8 +156,6 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                DateNow = DateTime.Now;
-
                 var data = await _fieldServices.GetFieldById(fieldDto.Id.Value);
 
                 NameField = data.Name;

@@ -11,11 +11,9 @@
         <StackLayout BackgroundColor="#f5f5f3" Padding="20">
             <Button HorizontalOptions="End"  Text="Register" TextColor="Gray" Image="Instagram/i759refresh2toolbarselected.png" BorderColor="Transparent" BackgroundColor="Transparent"
             Command="{Binding RegisterCommand}"></Button>
-
-            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\user.png" HeightRequest="50" WidthRequest="50"/>
             
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
-            
+            <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
 
             <Entry Placeholder="Email" Text="{Binding UserName}" PlaceholderColor="Gray" Keyboard="Email" MaxLength="20" />
             <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" MaxLength="20" />

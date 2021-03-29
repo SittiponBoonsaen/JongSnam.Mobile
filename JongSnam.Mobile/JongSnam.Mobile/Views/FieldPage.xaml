@@ -61,17 +61,17 @@
                                    VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="End"
                                    Text="เลือกวันที่"/>
-                            <DatePicker Grid.Column="1" Date="{Binding SelectedDate}" MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"/>
+                            <DatePicker Grid.Column="1" Date="{Binding SelectedDate}" />
                         </Grid>
                     </StackLayout>
                     <StackLayout>
                         <Grid >
                             <Label Grid.Column="0"
-                                   VerticalTextAlignment="Center" 
+                                   VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="End"
                                    Text="เวลาตั้งแต่" FontSize="Small"/>
 
-                            <TimePicker Grid.Column="1" 
+                            <TimePicker Grid.Column="1"
                                    Time="{Binding FromTime}"/>
                         </Grid>
                     </StackLayout>

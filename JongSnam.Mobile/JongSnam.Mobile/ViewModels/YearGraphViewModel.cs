@@ -56,7 +56,7 @@ namespace JongSnam.Mobile.ViewModels
                 };
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
-                //var data = await _reservationServices.
+
 
 
                 barSeries.Items.Add(new ColumnItem
