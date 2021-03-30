@@ -8,6 +8,7 @@ using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
+using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -28,6 +29,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command CancelApprovalStatusCommand { get; }
         public Command UploadReceiptCommand { get; }
         public Command SaveCommand { get; }
+        public Command EditDetailYourReservationCommand { get; }
         public Command SelectedPaymentIndexChangedCommand { get; private set; }
 
         private int _id;
@@ -250,9 +252,17 @@ namespace JongSnam.Mobile.ViewModels
             CancelApprovalStatusCommand = new Command(async () => await OnCancelApprovalStatusCommand(reservationId));
 
             UploadReceiptCommand = new Command(async () => await ExecuteUploadReceiptCommandCommand());
+
             SaveCommand = new Command(async () => await ExecuteSaveCommandCommand(reservationId));
 
             SelectedPaymentIndexChangedCommand = new Command(() => _selectedPayment.Validate());
+
+            EditDetailYourReservationCommand = new Command(async () => await OnEditDetailYourReservation(reservationId));
+        }
+
+        async Task OnEditDetailYourReservation(int reservationId)
+        {
+            await Shell.Current.Navigation.PushAsync(new UpdateReservationPage(reservationId));
         }
 
         async Task ExecuteLoadItemsCommand(int reservationId)

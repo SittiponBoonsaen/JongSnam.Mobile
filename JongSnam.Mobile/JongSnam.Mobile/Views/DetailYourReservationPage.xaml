@@ -11,7 +11,7 @@
         <ToolbarItem Text="แก้ไช"
                  IconImageSource=""
                  Order="Secondary" 
-                 Priority="1"  Command="{Binding EditDetailYourReservation}"/>
+                 Priority="1"  Command="{Binding EditDetailYourReservationCommand}"/>
         
         <ToolbarItem Text="{Binding SaveTitle}" Command="{Binding SaveCommand}" />
 
@@ -129,7 +129,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Center" Text="อัปโหลดหลักฐานการชำระเงิน" Command="{Binding UploadReceiptCommand}" BackgroundColor="Green" />
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.ColumnSpan="3" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="add_photo.png"
+                                 Command="{Binding ExecuteUploadReceiptCommandCommand}"/>
+                
             </Grid>
         </StackLayout>
         </ScrollView>

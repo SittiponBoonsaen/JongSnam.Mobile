@@ -51,7 +51,6 @@
                             <Label Text="" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
                     <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
                             <Label Text="{Binding IsOpen}" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="15"/>
-                 
                 </Grid>
             </StackLayout>
             <BoxView HeightRequest="1" Color="Gray"></BoxView>
