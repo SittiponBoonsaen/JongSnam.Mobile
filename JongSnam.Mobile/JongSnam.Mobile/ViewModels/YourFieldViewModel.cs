@@ -16,6 +16,7 @@ namespace JongSnam.Mobile.ViewModels
     {
         private readonly IFieldServices _fieldServices;
         public Command LoadItemsCommand { get; }
+        public Command<FieldDto> BookingCommand { get; }
         public Command UpdateFieldCommand { get; }
         public ObservableCollection<FieldDto> Items { get; }
 
@@ -45,7 +46,7 @@ namespace JongSnam.Mobile.ViewModels
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
 
-            //UpdateFieldCommand = new Command<FieldDto>(OnUpdateField);
+            BookingCommand = new Command<FieldDto>(OnBookingCommand);
 
             AddFieldCommand = new Command(OnAddFieldAsync);
 
@@ -56,6 +57,10 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = false;
         }
 
+        async void OnBookingCommand(FieldDto fieldDto)
+        {
+            await Shell.Current.Navigation.PushAsync(new BookingPage(fieldDto, StoreName));
+        }
 
         async Task ExecuteLoadItemsCommand(int storeId, string nameStore)
         {

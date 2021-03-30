@@ -35,7 +35,10 @@
                 <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
                 <Label Text="ราคาสนาม"/>
             <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
-                <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
+                <Picker Title="ขนาดสนาม"
+                    ItemsSource="{Binding SizeFields}"
+                    SelectedItem="{Binding SizeField}"
+                    ItemDisplayBinding="{Binding Name}"/>
                 <Label Text="ส่วนลด %"/>
                 <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
                 

@@ -302,6 +302,8 @@ namespace JongSnam.Mobile.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                return;
             }
             finally
             {
@@ -418,37 +420,61 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteSaveCommandCommand(int reservationId)
         {
-            if (IsOwner)
+            try
             {
+                if (IsOwner)
+                {
+                    return;
+                }
+
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการบันทึกการชำระเงินใช่หรือไม่ ?", "ใช่", "ไม่");
+                if (!answer)
+                {
+                    return;
+                }
+
+                var imageStream = await ((StreamImageSource)ReceiptPayment).Stream.Invoke(new System.Threading.CancellationToken());
+                if (imageStream == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
+                    return;
+                }
+                if (Amount == 0)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรอกจำนวนที่ต้องจ่ายเงิน", "ตกลง");
+                    return;
+                }
+
+                var request = new PaymentRequest
+                {
+                    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
+                    Date = DateTime.Now,
+                    ReservationId = reservationId,
+                    IsFullAmount = SelectedPayment.Value.Id == 1 ? true : false,
+                    Amount = Amount
+                };
+
+                var result = await _paymentServices.CreatePayment(request);
+
+                if (result)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน", "บันทึข้อมูลเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน", "ไม่สามารถบันทึข้อมูลได้", "ตกลง");
+                }
+
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาทำรายการให้ถูกต้อง", "ตกลง");
                 return;
             }
-
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการบันทึกการชำระเงินใช่หรือไม่ ?", "ใช่", "ไม่");
-            if (!answer)
+            finally
             {
-                return;
-            }
 
-            var imageStream = await ((StreamImageSource)ReceiptPayment).Stream.Invoke(new System.Threading.CancellationToken());
-            var request = new PaymentRequest
-            {
-                Image = await GeneralHelper.GetBase64StringAsync(imageStream),
-                Date = DateTime.Now,
-                ReservationId = reservationId,
-                IsFullAmount = SelectedPayment.Value.Id == 1 ? true : false,
-                Amount = Amount
-            };
-
-            var result = await _paymentServices.CreatePayment(request);
-
-            if (result)
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน", "บันทึข้อมูลเรียบร้อยแล้ว", "ตกลง");
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน", "ไม่สามารถบันทึข้อมูลได้", "ตกลง");
             }
         }
 

@@ -1,63 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JongSnam.Mobile.Views.FieldPage">
+             x:Class="JongSnam.Mobile.Views.BookingPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding TextReservation}" 
+        <ToolbarItem Text="จองทันที" 
                  Order="Primary"
                  Priority="0"  Command="{Binding BookCommand}"/>
     </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Content>
         <RefreshView>
             <ScrollView>
-            <StackLayout>
+                <StackLayout>
                     <Label Text="{Binding StoreName}" BackgroundColor="White" TextColor="DarkBlue" FontSize="24" HorizontalTextAlignment="Center"/>
-            <StackLayout Orientation="Vertical">
-            <Grid  Padding="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="0.5*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100"  Grid.Row="0" Grid.Column="0" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="0" Grid.Column="1" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="0" />
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="1" />
-            </Grid>
-            </StackLayout>
-            <StackLayout Orientation="Vertical">
-             <Grid  Padding="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="0.5*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
+                    <StackLayout Orientation="Vertical">
+                        <Grid  Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100"  Grid.Row="0" Grid.Column="0" />
+                            <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="0" Grid.Column="1" />
+                            <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="0" />
+                            <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="1" />
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <Grid  Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
                             <Label Text="{Binding NameField}" TextColor="DarkBlue" FontSize="22"  Grid.Row="0" Grid.ColumnSpan="3"/>
                             <Label Text="ขนาดสนาม : " TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="0" HorizontalOptions="End"/>
                             <Label Text="{Binding SizeField}" TextColor="Black" FontSize="15"  Grid.Row="1" Grid.Column="1"/>
                             <Label Text="อัตราค่าบริการ : " TextColor="Black" Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
                             <Label Text="{Binding Price}" TextColor="Black" Grid.Row="2" Grid.Column="1" FontSize="15"/>
                             <Label Text="" TextColor="Black" Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Start"/>
-                    <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
+                            <Label Text="สถานะ : " TextColor="Black" Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="End"/>
                             <Label Text="{Binding IsOpen}" TextColor="Green" Grid.Row="3" Grid.Column="1" FontSize="15"/>
-                 
-                </Grid>
-            </StackLayout>
-            <BoxView HeightRequest="1" Color="Gray"></BoxView>
+
+                        </Grid>
+                    </StackLayout>
+                    <BoxView HeightRequest="1" Color="Gray"></BoxView>
                     <StackLayout>
                         <Grid >
-                        <Label Grid.Column="0"
+                            <Label Grid.Column="0"
                                    VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="End"
                                    Text="เลือกวันที่"/>
@@ -86,7 +86,7 @@
                         </Grid>
                     </StackLayout>
                 </StackLayout>
-        </ScrollView>
+            </ScrollView>
         </RefreshView>
     </ContentPage.Content>
 </ContentPage>

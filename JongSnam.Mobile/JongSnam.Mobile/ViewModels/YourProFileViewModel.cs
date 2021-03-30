@@ -193,7 +193,13 @@ namespace JongSnam.Mobile.ViewModels
                     return;
                 }
                 var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
-                if (Phone.Length < 10)
+
+                if (imageStream == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
+                    return;
+                }
+                else if (Phone.Length < 10)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
                     return;

@@ -395,7 +395,7 @@ namespace JongSnam.Mobile.ViewModels
                 }
                 var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
 
-                if (imageStream == null || string.IsNullOrWhiteSpace(Name) || SelectedDistrict.Value == null || SelectedProvince.Value == null || SelectedSubDistrict.Value == null || string.IsNullOrWhiteSpace(ContactMobile) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(OfficeHours) || string.IsNullOrWhiteSpace(Rules))
+                if (imageStream == null || string.IsNullOrWhiteSpace(Name) || SelectedDistrict.Value == null || SelectedProvince.Value == null || SelectedSubDistrict.Value == null || string.IsNullOrWhiteSpace(ContactMobile) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(OfficeHours))
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                     return;
@@ -429,7 +429,7 @@ namespace JongSnam.Mobile.ViewModels
                 if (statusSaved)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
-                    await Shell.Current.GoToAsync("..");
+                    await Shell.Current.Navigation.PopAsync();
                 }
                 else
                 {

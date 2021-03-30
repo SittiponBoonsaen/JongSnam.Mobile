@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Services.Interfaces;
@@ -8,12 +10,12 @@ using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
-    public class FieldViewModel : BaseViewModel
+    public class BookingViewModel : BaseViewModel
     {
         private readonly IReservationServices _reservationServices;
 
         private readonly IFieldServices _fieldServices;
-        
+
         private TimeSpan _fromTime;
         private TimeSpan _toTime;
         private DateTime _selectedDate = DateTime.Now;
@@ -135,57 +137,30 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StoreName));
             }
         }
-        public bool IsEnabled
-        {
-            get => _isEnabled;
-            set
-            {
-                _isEnabled = value;
-                OnPropertyChanged(nameof(IsEnabled));
-            }
-        }
-        public string TextReservation
-        {
-            get
-            {
-                return _textReservation;
-            }
 
-            set
-            {
-                _textReservation = value;
-                OnPropertyChanged(nameof(TextReservation));
-            }
-        }
-
-
-
-        public FieldViewModel(FieldDto fieldDto, string StoreName)
+        public BookingViewModel(FieldDto fieldDto, string storeName)
         {
             _reservationServices = DependencyService.Get<IReservationServices>();
+
             _fieldServices = DependencyService.Get<IFieldServices>();
-            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
-            if (userType != "Owner")
-            {
-                BookCommand = new Command(async () => await ExecuteBookCommand(fieldDto));
-                TextReservation = "จองทันที";
-            }
+
+            BookCommand = new Command(async () => await ExecuteBookCommand(fieldDto));
 
             Task.Run(async () => await ExecuteLoadItemsCommand(fieldDto, StoreName));
+
         }
 
         internal void OnAppearing()
         {
             IsBusy = true;
         }
-
         async Task ExecuteLoadItemsCommand(FieldDto fieldDto, string storeName)
         {
             IsBusy = true;
             try
             {
                 SelectedDate = DateTime.Now;
-                
+
                 var data = await _fieldServices.GetFieldById(fieldDto.Id.Value);
 
                 NameField = data.Name;
@@ -228,13 +203,13 @@ namespace JongSnam.Mobile.ViewModels
                 var stop = request.StopTime.Value.ToString("MM/dd/yyyy h:mm tt");
 
                 bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", $"\n ชื่อร้านที่จอง: {StoreName} \n ชื่อสนามที่จอง: {NameField} \n ราคา : {Price} \n ขนาดของสนาม : {SizeField} \n ตั้งแต่ : {start} \n " +
-                    $"ถึง : {stop}\n" , "ใช่", "ไม่");
+                    $"ถึง : {stop}\n", "ใช่", "ไม่");
                 if (!answer)
                 {
                     return;
                 }
                 var result = await _reservationServices.CreateReservation(request);
-                if(result)
+                if (result)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "ทำรายการจองเรียบร้อยแล้ว", "ตกลง");
                     await Shell.Current.Navigation.PopAsync();

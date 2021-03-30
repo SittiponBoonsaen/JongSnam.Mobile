@@ -98,8 +98,20 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="1"  Text="ไม่อนุมัติ"  Command="{Binding CancelApprovalStatusCommand}" BackgroundColor="Red" />
-            <Button Grid.Row="0" Grid.Column="2"  Text="อนุมัติ"   Command="{Binding CommitApprovalStatusCommand}" BackgroundColor="GreenYellow" />
+                
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.Column="1" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="icon_cancel.png"
+                                 Command="{Binding CancelApprovalStatusCommand}"/>
+                
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.Column="2" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="confirm.png"
+                                 Command="{Binding CommitApprovalStatusCommand}"/>
             </Grid>
 
             <Grid IsVisible="{Binding IsCustomer}">

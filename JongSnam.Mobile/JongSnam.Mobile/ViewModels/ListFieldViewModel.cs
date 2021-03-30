@@ -96,9 +96,6 @@ namespace JongSnam.Mobile.ViewModels
             ReviewCommand = new Command(async () => await OnReview(storeDto.Id.Value));
 
             Task.Run(async () => await ExecuteLoadFieldCommand(storeDto));
-
-            LoadItemsCommand = new Command(async () => await ExecuteLoadFieldCommand(storeDto));
-
         }
 
         async Task ExecuteLoadFieldCommand(StoreDtoModel storeDto)
@@ -110,25 +107,29 @@ namespace JongSnam.Mobile.ViewModels
                 StoreName = storeDto.Name;
                 OfficeHours = storeDto.OfficeHours;
                 ImageStore = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(storeDto.Image)));
+
                 var items = await _fieldServices.GetFieldByStoreId(storeDto.Id.Value, 1, 20);
-                if (items == null)
+                if (items != null)
                 {
-                    return;
-                }
-                foreach (var item in items)
-                {
-                    Items.Add(new ListFieldModel
+                    foreach (var item in items)
                     {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Price = item.Price,
-                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
-                    });
+                        Items.Add(new ListFieldModel
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Price = item.Price,
+                            ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                        });
+                    }
                 }
+                    await Shell.Current.DisplayAlert("แจ้งเตือน", "บันทึข้อมูลเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.GoToAsync("..");
+
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+
             }
             finally
             {

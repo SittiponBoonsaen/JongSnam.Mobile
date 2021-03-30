@@ -26,7 +26,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private string _nameField;
         private int _priceField;
-        private string _sizeField;
+                private IsOpen _sizeField;
         private bool _isOpen;
         private double _percentage;
         private System.DateTime _startDate = DateTime.Now;
@@ -51,16 +51,6 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _priceField = value;
                 OnPropertyChanged(nameof(PriceField));
-            }
-        }
-
-        public string SizeField
-        {
-            get => _sizeField;
-            set
-            {
-                _sizeField = value;
-                OnPropertyChanged(nameof(SizeField));
             }
         }
         public bool IsOpen
@@ -126,6 +116,26 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _imageProfile = value;
                 OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
+        public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "ขนาด 5 คน"},
+        new IsOpen(){Name = "ขนาด 7 คน"},
+        new IsOpen(){Name = "ขนาด 11 คน"}
+        };
+
+
+        public IsOpen SizeField
+        {
+            get
+            {
+                return _sizeField;
+            }
+            set
+            {
+                _sizeField = value;
+                OnPropertyChanged(nameof(SizeField));
             }
         }
 
@@ -209,7 +219,7 @@ namespace JongSnam.Mobile.ViewModels
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลราคาสนาม", "ตกลง");
                     return;
                 }
-                if (string.IsNullOrWhiteSpace(SizeField))
+                if (string.IsNullOrWhiteSpace(SizeField.Name))
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลขนาดสนาม", "ตกลง");
                     return;
@@ -220,7 +230,7 @@ namespace JongSnam.Mobile.ViewModels
                     IsOpen = true,
                     Name = NameField,
                     Price = PriceField,
-                    Size = SizeField,
+                    Size = SizeField.Name,
                     StoreId = storeId
                 };
                 var discountRequest = new DiscountRequest()
