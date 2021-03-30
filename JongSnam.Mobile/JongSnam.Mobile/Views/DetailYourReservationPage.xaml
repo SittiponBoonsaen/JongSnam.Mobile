@@ -5,11 +5,19 @@
              xmlns:model="clr-namespace:JongSnam.Mobile.Models" xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
              x:Class="JongSnam.Mobile.Views.DetailYourReservationPage"
              BindingContext="{Binding DetailYourReservationViewModel}">
+
     <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="แก้ไช"
+                 IconImageSource=""
+                 Order="Secondary" 
+                 Priority="1"  Command="{Binding EditDetailYourReservation}"/>
+        
         <ToolbarItem Text="{Binding SaveTitle}" Command="{Binding SaveCommand}" />
+
     </ContentPage.ToolbarItems>
-    
-        <ScrollView>
+
+    <ScrollView>
             <StackLayout>
                 <Label             
                     Text="{Binding StoreName}"

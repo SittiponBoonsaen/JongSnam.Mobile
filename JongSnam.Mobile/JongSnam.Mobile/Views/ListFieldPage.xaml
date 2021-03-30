@@ -11,6 +11,7 @@
     
     
     <ContentPage.Content>
+        <RefreshView x:DataType="local:ListFieldViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <ScrollView>
             <StackLayout>
                 <StackLayout>
@@ -88,5 +89,6 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
+          </RefreshView>
     </ContentPage.Content>
 </ContentPage>
