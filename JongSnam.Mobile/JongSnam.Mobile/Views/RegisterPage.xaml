@@ -14,7 +14,7 @@
                 <Editor Placeholder="ชื่อ" Text="{Binding FirstName}" Grid.Column="0"/>
                 <Editor Placeholder="นามสกุล" Text="{Binding LastName}" Grid.Column="1"/>
             </Grid>
-            <Entry Placeholder="เบอร์โทรศัพท์" Text="{Binding Phone}" MaxLength="10" PlaceholderColor="Gray" />
+                <Entry Placeholder="เบอร์โทรศัพท์" Text="{Binding Phone}" Keyboard="Numeric" MaxLength="10" PlaceholderColor="Gray" />
             <Editor Placeholder="ที่อยู่" Text="{Binding Address}" HeightRequest="70" />
                 
                 <Picker Title="กรุณาเลือก..."

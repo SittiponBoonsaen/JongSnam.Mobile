@@ -76,15 +76,14 @@
                 <Label Text="{Binding FieldName}" TextColor="Black" Grid.Row="7" Grid.Column="2" HorizontalOptions="Start"/>
                 <Label Text="{Binding PricePerHour}" TextColor="Black" Grid.Row="8" Grid.Column="2" HorizontalOptions="Start"/>
             </Grid>
-
-                <Label BackgroundColor="Black" FontSize="0.5" />
-
+            <Label BackgroundColor="Gray" FontSize="0.2" />
+            <StackLayout Padding="50">
                     <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" Padding="10" 
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"/>
-            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" IsEnabled="{Binding IsCustomer}"/>
-            <Picker ItemsSource="{Binding PaymentMethodList}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"/>
+            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" HorizontalTextAlignment="Center" IsEnabled="{Binding IsCustomer}" />
+            <Picker ItemsSource="{Binding PaymentMethodList}" HorizontalTextAlignment="Center" 
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedPayment.Value, Mode=TwoWay}"
                                         Title="กรุณาเลือก วิธีการชำระเงิน" IsEnabled="{Binding IsCustomer}">
@@ -94,7 +93,7 @@
 
                 </Picker.Behaviors>
             </Picker>
-
+            </StackLayout>
             <Image Source="{Binding ReceiptPayment}" WidthRequest="200" HeightRequest="200"/>
             <Grid  IsVisible="{Binding IsOwner}">
                 <Grid.RowDefinitions>

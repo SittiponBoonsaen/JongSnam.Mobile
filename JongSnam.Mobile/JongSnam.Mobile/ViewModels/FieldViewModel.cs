@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Services.Interfaces;
@@ -24,6 +25,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _storeName;
         private bool _isEnabled;
         private string _textReservation;
+        private ImageSource _imageField;
 
         public Command BookCommand { get; private set; }
 
@@ -157,6 +159,19 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(TextReservation));
             }
         }
+        public ImageSource ImageField
+        {
+            get
+            {
+                return _imageField;
+            }
+
+            set
+            {
+                _imageField = value;
+                OnPropertyChanged(nameof(ImageField));
+            }
+        }
 
 
 
@@ -187,12 +202,13 @@ namespace JongSnam.Mobile.ViewModels
                 SelectedDate = DateTime.Now;
                 
                 var data = await _fieldServices.GetFieldById(fieldDto.Id.Value);
-
                 NameField = data.Name;
                 Price = data.Price.Value.ToString() + " /ชม";
                 IsOpen = data.IsOpen == true ? IsOpen = "เปิดบริการ" : IsOpen = "ปิดบริการ";
                 SizeField = data.Size;
                 StoreName = storeName;
+                ImageField = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(data.ImageFieldModel[0].Image)));
+
             }
             catch (Exception ex)
             {

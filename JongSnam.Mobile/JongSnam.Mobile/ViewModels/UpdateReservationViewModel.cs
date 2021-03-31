@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
@@ -38,6 +40,7 @@ namespace JongSnam.Mobile.ViewModels
         private ImageSource _ImageProfile;
         private ValidatableObject<EnumDto> _selectedPayment;
         private string _saveTitle;
+        private bool _approvalStatus;
 
         public string SaveTitle
         {
@@ -211,20 +214,54 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(SelectedPayment));
             }
         }
+        public bool ApprovalStatus
+        {
+            get => _approvalStatus;
+            set
+            {
+                _approvalStatus = value;
+                OnPropertyChanged(nameof(ApprovalStatus));
+            }
+        }
 
         public Command SaveCommand { get; }
 
-        public UpdateReservationViewModel(int reservationId)
+        public UpdateReservationViewModel(int reservationId, bool approvalStatus)
         {
+            ApprovalStatus = approvalStatus;
+            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+            if (userType == "Customer" && ApprovalStatus == true)
+            {
+                //ถ้าอนุมัติแล้วลูกค้าจะไม่สามารถแก้ไขได้
+            }
+            else
+            {
+                //แก้ไชได้
+            }
+
             _reservationServices = DependencyService.Get<IReservationServices>();
             _paymentServices = DependencyService.Get<IPaymentServices>();
 
+            PaymentMethodList = new ObservableCollection<EnumDto>
+            {
+                new EnumDto
+                {
+                    Id = 1,
+                    Name = "จ่ายเต็มจำนวน"
+                },
+                new EnumDto
+                {
+                    Id = 2,
+                    Name = "แบ่งจ่าย"
+                }
+            };
+
             Task.Run(async () => await ExecuteLoadItemsCommand(reservationId));
 
-            SaveCommand = new Command(async () => await ExecuteSaveCommand(reservationId));
+            SaveCommand = new Command(async () => await ExecuteSaveCommand(reservationId, approvalStatus));
         }
 
-        async Task ExecuteSaveCommand(int reservationId)
+        async Task ExecuteSaveCommand(int reservationId,bool approvalStatus)
         {
             try
             {

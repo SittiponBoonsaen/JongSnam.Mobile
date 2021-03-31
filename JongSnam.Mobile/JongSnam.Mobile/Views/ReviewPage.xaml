@@ -5,16 +5,13 @@
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              x:Class="JongSnam.Mobile.Views.ReviewPage"
              xmlns:model="clr-namespace:JongSnamService.Models"
-             xmlns:model2="clr-namespace:JongSnam.Mobile.Models">
+             xmlns:model2="clr-namespace:JongSnam.Mobile.Models"
+             Title=" คะแนนและการรีวิว">
 
     <ContentPage.Content>
  <RefreshView x:DataType="local:ReviewViewModel" Command="{Binding LoadReview}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <StackLayout BackgroundColor="#f5f5f3">
-                <StackLayout>
 
-                <Label Text="คะแนนและการรีวิว" HorizontalOptions="Start" TextColor="Green"  FontAttributes="Bold" FontSize="24" Padding="10"/>
-
-                </StackLayout>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200" ></RowDefinition>

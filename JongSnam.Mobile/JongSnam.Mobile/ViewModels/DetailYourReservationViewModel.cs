@@ -39,6 +39,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _startTime;
         private string _stopTime;
         private string _approvalStatusString;
+        private bool _approvalStatus;
         private bool _isApproved;
         private bool _unApproved;
         private string _fieldName;
@@ -262,7 +263,7 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task OnEditDetailYourReservation(int reservationId)
         {
-            await Shell.Current.Navigation.PushAsync(new UpdateReservationPage(reservationId));
+            await Shell.Current.Navigation.PushAsync(new UpdateReservationPage(reservationId, _approvalStatus));
         }
 
         async Task ExecuteLoadItemsCommand(int reservationId)
@@ -297,7 +298,7 @@ namespace JongSnam.Mobile.ViewModels
                 UnApproved = items.ApprovalStatus == false ? true : false;
                 ApprovalStatusString = items.ApprovalStatus == true ? ApprovalStatusString = "อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ";
                 FieldName = items.FieldName;
-
+                _approvalStatus = items.ApprovalStatus.Value;
                 var paymentId = items.IsFullAmount.Value ? 1 : 2;
                 SelectedPayment.Value = PaymentMethodList.Where(w => w.Id.Value == paymentId).FirstOrDefault();
                 Amount = items.AmountForPay.Value;
