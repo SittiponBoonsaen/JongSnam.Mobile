@@ -134,7 +134,7 @@
                              WidthRequest="64"
                                 Padding="5"
                                 Source="add_photo.png"
-                                 Command="{Binding ExecuteUploadReceiptCommandCommand}"/>
+                                 Command="{Binding UploadReceiptCommand}"/>
                 
             </Grid>
         </StackLayout>
