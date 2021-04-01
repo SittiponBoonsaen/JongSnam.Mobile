@@ -10,14 +10,14 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <Label Text="สมัครสมาชิก" FontSize="Title" HorizontalOptions="Center" />
+            <Label Text="สมัครสมาชิก" FontSize="Title" TextColor="Black" HorizontalOptions="Center" />
 
-                <Label Text="อีเมล"/>
-            <Entry Placeholder="" Text="{Binding Email}" PlaceholderColor="Gray" />
-                <Label Text="รหัสผ่าน"/>
-            <Entry Placeholder="" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
-                <Label Text="ยืนยันรหัสผ่าน"/>
-             <Entry Placeholder="" IsPassword="true" Text="{Binding ConfrimPassword}" PlaceholderColor="Gray" />
+                <Label Text="อีเมล" TextColor="Black"/>
+                <Entry Placeholder="" Text="{Binding Email}" PlaceholderColor="Gray"  MaxLength="25" />
+                <Label Text="รหัสผ่าน" TextColor="Black"/>
+                <Entry Placeholder="" IsPassword="true" Text="{Binding Password}" MaxLength="25" PlaceholderColor="Gray" />
+                <Label Text="ยืนยันรหัสผ่าน" TextColor="Black"/>
+                <Entry Placeholder="" IsPassword="true" Text="{Binding ConfrimPassword}"  MaxLength="25" PlaceholderColor="Gray" />
                 <Grid RowSpacing="-15" >
                     <Grid.RowDefinitions >
                         <RowDefinition Height="40"/>
@@ -27,17 +27,17 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Text="ชื่อ" Grid.Column="0" Grid.Row="0"/>
+                    <Label Text="ชื่อ" Grid.Column="0" TextColor="Black" Grid.Row="0"/>
                     <Editor Placeholder="" Text="{Binding FirstName}" Grid.Column="0" Grid.Row="1"/>
-                    <Label Text="นามสกุล" Grid.Column="1" Grid.Row="0"/>
+                    <Label Text="นามสกุล" TextColor="Black" Grid.Column="1" Grid.Row="0"/>
                     <Editor Placeholder="" Text="{Binding LastName}" Grid.Column="1" Grid.Row="1"/>
             </Grid>
-                <Label Text="เบอร์โทรศัพท์"/>
+                <Label Text="เบอร์โทรศัพท์" TextColor="Black"/>
                 <Entry Placeholder="" Text="{Binding Phone}" Keyboard="Numeric" MaxLength="10" PlaceholderColor="Gray" />
-                <Label Text="ที่อยู่"/>
+                <Label Text="ที่อยู่" TextColor="Black"/>
             <Editor Placeholder="" Text="{Binding Address}" HeightRequest="70" />
 
-                <Picker Title="เลือกสถานะของสมาชิก" FontSize="15"
+                <Picker Title="เลือกสถานะของสมาชิก" TextColor="Black" FontSize="15"
                     ItemsSource="{Binding UserTypes}"
                     SelectedItem="{Binding UserType}"
                     ItemDisplayBinding="{Binding Name}"/>

@@ -14,5 +14,6 @@ namespace JongSnam.Mobile.Models
         public ImageSource ImageSource { get; set; }
         public bool IsApproved { get; set; }
         public bool UnApproved { get; set; }
+        public bool IsVisible { get; set; }
     }
 }

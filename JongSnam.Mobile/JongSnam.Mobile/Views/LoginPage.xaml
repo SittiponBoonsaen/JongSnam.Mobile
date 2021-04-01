@@ -17,7 +17,7 @@
             <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
             <Image Source="icon_logo.png"/>
 
-            <Entry Placeholder="Email" Text="{Binding UserName}" PlaceholderColor="Gray" Keyboard="Email" MaxLength="20" />
+            <Entry Placeholder="Email" Text="{Binding UserName}" PlaceholderColor="Gray" Keyboard="Email" MaxLength="25" />
             <Entry Placeholder="Password" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" MaxLength="20" />
             <Button Text="Login"
                 VerticalOptions="CenterAndExpand"

@@ -18,7 +18,7 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoginCommand { get; }
         public Command RegisterCommand { get; set; }
 
-        internal void OnAppearing()
+        public void OnAppearing()
         {
             IsBusy = true;
         }
@@ -60,9 +60,9 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteLoginCommand()
         {
+            IsBusy = true;
             try
             {
-                IsBusy = true;
                 if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
                 {
                     await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
@@ -91,7 +91,7 @@ namespace JongSnam.Mobile.ViewModels
                     Application.Current.MainPage = new AppShell();
                     await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
                 }
-                else
+                else if (userType == "Customer")
                 {
                     IsCustomer = true;
                     IsOwner = false;
@@ -101,7 +101,8 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch(Exception ex)
             {
-
+                return;
+                throw ex;
             }
             finally
             {

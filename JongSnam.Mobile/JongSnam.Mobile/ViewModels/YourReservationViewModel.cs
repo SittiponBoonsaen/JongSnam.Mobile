@@ -19,6 +19,7 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IReservationServices _reservationServices;
         private string _textMonth;
         private string _textYear;
+        private bool _isVisible;
 
         public ObservableCollection<ReservationDto> Items { get; }
         public Command SearchReservationCommand { get; }
@@ -43,6 +44,15 @@ namespace JongSnam.Mobile.ViewModels
             {
                 _textYear = value;
                 OnPropertyChanged(nameof(TextYear));
+            }
+        }
+        public bool IsVisible
+        {
+            get => _isVisible;
+            set
+            {
+                _isVisible = value;
+                OnPropertyChanged(nameof(IsVisible));
             }
         }
         public YourReservationViewModel()
@@ -94,19 +104,20 @@ namespace JongSnam.Mobile.ViewModels
                 Items.Clear();
 
 
-
+                
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
                 var items = await _reservationServices.GetYourReservation(Convert.ToInt32(userId), 1, 20);
                 if (items == null)
                 {
+                    IsVisible = true;
                     IsBusy = false;
-                    return;
                 }
                 foreach (var item in items)
                 {
                     Items.Add(
                     new YourReservationModel
                     {
+                        IsVisible = IsVisible,
                         Id = item.Id,
                         UserName = item.UserName,
                         StoreName = item.StoreName,
@@ -118,6 +129,8 @@ namespace JongSnam.Mobile.ViewModels
                         ApprovalStatusString = GetApprovalStatus(item.ApprovalStatus.Value, item.CreatedDate.Value),
                         DateTime = item.StartTime.Value.Date,
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+
+
                     });
                 }
             }

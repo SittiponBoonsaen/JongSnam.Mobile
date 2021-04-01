@@ -193,6 +193,7 @@ namespace JongSnam.Mobile.ViewModels
                         IsCustomer = false;
                         Application.Current.MainPage = new AppShell();
                         await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+
                     }
                     else
                     {
