@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
@@ -16,6 +17,11 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command LoginCommand { get; }
         public Command RegisterCommand { get; set; }
+
+        internal void OnAppearing()
+        {
+            IsBusy = true;
+        }
 
         public string UserName
         {
@@ -54,41 +60,54 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteLoginCommand()
         {
-            if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+            try
             {
-                await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
-                return;
-            }
-            if (!IsValidEmail(UserName))
-            {
-                await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
-                return;
-            }
+                IsBusy = true;
+                if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+                {
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    return;
+                }
+                if (!IsValidEmail(UserName))
+                {
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
+                    return;
+                }
 
-            var statusLogin = await _authenticationServices.Login(UserName, Password);
+                var statusLogin = await _authenticationServices.Login(UserName, Password);
 
-            if (!statusLogin)
-            {
-                await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
-                return;
-            }
+                if (!statusLogin)
+                {
+                    await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
+                    return;
+                }
 
-            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
 
-            if (userType == "Owner")
-            {
-                IsOwner = true;
-                IsCustomer = false;
-                Application.Current.MainPage = new AppShell();
-                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                if (userType == "Owner")
+                {
+                    IsOwner = true;
+                    IsCustomer = false;
+                    Application.Current.MainPage = new AppShell();
+                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                }
+                else
+                {
+                    IsCustomer = true;
+                    IsOwner = false;
+                    Application.Current.MainPage = new AppShellCustomer();
+                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                IsCustomer = true;
-                IsOwner = false;
-                Application.Current.MainPage = new AppShellCustomer();
-                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+
             }
+            finally
+            {
+                IsBusy = false;
+            }
+           
         }
         bool IsValidEmail(string email)
         {

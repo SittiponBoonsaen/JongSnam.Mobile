@@ -53,10 +53,9 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteLoadItemsCommand()
         {
-            IsBusy = true;
-
             try
             {
+                IsBusy = true;
                 Items.Clear();
                 var items = await _storeServices.GetStores(1, 20);
                 foreach (var item in items)
