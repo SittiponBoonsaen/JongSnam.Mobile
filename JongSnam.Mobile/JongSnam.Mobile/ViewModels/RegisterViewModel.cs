@@ -206,6 +206,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                 return;
+                throw ex;
             }
             finally
             {

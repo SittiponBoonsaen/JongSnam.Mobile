@@ -15,9 +15,6 @@ namespace JongSnam.Mobile.ViewModels
     public class YourStoreViewModel : BaseViewModel
     {
         private readonly IStoreServices _storeServices;
-        private int _currentPage = 1;
-        private int _pageSize = 5;
-
         public ObservableCollection<YourStoreModel> Items { get; }
 
         public Command LoadItemsCommand { get; }

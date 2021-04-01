@@ -269,7 +269,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             finally
             {
@@ -310,7 +310,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             finally
             {

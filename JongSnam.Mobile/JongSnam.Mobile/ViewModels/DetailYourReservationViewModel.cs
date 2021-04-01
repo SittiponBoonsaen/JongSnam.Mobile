@@ -482,6 +482,7 @@ namespace JongSnam.Mobile.ViewModels
             {
                 await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาทำรายการให้ถูกต้อง", "ตกลง");
                 return;
+                throw ex;
             }
             finally
             {
