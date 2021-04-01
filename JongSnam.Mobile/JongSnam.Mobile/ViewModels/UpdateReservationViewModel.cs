@@ -294,11 +294,12 @@ namespace JongSnam.Mobile.ViewModels
                 UnApproved = items.ApprovalStatus == false ? true : false;
                 ApprovalStatusString = items.ApprovalStatus == true ? ApprovalStatusString = "อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ";
                 FieldName = items.FieldName;
-
-                var paymentId = items.IsFullAmount.Value ? 1 : 2;
-                SelectedPayment.Value = PaymentMethodList.Where(w => w.Id.Value == paymentId).FirstOrDefault();
                 Amount = items.AmountForPay.Value;
                 PricePerHour = items.PricePerHour.Value;
+
+                var paymentId = items.IsFullAmount.Value ? 1 : 2;
+
+                SelectedPayment.Value = PaymentMethodList.Where(w => w.Id.Value == paymentId).FirstOrDefault();
 
                 DateBook = items.StartTime.Value.Date.ToString("dd/MMMM/yyyy");
                 ReceiptPayment =
