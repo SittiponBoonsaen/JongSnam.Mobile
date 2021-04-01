@@ -125,18 +125,24 @@ namespace JongSnam.Mobile.ViewModels
             {
                 if (string.IsNullOrWhiteSpace(Address) || UserType.UserTypeId == 0 || UserType == null || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Phone))
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                    return;
+                }
+
+                if (!IsValidEmail(Email))
+                {
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
                     return;
                 }
                 else if (Phone.Length < 10)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
                     return;
                 }
 
                 else if (Password != ConfrimPassword)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "รหัสผ่านไม่ตรงกัน", "ตกลง");
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "รหัสผ่านไม่ตรงกัน", "ตกลง");
                     return;
                 }
 
@@ -154,7 +160,7 @@ namespace JongSnam.Mobile.ViewModels
                 };
 
 
-                bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "คุณแน่ใจที่จะสมัครสมาชิกใช่ไหม ?", "ใช่", "ไม่");
+                bool answer = await App.Current.MainPage.DisplayAlert("ยืนยันข้อมูล", "คุณแน่ใจที่จะสมัครสมาชิกใช่ไหม ?", "ใช่", "ไม่");
                 if (!answer)
                 {
                     return;
@@ -164,7 +170,7 @@ namespace JongSnam.Mobile.ViewModels
 
                 if (statusSaved)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ท่านได้สมัครสมาชิกเรียบร้อยแล้ว", "ตกลง");
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "ท่านได้สมัครสมาชิกเรียบร้อยแล้ว", "ตกลง");
 
                     if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
                     {
@@ -175,7 +181,7 @@ namespace JongSnam.Mobile.ViewModels
 
                     if (!statusLogin)
                     {
-                        await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
+                        await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Username หรือ password ไม่ถูกต้อง", "ตกลง");
                         return;
                     }
 
@@ -198,13 +204,13 @@ namespace JongSnam.Mobile.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "เกิดข้อผิดพลาดบางอย่าง!!!!", "ตกลง");
+                    await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "เกิดข้อผิดพลาดบางอย่าง!!!!", "ตกลง");
                 }
 
             }
             catch(Exception ex)
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                 return;
                 throw ex;
             }
@@ -213,6 +219,18 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = true;
             }
             
+        }
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         internal void OnAppearing()

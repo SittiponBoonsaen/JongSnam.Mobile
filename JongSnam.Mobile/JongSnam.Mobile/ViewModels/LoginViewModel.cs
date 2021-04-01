@@ -40,6 +40,7 @@ namespace JongSnam.Mobile.ViewModels
         public LoginViewModel()
         {
             Preferences.Clear();
+
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
             LoginCommand = new Command(async () => await ExecuteLoginCommand());
@@ -48,19 +49,19 @@ namespace JongSnam.Mobile.ViewModels
         }
         async Task OnRegisterCommand()
         {
-            await Shell.Current.Navigation.PushAsync(new RegisterPage());
+            await App.Current.MainPage.Navigation.PushAsync(new RegisterPage());
         }
 
         async Task ExecuteLoginCommand()
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
+                await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
                 return;
             }
             if (!IsValidEmail(UserName))
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
+                await App.Current.MainPage.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
                 return;
             }
 
@@ -68,7 +69,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (!statusLogin)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
+                await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
                 return;
             }
 
