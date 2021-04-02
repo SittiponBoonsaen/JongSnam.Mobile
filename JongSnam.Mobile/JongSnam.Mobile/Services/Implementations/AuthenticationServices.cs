@@ -67,5 +67,40 @@ namespace JongSnam.Mobile.Services.Implementations
                 return false;
             }
         }
+
+        public async Task<bool> CheckLogin()
+        {
+            try
+            {
+                var username = Preferences.Get(AuthorizeConstants.UserKey, string.Empty);
+                var password = Preferences.Get(AuthorizeConstants.PasswordKey, string.Empty);
+
+                var response = await JongSnamServices.LoginWithHttpMessagesAsync(username, password);
+
+                var userModel = await GetRespondDtoHandlerHttpStatus<UserModel>(response);
+                if (userModel == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    Preferences.Clear();
+
+                    // save access token
+                    Preferences.Set(AuthorizeConstants.UserIdKey, userModel.Id.ToString());
+                    Preferences.Set(AuthorizeConstants.UserKey, userModel.Email);
+                    Preferences.Set(AuthorizeConstants.PasswordKey, userModel.Password);
+                    Preferences.Set(AuthorizeConstants.UserTypeKey, userModel.UserType);
+                    Preferences.Set(AuthorizeConstants.IsLoggedInKey, userModel.IsLoggedIn.ToString());
+                    await Task.Delay(MillisecondsDelay);
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

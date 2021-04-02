@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.CustomErrors;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Views;
@@ -154,27 +155,42 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                var dataUser = await _usersServices.GetUserById(id);
-                FirstName = dataUser.FirstName;
-                LastName = dataUser.LastName;
-                Email = dataUser.Email;
-                Phone = dataUser.ContactMobile;
-                Address = dataUser.Address;
-                DataUser = dataUser;
+                await _usersServices.GetUserById(
+                    id,
+                    executeSuccess: (dataUser) =>
+                    {
+                        //MessagingCenter.Send(this, ShopAddedMessage);
+                        FirstName = dataUser.FirstName;
+                        LastName = dataUser.LastName;
+                        Email = dataUser.Email;
+                        Phone = dataUser.ContactMobile;
+                        Address = dataUser.Address;
+                        DataUser = dataUser;
 
-                if (!(String.IsNullOrEmpty(dataUser.Image)))
-                {
-                    ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
-                }
-                else
-                {
-                    ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
-                }
+                        if (!(String.IsNullOrEmpty(dataUser.Image)))
+                        {
+                            ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
+                        }
+                        else
+                        {
+                            ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                        }
+                    },
+                    executeError: async (msg, ex) =>
+                    {
+                        IsBusy = false;
+                        var aa = (Shell.Current.CurrentItem.Items[0] as IShellSectionController).PresentedPage;
+                        //await CurrentShell.DisplayAlert(AppResource.CannotDisplayShopList, msg, AppResource.ButtonOk);
+                        //await UserService.Logout();
+                        await Shell.Current.Navigation.PopToRootAsync();
+                        //await Shell.Current.GoToAsync("//LoginPage");
+                });
+
+                //var dataUser = await _usersServices.GetUserById(id);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
             }
             finally
             {

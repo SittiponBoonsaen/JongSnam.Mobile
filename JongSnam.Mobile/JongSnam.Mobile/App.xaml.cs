@@ -21,6 +21,7 @@ namespace JongSnam.Mobile
             InitializeComponent();
 
             DependencyService.Register<IRepository<UserModel>, Repository<UserModel>>();
+            DependencyService.Register<IConnectivityService, ConnectivityService>();
             DependencyService.Register<IConfigurationService, ConfigurationService>();
             DependencyService.Register<IFieldServices, FieldServices>();
             DependencyService.Register<IPaymentServices, PaymentServices>();
@@ -34,6 +35,7 @@ namespace JongSnam.Mobile
             DependencyService.Register<MockDataStore>();
 
             var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+
             if (userType == "Owner")
             {
                 MainPage = new AppShell();
@@ -42,7 +44,7 @@ namespace JongSnam.Mobile
             {
                 MainPage = new AppShellCustomer();
             }
-            
+
         }
 
         protected override void OnStart()

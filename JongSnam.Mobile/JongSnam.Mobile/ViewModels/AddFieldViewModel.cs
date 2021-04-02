@@ -281,7 +281,7 @@ namespace JongSnam.Mobile.ViewModels
         private void InitValidation()
         {
             ImageValidata = new ValidatableObject<string>();
-            ImageValidata.Validations.Add(new IsNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
+            ImageValidata.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
         }
 
         private async Task TakePhotoAsync()

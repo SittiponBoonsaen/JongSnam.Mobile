@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.CustomErrors;
 using JongSnam.Mobile.Services.Base;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService.Models;
@@ -15,10 +17,42 @@ namespace JongSnam.Mobile.Services.Implementations
             return await GetRespondDtoHandlerHttpStatus<IEnumerable<UserDto>>(response);
         }
 
-        public async Task<UserDto> GetUserById(int id)
+        public async Task GetUserById(int id, Action<UserDto> executeSuccess = null, Action<string, Exception> executeError = null)
         {
-            var response = await JongSnamServices.GetUserByIdWithHttpMessagesAsync(id, CustomHeaders);
-            return await GetRespondDtoHandlerHttpStatus<UserDto>(response);
+            try
+            {
+                var result = await InvokeServiceCheckInternetConnection(async () =>
+                {
+                    var response = await JongSnamServices.GetUserByIdWithHttpMessagesAsync(id, CustomHeaders);
+                    return await GetRespondDtoHandlerHttpStatus<UserDto>(response);
+                });
+
+                executeSuccess?.Invoke(result);
+            }
+            catch (InvalidAccessTokenException ex)
+            {
+                executeError?.Invoke(ex.Message, ex);
+            }
+            catch (BadRequestException ex)
+            {
+                executeError?.Invoke(MessageConstants.SomeValueINvalid + "\n[" + ex.Message + "]", ex);
+            }
+            catch (UnauthorizedException uex)
+            {
+                executeError?.Invoke(MessageConstants.UnauthorizedError, uex);
+            }
+            catch (InternalServerErrorException inex)
+            {
+                executeError?.Invoke(MessageConstants.SomethingWentWrong, inex);
+            }
+            catch (NoInternetConnectionException nicex)
+            {
+                executeError?.Invoke(MessageConstants.CannotConnectToInternet, nicex);
+            }
+            catch (Exception ex)
+            {
+                executeError?.Invoke(MessageConstants.SomethingWentWrong, ex);
+            }
         }
 
         public async Task<bool> CreateUser(UserRequest userRequest)

@@ -124,7 +124,7 @@ namespace JongSnam.Mobile.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                await Shell.Current.GoToAsync("//LoginPage");
+                //await Shell.Current.GoToAsync("//LoginPage");
             }
             finally
             {
@@ -143,12 +143,15 @@ namespace JongSnam.Mobile.ViewModels
         }
 
 
-        internal async Task OnAppearingAsync()
+        public async Task OnAppearingAsync()
         {
             var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+
             if (isLoggedIn != "True")
             {
-                await Shell.Current.GoToAsync("//LoginPage");
+                //await Shell.SetTabBarIsVisible(this, false);
+                await Shell.Current.Navigation.PushAsync(new LoginPage());
+                //await Shell.Current.Navigation.PopToRootAsync();
             }
             IsBusy = true;
         }

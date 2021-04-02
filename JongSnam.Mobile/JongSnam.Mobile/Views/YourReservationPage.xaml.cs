@@ -11,10 +11,10 @@ namespace JongSnam.Mobile.Views
             InitializeComponent();
             BindingContext = _viewModel = new YourReservationViewModel();
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.OnAppearingAsync();
+            await _viewModel.OnAppearingAsync();
         }
     }
 }

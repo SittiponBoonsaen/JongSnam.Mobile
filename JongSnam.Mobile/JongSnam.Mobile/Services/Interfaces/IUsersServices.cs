@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using JongSnamService.Models;
 
@@ -8,7 +9,7 @@ namespace JongSnam.Mobile.Services.Interfaces
     {
         Task<IEnumerable<UserDto>> GetUsers();
 
-        Task<UserDto> GetUserById(int id);
+        Task GetUserById(int id, Action<UserDto> executeSuccess = null, Action<string, Exception> executeError = null);
 
         Task<bool> CreateUser(UserRequest userRequest);
 
