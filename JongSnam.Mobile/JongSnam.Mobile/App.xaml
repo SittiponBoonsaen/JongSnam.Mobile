@@ -1,13 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converters="clr-namespace:JongSnam.Mobile.Converters"
              x:Class="JongSnam.Mobile.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
         <ResourceDictionary>
+            <!--converter-->
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+
             <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="ErrorTextColor">Red</Color>
+            
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -26,6 +31,13 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+
+            <!-- Style for error Label -->
+            <Style x:Key="ErrorLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="TextColor" Value="{StaticResource ErrorTextColor}"/>
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

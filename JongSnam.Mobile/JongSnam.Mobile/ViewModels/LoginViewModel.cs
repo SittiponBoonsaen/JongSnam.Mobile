@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
 using JongSnam.Mobile.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,23 +12,25 @@ namespace JongSnam.Mobile.ViewModels
     {
         private readonly IAuthenticationServices _authenticationServices;
 
-        private string _userName;
-        private string _password;
+        private ValidatableObject<string> _email;
+        private ValidatableObject<string> _password;
 
-        public Command LoginCommand { get; }
+        public Command LoginCommand { get; private set; }
         public Command RegisterCommand { get; set; }
+        public Command EmailTextChangedCommand { get; private set; }
+        public Command PasswordTextChangedCommand { get; private set; }
 
-        public string UserName
+        public ValidatableObject<string> Email
         {
-            get => _userName;
+            get => _email;
             set
             {
-                _userName = value;
-                OnPropertyChanged(nameof(UserName));
+                _email = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
 
-        public string Password
+        public ValidatableObject<string> Password
         {
             get => _password;
             set
@@ -39,13 +42,42 @@ namespace JongSnam.Mobile.ViewModels
 
         public LoginViewModel()
         {
+            // remove all storage that we was wrote
             Preferences.Clear();
+
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
+            AddValidations();
+
+            SetupCommands();
+        }
+
+        void AddValidations()
+        {
+            _email = new ValidatableObject<string>();
+            _email.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "กรุณากรอก อีเมลล์" });
+            _email.Validations.Add(new IsEmailRule { ValidationMessage = "รูปแบบของ อีเมลล์ไม่ถูกต้อง" });
+
+            _password = new ValidatableObject<string>();
+            _password.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "กรุณากรอก พาสเวิด" });
+        }
+
+        private bool IsValidLogin()
+        {
+            return _email.Validate() & _password.Validate();
+        }
+
+        void SetupCommands()
+        {
             LoginCommand = new Command(async () => await ExecuteLoginCommand());
 
             RegisterCommand = new Command(async () => await OnRegisterCommand());
+
+
+            EmailTextChangedCommand = new Command(() => _email.Validate());
+            PasswordTextChangedCommand = new Command(() => _password.Validate());
         }
+
         async Task OnRegisterCommand()
         {
             await Shell.Current.Navigation.PushAsync(new RegisterPage());
@@ -53,18 +85,12 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteLoginCommand()
         {
-            if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+            if (!IsValidLogin())
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
-                return;
-            }
-            if (!IsValidEmail(UserName))
-            {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกอีเมลให้ถูกต้อง", "ตกลง");
                 return;
             }
 
-            var statusLogin = await _authenticationServices.Login(UserName, Password);
+            var statusLogin = await _authenticationServices.Login(Email.Value, Password.Value);
 
             if (!statusLogin)
             {
@@ -87,18 +113,6 @@ namespace JongSnam.Mobile.ViewModels
                 IsOwner = false;
                 Application.Current.MainPage = new AppShellCustomer();
                 await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
-            }
-        }
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
             }
         }
     }
