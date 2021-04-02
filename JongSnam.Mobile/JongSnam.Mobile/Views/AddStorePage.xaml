@@ -45,9 +45,11 @@
                     <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                           Command="{Binding LoadDistrictCommand}"/>
                 </Picker.Behaviors>
-            </Picker>
+                </Picker>
+                <Label Text="{Binding SelectedProvince.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                           Style="{StaticResource ErrorLabel}"/>
 
-            <Picker ItemsSource="{Binding District}"
+                <Picker ItemsSource="{Binding District}"
                                         ItemDisplayBinding="{Binding Name}"
                                         SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
                                         Title="กรุณาเลือก อำเภอ">

@@ -10,5 +10,6 @@ namespace JongSnam.Mobile.Constants
         public static string UnauthorizedError = "การยืนยันตัวตนล้อมเหลว";
         public static string SomethingWentWrong = "เกิดข้อผิดพลาดบางอย่างจากระบบ";
         public static string CannotConnectToInternet = "ไม่มีการเชื่อต่ออินเตอร์เน็ต";
+        public static string PleaseSelectProvince = "กรุณาเลือกจังหวัด";
     }
 }

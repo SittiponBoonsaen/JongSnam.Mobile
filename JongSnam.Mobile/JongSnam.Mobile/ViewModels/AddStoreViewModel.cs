@@ -9,6 +9,7 @@ using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
+using JongSnam.Mobile.Constants;
 
 namespace JongSnam.Mobile.ViewModels
 {
@@ -312,22 +313,20 @@ namespace JongSnam.Mobile.ViewModels
         {
             ImageValidata = new ValidatableObject<string>();
             ImageValidata.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
-            _selectedProvince = new ValidatableObject<EnumDto>();
-            _selectedDistrict = new ValidatableObject<EnumDto>();
             _selectedSubDistrict = new ValidatableObject<EnumDto>();
             _selectedSubDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกตำบล" });
+
+            _selectedDistrict = new ValidatableObject<EnumDto>();
             _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
-            _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกจังหวัด" });
-        }
-        private bool IsValid
-        {
-            get
-            {
-                return ImageValidata.Validate();
-            }
+
+            _selectedProvince = new ValidatableObject<EnumDto>();
+            _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = MessageConstants.PleaseSelectProvince });
         }
 
- 
+        private bool IsValid()
+        {
+            return _selectedProvince.Validate();
+        }
 
         async Task LoadProvinceEnum()
         {
@@ -388,6 +387,11 @@ namespace JongSnam.Mobile.ViewModels
         {
             try
             {
+                if (!IsValid())
+                {
+                    return;
+                }
+
                 bool answer = await Shell.Current.DisplayAlert("ยืนยันข้อมูล", "ต้องการเพิ่มร้านใช่หรือไม่ ?", "ใช่", "ไม่");
                 if (!answer)
                 {
