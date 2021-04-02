@@ -93,39 +93,32 @@ namespace JongSnam.Mobile.ViewModels
 
             var statusLogin = await _authenticationServices.Login(Email.Value, Password.Value);
 
-                if (!statusLogin)
-                {
-                    await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
-                    return;
-                }
-
-                var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
-
-                if (userType == "Owner")
-                {
-                    IsOwner = true;
-                    IsCustomer = false;
-                    Application.Current.MainPage = new AppShell();
-                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
-                }
-                else if (userType == "Customer")
-                {
-                    IsCustomer = true;
-                    IsOwner = false;
-                    Application.Current.MainPage = new AppShellCustomer();
-                    await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
-                }
-            }
-            catch(Exception ex)
+            if (!statusLogin)
             {
+                await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");
                 return;
-                throw ex;
             }
-            finally
+
+            var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
+
+            if (userType == "Owner")
             {
-                IsBusy = false;
+                IsOwner = true;
+                IsCustomer = false;
+                Application.Current.MainPage = new AppShell();
+                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
             }
-           
+            else if (userType == "Customer")
+            {
+                IsCustomer = true;
+                IsOwner = false;
+                Application.Current.MainPage = new AppShellCustomer();
+                await Shell.Current.GoToAsync($"//{nameof(YourReservationPage)}");
+            }
+            else
+            {
+
+            }
         }
     }
 }

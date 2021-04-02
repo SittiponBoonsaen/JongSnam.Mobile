@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.CustomErrors;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService;
 using Microsoft.Rest;
@@ -77,5 +78,17 @@ namespace JongSnam.Mobile.Services.Base
             var respondModel = JsonConvert.DeserializeObject<T>(responseString);
             return respondModel;
         }
+
+        protected T InvokeServiceCheckInternetConnection<T>(Func<T> serviceMethod)
+        {
+            var isInternetConnection = ConnectivityService.IsInternetConnection();
+            if (!isInternetConnection)
+            {
+                throw new NoInternetConnectionException($"Cannot request to {nameof(serviceMethod)}");
+            }
+
+            return serviceMethod.Invoke();
+        }
+
     }
 }
