@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100"  Grid.Row="0" Grid.Column="0" />
+                <Image Source="{Binding ImageField}" Aspect="Fill"  WidthRequest="100" HeightRequest="100"  Grid.Row="0" Grid.Column="0" />
                 <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="0" Grid.Column="1" />
                 <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill" WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="0" />
                 <Image Source="https://www.teamturfsport.com/wp-content/uploads/2017/03/S__20725805.jpg" Aspect="Fill"  WidthRequest="100" HeightRequest="100" Grid.Row="1" Grid.Column="1" />

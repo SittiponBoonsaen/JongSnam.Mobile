@@ -117,11 +117,10 @@ namespace JongSnam.Mobile.ViewModels
 
             UploadImageCommand = new Command(async () =>
             {
-                if (IsBusy)
-                {
-                    return;
-                }
-
+                //if (IsBusy)
+                //{
+                //    return;
+                //}
                 var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
 
                 switch (actionSheet)

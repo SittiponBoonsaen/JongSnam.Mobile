@@ -50,7 +50,7 @@
                 BackgroundColor="RoyalBlue"
                 Command="{Binding LoginCommand}"    
                 />
-            <Label Text="version1.0" HorizontalOptions="CenterAndExpand" />
+            <Label Text="version1.1" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,6 +5,7 @@ using JongSnam.Mobile.Services.Implementations;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.SqliteRepository;
 using JongSnam.Mobile.SqliteRepository.Interfaces;
+using JongSnam.Mobile.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -40,9 +41,13 @@ namespace JongSnam.Mobile
             {
                 MainPage = new AppShell();
             }
-            else
+            else if(userType == "Customer")
             {
                 MainPage = new AppShellCustomer();
+            }
+            else
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
 
         }

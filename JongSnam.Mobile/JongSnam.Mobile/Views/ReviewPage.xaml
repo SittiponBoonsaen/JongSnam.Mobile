@@ -5,21 +5,13 @@
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              x:Class="JongSnam.Mobile.Views.ReviewPage"
              xmlns:model="clr-namespace:JongSnamService.Models"
-             xmlns:model2="clr-namespace:JongSnam.Mobile.Models">
-    <!--<AbsoluteLayout>
-        <oxy:PlotView Model="{Binding BarModel}"  
-                  AbsoluteLayout.LayoutBounds="20,0,.9,.9"  
-                  AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional" />
-    </AbsoluteLayout>-->
+             xmlns:model2="clr-namespace:JongSnam.Mobile.Models"
+             Title=" คะแนนและการรีวิว">
 
     <ContentPage.Content>
  <RefreshView x:DataType="local:ReviewViewModel" Command="{Binding LoadReview}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <StackLayout BackgroundColor="#f5f5f3">
-                <StackLayout>
 
-                <Label Text="คะแนนและการรีวิว" HorizontalOptions="Start" TextColor="Green"  FontAttributes="Bold" FontSize="24" Padding="10"/>
-
-                </StackLayout>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200" ></RowDefinition>
@@ -54,6 +46,7 @@
                                     <RowDefinition Height="25" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
+                                    <RowDefinition Height="5" ></RowDefinition>
                                 </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" ></ColumnDefinition>
@@ -65,21 +58,37 @@
                                   </StackLayout>
                                 
 
-                             <Label Text="{Binding Name}" Grid.Column="1" FontSize="17" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start"></Label>
-                                   
+                             <Label Text="{Binding Name}" Grid.Column="1"  Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start"></Label>
 
-                                    <Label  Grid.Row="1" 
+                                    <StackLayout  HeightRequest="16" WidthRequest="16"  Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" ></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="16" ></ColumnDefinition>
+                                                <ColumnDefinition Width="16" ></ColumnDefinition>
+                                                <ColumnDefinition Width="16" ></ColumnDefinition>
+                                                <ColumnDefinition Width="16" ></ColumnDefinition>
+                                                <ColumnDefinition Width="16" ></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImageStar1}" ></Image>
+                                            <Image Grid.Column="1" Grid.Row="0" Source="{Binding ImageStar2}" ></Image>
+                                            <Image Grid.Column="2" Grid.Row="0" Source="{Binding ImageStar3}" ></Image>
+                                            <Image Grid.Column="3" Grid.Row="0" Source="{Binding ImageStar4}" ></Image>
+                                            <Image Grid.Column="4" Grid.Row="0" Source="{Binding ImageStar5}" ></Image>
+                                        </Grid>
+                                    </StackLayout>
+                                    <Label  Grid.Row="2" 
                                             Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    FontAttributes="Bold"
-                                    IsEnabled="False"
-                                    HorizontalOptions="Fill"
-                                             VerticalOptions="Start"
-                                    Text="{Binding Message}"
-                                    TextColor="Black"
-                                    />
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            FontAttributes="None"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="End"
+                                            Text="{Binding Message}"
+                                            TextColor="Black"/>
                                     
-                                    <Label Text="{Binding RatingString}" Grid.Column="0" Grid.Row="2" HorizontalOptions="Start" TextColor="Green" VerticalOptions="Start"></Label>
                                 </Grid>
                                 </StackLayout>
                             </DataTemplate>

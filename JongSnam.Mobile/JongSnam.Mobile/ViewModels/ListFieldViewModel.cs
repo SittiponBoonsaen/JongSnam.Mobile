@@ -22,6 +22,7 @@ namespace JongSnam.Mobile.ViewModels
         private string _officeHours;
         private FieldDto _selectedItem;
         private ImageSource _imageStore;
+        private ImageSource _imageProfile;
 
         public Command LoadFieldCommand { get; }
         public Command<FieldDto> ItemTapped { get; }
@@ -77,7 +78,15 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ImageStore));
             }
         }
-
+        public ImageSource ImageProfile
+        {
+            get { return _imageProfile; }
+            set
+            {
+                _imageProfile = value;
+                OnPropertyChanged(nameof(ImageProfile));
+            }
+        }
         public Command LoadItemsCommand { get; }
 
         public ListFieldViewModel(StoreDtoModel storeDto)
@@ -105,6 +114,7 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+               
                 Items.Clear();
                 StoreName = storeDto.Name;
                 OfficeHours = storeDto.OfficeHours;
@@ -140,6 +150,7 @@ namespace JongSnam.Mobile.ViewModels
                         Name = item.Name,
                         Price = item.Price,
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                        
                     });
                 }
             }

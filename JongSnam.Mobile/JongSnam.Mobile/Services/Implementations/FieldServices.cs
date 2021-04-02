@@ -52,6 +52,7 @@ namespace JongSnam.Mobile.Services.Implementations
             catch (Exception ex)
             {
                 return false;
+                throw ex;
             }
         }
 
@@ -66,6 +67,7 @@ namespace JongSnam.Mobile.Services.Implementations
             catch (Exception ex)
             {
                 return false;
+                throw ex;
             }
         }
         public async Task<bool> DeleteField(int id)
@@ -79,6 +81,7 @@ namespace JongSnam.Mobile.Services.Implementations
             catch (Exception ex)
             {
                 return false;
+                throw ex;
             }
         }
 

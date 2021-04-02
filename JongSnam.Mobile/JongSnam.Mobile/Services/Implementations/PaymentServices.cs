@@ -33,7 +33,9 @@ namespace JongSnam.Mobile.Services.Implementations
             }
             catch (Exception ex)
             {
+                
                 return false;
+                throw ex;
             }
         }
 
@@ -48,6 +50,8 @@ namespace JongSnam.Mobile.Services.Implementations
             catch (Exception ex)
             {
                 return false;
+                throw ex;
+
             }
         }
 

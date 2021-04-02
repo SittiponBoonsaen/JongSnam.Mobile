@@ -8,7 +8,6 @@ namespace JongSnam.Mobile
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute("login", typeof(LoginPage));
             Routing.RegisterRoute("reservation", typeof(YourReservationPage));
         }
 

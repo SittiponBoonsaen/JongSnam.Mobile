@@ -2,30 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.RegisterPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="ยืนยัน" Command="{Binding RegisterCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <Label Text="REGISTER" FontSize="Title" HorizontalOptions="Center" />
-                <Image Source="C:\Users\PingSittipon\Documents\GitHub\JongSnam.Mobile\JongSnam.Mobile\JongSnam.Mobile\assets\Logo.png"/>
-            <Entry Placeholder="Email" Text="{Binding Email}" PlaceholderColor="Gray" />
-            <Entry Placeholder="รหัสผ่าน" IsPassword="true" Text="{Binding Password}" PlaceholderColor="Gray" />
-             <Entry Placeholder="ยืนยันรหัสผ่าน" IsPassword="true" Text="{Binding ConfrimPassword}" PlaceholderColor="Gray" />
-            <Grid>
-                <Editor Placeholder="ชื่อ" Text="{Binding FirstName}" Grid.Column="0"/>
-                <Editor Placeholder="นามสกุล" Text="{Binding LastName}" Grid.Column="1"/>
+            <Label Text="สมัครสมาชิก" FontSize="Title" TextColor="Black" HorizontalOptions="Center" />
+
+                <Label Text="อีเมล" TextColor="Black"/>
+                <Entry Placeholder="" Text="{Binding Email}" PlaceholderColor="Gray"  MaxLength="25" />
+                <Label Text="รหัสผ่าน" TextColor="Black"/>
+                <Entry Placeholder="" IsPassword="true" Text="{Binding Password}" MaxLength="25" PlaceholderColor="Gray" />
+                <Label Text="ยืนยันรหัสผ่าน" TextColor="Black"/>
+                <Entry Placeholder="" IsPassword="true" Text="{Binding ConfrimPassword}"  MaxLength="25" PlaceholderColor="Gray" />
+                <Grid RowSpacing="-15" >
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="ชื่อ" Grid.Column="0" TextColor="Black" Grid.Row="0"/>
+                    <Editor Placeholder="" Text="{Binding FirstName}" Grid.Column="0" Grid.Row="1"/>
+                    <Label Text="นามสกุล" TextColor="Black" Grid.Column="1" Grid.Row="0"/>
+                    <Editor Placeholder="" Text="{Binding LastName}" Grid.Column="1" Grid.Row="1"/>
             </Grid>
-            <Entry Placeholder="เบอร์โทรศัพท์" Text="{Binding Phone}" MaxLength="10" PlaceholderColor="Gray" />
-            <Editor Placeholder="ที่อยู่" Text="{Binding Address}" HeightRequest="70" />
-                
-                <Picker Title="กรุณาเลือก..."
+                <Label Text="เบอร์โทรศัพท์" TextColor="Black"/>
+                <Entry Placeholder="" Text="{Binding Phone}" Keyboard="Numeric" MaxLength="10" PlaceholderColor="Gray" />
+                <Label Text="ที่อยู่" TextColor="Black"/>
+            <Editor Placeholder="" Text="{Binding Address}" HeightRequest="70" />
+
+                <Picker Title="เลือกสถานะของสมาชิก" TextColor="Black" FontSize="15"
                     ItemsSource="{Binding UserTypes}"
                     SelectedItem="{Binding UserType}"
                     ItemDisplayBinding="{Binding Name}"/>
 
-                <Button Text="Register"
-                VerticalOptions="CenterAndExpand"
-                 Command="{Binding RegisterCommand}"
-                    BackgroundColor="RoyalBlue"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

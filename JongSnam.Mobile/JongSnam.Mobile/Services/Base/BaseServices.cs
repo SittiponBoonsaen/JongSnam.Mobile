@@ -66,7 +66,6 @@ namespace JongSnam.Mobile.Services.Base
             JongSnamServices = new JongSnamServices(new Uri("http://192.168.88.105:8080/"), handler);
         }
 
-
         protected async Task<T> GetRespondDtoHandlerHttpStatus<T>(HttpOperationResponse httpOperationResponse)
         {
             var responseString = await httpOperationResponse.Response.Content.ReadAsStringAsync();

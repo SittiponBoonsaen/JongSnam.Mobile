@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace JongSnam.Mobile.ViewModels
         private int _page = 1;
         private int _pageSize = 20;
 
+
+        public ImageSource star { get; set; }
+        public ImageSource unstar { get; set; }
+
+
         public ObservableCollection<ReviewDto> Items { get; }
 
         public Command LoadReview { get; }
@@ -31,6 +37,12 @@ namespace JongSnam.Mobile.ViewModels
         private double _ratingsum;
         private double _textComment;
         private bool _visible;
+        private ImageSource _imageStar5;
+        private ImageSource _imageStar4;
+        private ImageSource _imageStar3;
+        private ImageSource _imageStar2;
+        private ImageSource _imageStar1;
+
 
         public double RatingSum
         {
@@ -97,19 +109,26 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                BarModel.InvalidatePlot(true);
-
+                star = ImageSource.FromFile("star.png");
+                unstar = ImageSource.FromFile("unstar.png");
                 Items.Clear();
                 var items = await _reviewServices.GetReviewByStoreId(storeId, _page, _pageSize);
-
                 foreach (var item in items.Collection)
                 {
+
+                    GetRatting(item.Rating.Value);
+
                     Items.Add(new ReviewDtoModel
                     { 
                         Message = item.Message,
                         Name = item.Name,
-                        RatingString = GetRatting(item.Rating.Value),
+                        ImageStar1 = _imageStar1,
+                        ImageStar2 = _imageStar2,
+                        ImageStar3 = _imageStar3,
+                        ImageStar4 = _imageStar4,
+                        ImageStar5 = _imageStar5
                     });
+                    
                 }
             }
             catch (Exception ex)
@@ -129,6 +148,7 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+
                 var userType = Preferences.Get(AuthorizeConstants.UserTypeKey, string.Empty);
                 if (userType != "Owner")
                 {
@@ -173,6 +193,7 @@ namespace JongSnam.Mobile.ViewModels
                 BarModel.Series.Add(s1);
                 BarModel.Axes.Add(xaxis);
                 BarModel.Axes.Add(yaxis);
+                BarModel.InvalidatePlot(true);
             }
             catch (Exception ex)
             {
@@ -181,6 +202,7 @@ namespace JongSnam.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
+                
             }
         }
 
@@ -188,33 +210,52 @@ namespace JongSnam.Mobile.ViewModels
         {
             IsBusy = true;
         }
-        string GetRatting(double Rating)
+        public void GetRatting(double Rating)
         {
+
             if (Rating == 5)
             {
-                return "5 ดาว";
+                _imageStar1 = star;
+                _imageStar2 = star;
+                _imageStar3 = star;
+                _imageStar4 = star;
+                _imageStar5 = star;
             }
             else if (Rating == 4)
             {
-                return "4 ดาวว";
+                _imageStar1 = star;
+                _imageStar2 = star;
+                _imageStar3 = star;
+                _imageStar4 = star;
+                _imageStar5 = unstar;
+
             }
             else if (Rating == 3)
             {
-                return "3 ดาว";
+                _imageStar1 = star;
+                _imageStar2 = star;
+                _imageStar3 = star;
+                _imageStar4 = unstar;
+                _imageStar5 = unstar;
+
             }
-            else if (Rating ==2)
+            else if (Rating == 2)
             {
-                return "2 ดาว";
+                _imageStar1 = star;
+                _imageStar2 = star;
+                _imageStar3 = unstar;
+                _imageStar4 = unstar;
+                _imageStar5 = unstar;
+
             }
             else if (Rating == 1)
             {
-                return "1 ดาว";
+                _imageStar1 = star;
+                _imageStar2 = unstar;
+                _imageStar3 = unstar;
+                _imageStar4 = unstar;
+                _imageStar5 = unstar;
             }
-            else
-            {
-                return "ไม่ได้ลงคะแนน";
-            }
-
         }
     }
 }

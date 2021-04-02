@@ -13,10 +13,10 @@ namespace JongSnam.Mobile.Views
     public partial class UpdateReservationPage : ContentPage
     {
         UpdateReservationViewModel _viewModel;
-        public UpdateReservationPage(int reservationId)
+        public UpdateReservationPage(int reservationId, bool approvalStatus)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new UpdateReservationViewModel(reservationId);
+            BindingContext = _viewModel = new UpdateReservationViewModel(reservationId, approvalStatus);
         }
         protected override void OnAppearing()
         {

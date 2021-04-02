@@ -5,7 +5,12 @@
               BindingContext="{Binding UpdateFieldViewModel}"
              Title="แก้ไขสนาม">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
+        <ToolbarItem Text="บันทึก" Order="Primary" Command="{Binding SaveCommand}"/>
+
+        <ToolbarItem Text="ลบสนามนี้"
+                 Order="Secondary" 
+                 Priority="1"  Command="{Binding DeleteFieldCommand}"/>
+        
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
@@ -63,9 +68,6 @@
                 <StackLayout Padding="20,0">
                     <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>
-            <Button Text="ลบสนามนี้"
-                VerticalOptions="CenterAndExpand" Command="{Binding DeleteFieldCommand}"
-                    BackgroundColor="Red"/>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>
