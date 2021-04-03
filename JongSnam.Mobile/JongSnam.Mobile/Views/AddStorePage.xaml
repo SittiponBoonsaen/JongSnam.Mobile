@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.AddStorePage"
              xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
              BindingContext="{Binding AddStoreViewModel}"
              Title="เพิ่มร้าน">
 
@@ -10,9 +11,8 @@
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
 
-        <ContentPage.Content>
-        <ScrollView>
-            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+    <ScrollView InputTransparent="True">
+        <StackLayout BackgroundColor="#f5f5f3" Padding="20">
 
                 <StackLayout>
                     <ActivityIndicator IsVisible="{Binding IsBusy}"
@@ -33,66 +33,56 @@
                     </ImageButton>
                 </StackLayout>
                 <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" Text="{Binding Name}"/>
-            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" Text="{Binding Address}"/>
+                <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" Text="{Binding Address}"/>
 
-            <Picker ItemsSource="{Binding Province}"
-                                        ItemDisplayBinding="{Binding Name}"
-                                        SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
-                                        Title="กรุณาเลือก จังหวัด">
-                <Picker.Behaviors>
-                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding SelectedProvinceIndexChangedCommand}"/>
-                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding LoadDistrictCommand}"/>
-                </Picker.Behaviors>
+                <Picker ItemsSource="{Binding Province}"
+                                            ItemDisplayBinding="{Binding Name}"
+                                            SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
+                                            Title="กรุณาเลือก จังหวัด">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                              Command="{Binding SelectedProvinceIndexChangedCommand}"/>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                              Command="{Binding LoadDistrictCommand}"/>
+                    </Picker.Behaviors>
                 </Picker>
                 <Label Text="{Binding SelectedProvince.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-                                           Style="{StaticResource ErrorLabel}"/>
+                                               Style="{StaticResource ErrorLabel}"/>
 
                 <Picker ItemsSource="{Binding District}"
-                                        ItemDisplayBinding="{Binding Name}"
-                                        SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
-                                        Title="กรุณาเลือก อำเภอ">
-                <Picker.Behaviors>
-                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding SelectedDistrictIndexChangedCommand}"/>
-                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding LoadSubDistrictCommand}"/>
-                </Picker.Behaviors>
-            </Picker>
-            <Picker ItemsSource="{Binding SubDistrict}"
-                                        ItemDisplayBinding="{Binding Name}"
-                                        SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
-                                        Title="กรุณาเลือก ตำบล">
-                <Picker.Behaviors>
-                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                                          Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
-                    
-                </Picker.Behaviors>
-            </Picker>
+                                            ItemDisplayBinding="{Binding Name}"
+                                            SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
+                                            Title="กรุณาเลือก อำเภอ">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                              Command="{Binding SelectedDistrictIndexChangedCommand}"/>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                              Command="{Binding LoadSubDistrictCommand}"/>
+                    </Picker.Behaviors>
+                </Picker>
+                <Picker ItemsSource="{Binding SubDistrict}"
+                                            ItemDisplayBinding="{Binding Name}"
+                                            SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
+                                            Title="กรุณาเลือก ตำบล">
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                              Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
+                    </Picker.Behaviors>
+                </Picker>
 
+                <Entry Placeholder="เบอร์ติดต่อ" MaxLength="10" PlaceholderColor="Gray" Text="{Binding ContactMobile}"/>
 
+                <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours}"/>
+                    <Picker Title="สถานะ"
+                        ItemsSource="{Binding Privacies}"
+                        SelectedItem="{Binding Privacy}"
+                        ItemDisplayBinding="{Binding Name}"/>
+            <Entry Placeholder="กฏของร้าน" HeightRequest="80" Text="{Binding Rules}" />
+            <StackLayout HeightRequest="300" WidthRequest="400">
+                <maps:Map x:Name="map"/>
+            </StackLayout>
 
+        </StackLayout>
 
-            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" Text="{Binding ContactMobile}"/>
-                    <Grid >
-                        <Entry Grid.Column="0"
-                           Keyboard="Numeric"
-                           Placeholder="ลัดติจูด"
-                           IsEnabled="false" />
-
-                        <Entry Grid.Column="1"
-                           Keyboard="Numeric"
-                           Placeholder="ลองติจูด"
-                           IsEnabled="false" />
-                    </Grid>
-            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours}"/>
-                <Picker Title="สถานะ"
-                    ItemsSource="{Binding Privacies}"
-                    SelectedItem="{Binding Privacy}"
-                    ItemDisplayBinding="{Binding Name}"/>
-                <Editor Placeholder="กฏของร้าน" HeightRequest="80" Text="{Binding Rules}" />
-                </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

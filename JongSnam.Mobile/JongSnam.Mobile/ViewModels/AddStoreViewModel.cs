@@ -10,6 +10,10 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using JongSnam.Mobile.Constants;
+using Xamarin.Forms.GoogleMaps;
+using Xamarin.Essentials;
+using Location = Xamarin.Essentials.Location;
+using Map = Xamarin.Forms.GoogleMaps.Map;
 
 namespace JongSnam.Mobile.ViewModels
 {
@@ -56,6 +60,7 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isOpen;
         private string _officeHours;
         private ImageSource _imageProfile;
+        private Map _map;
 
         public ValidatableObject<EnumDto> SelectedProvince
         {
@@ -252,11 +257,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public AddStoreViewModel(int userId)
+        public AddStoreViewModel(int userId, Map map)
         {
             _storeServices = DependencyService.Get<IStoreServices>();
 
             _enumServices = DependencyService.Get<IEnumServices>();
+
+            _map = map;
 
             InitValidation();
 
@@ -269,6 +276,8 @@ namespace JongSnam.Mobile.ViewModels
             LoadSubDistrictCommand = new Command(async () => await LoadSubDistrictEnum(SelectedDistrict.Value.Id.Value));
 
             Task.Run(async () => await LoadProvinceEnum());
+
+            Task.Run(async () => await InitMapLocation());
 
             UploadImageCommand = new Command(async () =>
             {
@@ -301,7 +310,6 @@ namespace JongSnam.Mobile.ViewModels
 
                 }
             });
-
         }
 
         public void OnAppearing()
@@ -453,7 +461,6 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-
         private async Task TakePhotoAsync()
         {
             if (!CrossMedia.Current.IsCameraAvailable)
@@ -517,5 +524,37 @@ namespace JongSnam.Mobile.ViewModels
             //_isBackFromChooseImage = false;
         }
 
+        async Task InitMapLocation()
+        {
+            Location location = await Geolocation.GetLastKnownLocationAsync();
+            if (location == null)
+            {
+                location = await Geolocation.GetLocationAsync(new GeolocationRequest
+                {
+                    DesiredAccuracy = GeolocationAccuracy.Medium,
+                    Timeout = TimeSpan.FromSeconds(10)
+                });
+            }
+
+            Pin pin = new Pin()
+            {
+                Type = PinType.Place,
+                Label = "กดค้างแล้วลากเพื่อย้ายตำแหน่ง.",
+                Position = new Position(location.Latitude, location.Longitude),
+                Rotation = 33.3f,
+                IsDraggable = true
+            };
+
+            _map.Pins.Add(pin);
+            _map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(5000)));
+
+            _map.PinDragEnd += (_, e) => SetLocation(e.Pin);
+        }
+
+        void SetLocation(Pin pin)
+        {
+            Latitude = pin.Position.Latitude;
+            Longtitude = pin.Position.Longitude;
+        }
     }
 }

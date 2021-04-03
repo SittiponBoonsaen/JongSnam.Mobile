@@ -4,8 +4,8 @@ using System.Text;
 
 namespace JongSnam.Mobile.Constants
 {
-    public static class AppConstants
+    public class AppConstants
     {
-        public static string MapApiKey = "AIzaSyBK_uiPTr_IZnJta_KNw9EZvHOSAYzcMQ4";
+        public const string GoogleMapsApiKey = "AIzaSyDA_5yqITx31d5LBOWYBkxGoY0vBLRykJU";
     }
 }
