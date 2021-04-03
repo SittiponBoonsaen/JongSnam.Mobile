@@ -26,18 +26,13 @@ namespace JongSnam.Mobile.ViewModels
         public Command LoadItemsCommand { get; }
         public Command UploadImageCommand { get; private set; }
 
-        public ValidatableObject<string> ImageValidata { get; set; }
-        public ValidatableObject<string> NameValidata { get; set; }
-        public ValidatableObject<string> AddressValidata { get; set; }
-        public ValidatableObject<string> SubDistrictValidata { get; set; }
-        public ValidatableObject<string> DistrictValidata { get; set; }
-        public ValidatableObject<string> ProvinceValidata { get; set; }
-        public ValidatableObject<string> ContactMobileValidata { get; set; }
-        public ValidatableObject<string> LatValidata { get; set; }
-        public ValidatableObject<string> LongValidata { get; set; }
-        public ValidatableObject<string> OfficeHoursValidata { get; set; }
-        public ValidatableObject<string> RulesValidata { get; set; }
+        public Command NameTextChangedCommand { get; private set; }
+        public Command AddressTextChangedCommand { get; private set; }
         public Command SelectedProvinceIndexChangedCommand { get; private set; }
+        public Command SelectedDistrictIndexChangedCommand { get; private set; }
+        public Command SelectedSubDistrictIndexChangedCommand { get; private set; }
+        public Command ContactMobileTextChangedCommand { get; private set; }
+        public Command OfficeHoursTextChangedCommand { get; private set; }
 
         public Command LoadDistrictCommand { get; private set; }
 
@@ -50,16 +45,15 @@ namespace JongSnam.Mobile.ViewModels
         private List<EnumDto> _district;
         private List<EnumDto> _subDistrict;
 
-        private string _name;
-        private string _address;
-        private string _contactMobile;
+        private ValidatableObject<string> _name;
+        private ValidatableObject<string> _address;
+        private ValidatableObject<string> _contactMobile;
         private double _latitude;
         private double _longtitude;
         private string _rules;
-        private string _image;
         private bool _isOpen;
-        private string _officeHours;
-        private ImageSource _imageProfile;
+        private ValidatableObject<string> _officeHours;
+        private ValidatableObject<ImageSource> _imageProfile;
         private Map _map;
 
         public ValidatableObject<EnumDto> SelectedProvince
@@ -139,7 +133,7 @@ namespace JongSnam.Mobile.ViewModels
         }
 
 
-        public string Name
+        public ValidatableObject<string> Name
         {
             get => _name;
             set
@@ -149,7 +143,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public string Address
+        public ValidatableObject<string> Address
         {
             get => _address;
             set
@@ -159,7 +153,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public string ContactMobile
+        public ValidatableObject<string> ContactMobile
         {
             get => _contactMobile;
             set
@@ -198,15 +192,6 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(Rules));
             }
         }
-        public string Image
-        {
-            get => _image;
-            set
-            {
-                _image = value;
-                OnPropertyChanged(nameof(Image));
-            }
-        }
 
         public bool IsOpen
         {
@@ -218,7 +203,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public string OfficeHours
+        public ValidatableObject<string> OfficeHours
         {
             get => _officeHours;
             set
@@ -228,7 +213,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ImageSource ImageProfile
+        public ValidatableObject<ImageSource> ImageProfile
         {
             get { return _imageProfile; }
             set
@@ -269,7 +254,13 @@ namespace JongSnam.Mobile.ViewModels
 
             SaveCommand = new Command(async () => await OnSaveCommand(userId));
 
+            NameTextChangedCommand = new Command(() => _selectedProvince.Validate());
+            AddressTextChangedCommand = new Command(() => _address.Validate());
             SelectedProvinceIndexChangedCommand = new Command(() => _selectedProvince.Validate());
+            SelectedDistrictIndexChangedCommand = new Command(() => _selectedDistrict.Validate());
+            SelectedSubDistrictIndexChangedCommand = new Command(() => _selectedSubDistrict.Validate());
+            ContactMobileTextChangedCommand = new Command(() => _contactMobile.Validate());
+            OfficeHoursTextChangedCommand = new Command(() => _officeHours.Validate());
 
             LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
 
@@ -319,13 +310,26 @@ namespace JongSnam.Mobile.ViewModels
 
         private void InitValidation()
         {
-            ImageValidata = new ValidatableObject<string>();
-            ImageValidata.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
-            _selectedSubDistrict = new ValidatableObject<EnumDto>();
-            _selectedSubDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกตำบล" });
+            _imageProfile = new ValidatableObject<ImageSource>();
+            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
+            
+            _name = new ValidatableObject<string>();
+            _name.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
+            
+            _address = new ValidatableObject<string>();
+            _address.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillAddress });
+            
+            _contactMobile = new ValidatableObject<string>();
+            _contactMobile.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillContactMobile });
+            
+            _officeHours = new ValidatableObject<string>();
+            _officeHours.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillOfficeHour });
 
             _selectedDistrict = new ValidatableObject<EnumDto>();
-            _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = "กรุณาเลือกอำเภอ" });
+            _selectedDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = MessageConstants.PleaseSelectDistrict });
+
+            _selectedSubDistrict = new ValidatableObject<EnumDto>();
+            _selectedSubDistrict.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = MessageConstants.PleaseSelectSubDistrict });
 
             _selectedProvince = new ValidatableObject<EnumDto>();
             _selectedProvince.Validations.Add(new IsSelectedItemRule<EnumDto>() { ValidationMessage = MessageConstants.PleaseSelectProvince });
@@ -333,7 +337,8 @@ namespace JongSnam.Mobile.ViewModels
 
         private bool IsValid()
         {
-            return _selectedProvince.Validate();
+            return _name.Validate() & _address.Validate() & _contactMobile.Validate() & _officeHours.Validate() &
+                _selectedProvince.Validate() & _selectedDistrict.Validate() & _selectedSubDistrict.Validate();
         }
 
         async Task LoadProvinceEnum()
@@ -405,33 +410,21 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     return;
                 }
-                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
-
-                if (imageStream == null || string.IsNullOrWhiteSpace(Name) || SelectedDistrict.Value == null || SelectedProvince.Value == null || SelectedSubDistrict.Value == null || string.IsNullOrWhiteSpace(ContactMobile) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(OfficeHours))
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
-                    return;
-                }
-
-                if (ContactMobile.Length < 10)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกให้ครบ10หลัก", "ตกลง");
-                    return;
-                }
+                var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
 
                 var request = new StoreRequest
                 {
                     OwnerId = userId,
                     Image = await GeneralHelper.GetBase64StringAsync(imageStream),
-                    Name = Name,
-                    Address = Address,
+                    Name = Name.Value,
+                    Address = Address.Value,
                     SubDistrictId = SelectedSubDistrict.Value.Id.Value,
                     DistrictId = SelectedDistrict.Value.Id.Value,
                     ProvinceId = SelectedProvince.Value.Id.Value,
-                    ContactMobile = ContactMobile,
+                    ContactMobile = ContactMobile.Value,
                     Latitude = Latitude,
                     Longtitude = Longtitude,
-                    OfficeHours = OfficeHours,
+                    OfficeHours = OfficeHours.Value,
                     IsOpen = Privacy == null ? false : Privacy.Value,
                     Rules = Rules
                 };
@@ -451,9 +444,6 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกข้อมูลให้ครบถ้วน", "ตกลง");
-                return;
-                throw ex;
             }
             finally
             {
@@ -491,7 +481,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
@@ -517,7 +507,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
