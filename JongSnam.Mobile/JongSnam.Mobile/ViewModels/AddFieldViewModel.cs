@@ -33,6 +33,7 @@ namespace JongSnam.Mobile.ViewModels
         private System.DateTime _endDate = DateTime.Now;
         private System.DateTime _dateNow;
         private string _detail;
+        private string _storeName;
 
         public string NameField
         {
@@ -43,7 +44,6 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(NameField));
             }
         }
-
         public int PriceField
         {
             get => _priceField;
@@ -139,9 +139,11 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public AddFieldViewModel(int storeId)
+        public AddFieldViewModel(int storeId, string storeName)
         {
             _fieldServices = DependencyService.Get<IFieldServices>();
+
+            Title = storeName;
 
             InitValidation();
 

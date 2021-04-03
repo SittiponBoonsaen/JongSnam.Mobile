@@ -311,7 +311,7 @@ namespace JongSnam.Mobile.ViewModels
         private void InitValidation()
         {
             _imageProfile = new ValidatableObject<ImageSource>();
-            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
+            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
             
             _name = new ValidatableObject<string>();
             _name.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
