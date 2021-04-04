@@ -14,7 +14,8 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IReservationServices _reservationServices;
 
         private readonly IFieldServices _fieldServices;
-        
+        TimeSpan interval = DateTime.Now - DateTime.Now.Date;
+
         private TimeSpan _fromTime;
         private TimeSpan _toTime;
         private DateTime _selectedDate = DateTime.Now;
@@ -26,6 +27,8 @@ namespace JongSnam.Mobile.ViewModels
         private bool _isEnabled;
         private string _textReservation;
         private ImageSource _imageField;
+
+        
 
         public Command BookCommand { get; private set; }
 
@@ -199,6 +202,10 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+
+
+                FromTime = interval;
+                ToTime = interval;
                 SelectedDate = DateTime.Now;
                 
                 var data = await _fieldServices.GetFieldById(fieldDto.Id.Value);
@@ -229,6 +236,28 @@ namespace JongSnam.Mobile.ViewModels
 
                 var userId = Preferences.Get(AuthorizeConstants.UserIdKey, string.Empty);
                 var storeId = Preferences.Get(AuthorizeConstants.StoreIdKey, string.Empty);
+
+
+
+
+                var Minutes = interval.Minutes;
+                var Seconds = interval.Seconds;
+                var Hours = interval.Hours;
+                if (FromTime.Hours < Hours)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถลงเวลาย้อนหลังได้", "ตกลง");
+                    return;
+                }
+                else if(FromTime.Minutes != 00 && FromTime.Minutes != 30 || ToTime.Minutes != 00 && ToTime.Minutes != 30)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาให้ถูกต้อง", "ตกลง");
+                    return;
+                }
+                else if (FromTime.Hours <= ToTime.Hours)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาจองขั้นตํ่า 1 ชั่วโมง", "ตกลง");
+                    return;
+                }
 
 
                 var request = new ReservationRequest
