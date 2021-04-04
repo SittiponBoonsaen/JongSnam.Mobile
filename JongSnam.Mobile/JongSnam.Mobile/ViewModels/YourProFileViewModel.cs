@@ -94,14 +94,15 @@ namespace JongSnam.Mobile.ViewModels
 
         public UserDto DataUser { get; set; }
 
-        public Command LoadItemsCommand { get; }
+        public Command LoadItemsCommand { get; private set; }
 
-        public Command ChangePasswordCommand { get; }
+        public Command ChangePasswordCommand { get; private set; }
 
-        public Command SaveCommand { get; }
+        public Command SaveCommand { get; private set; }
 
         public Command UploadImageCommand { get; private set; }
-        public Command LogoutCommand { get; }
+
+        public Command LogoutCommand { get; private set; }
 
         public YourProFileViewModel()
         {
@@ -109,8 +110,15 @@ namespace JongSnam.Mobile.ViewModels
 
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
-            DataUser = new UserDto();
+            InitValidation();
 
+            SetupCommands();
+
+            DataUser = new UserDto();
+        }
+
+        void SetupCommands()
+        {
             Task.Run(async () => await ExecuteLoadItemsCommand(Convert.ToInt32(userId)));
 
             SaveCommand = new Command(async () => await ExecuteSaveCommand(Convert.ToInt32(userId)));
@@ -119,20 +127,10 @@ namespace JongSnam.Mobile.ViewModels
 
             UploadImageCommand = new Command(async () =>
             {
-                //if (IsBusy)
-                //{
-                //    return;
-                //}
                 var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
 
                 switch (actionSheet)
                 {
-                    case "Cancel":
-
-                        // Do Something when 'Cancel' Button is pressed
-
-                        break;
-
                     case "กล้อง":
 
                         await TakePhotoAsync();
@@ -151,7 +149,7 @@ namespace JongSnam.Mobile.ViewModels
             LogoutCommand = new Command(async () => await ExecuteLogoutCommand());
         }
 
-        private void InitValidation()
+        void InitValidation()
         {
             _imageProfile = new ValidatableObject<ImageSource>();
             _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
@@ -163,8 +161,6 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-
-                InitValidation();
 
                 await _usersServices.GetUserById(
                     id,
@@ -212,7 +208,7 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+                bool answer = await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.WantToEdit, "ใช่", "ไม่");
                 if (!answer)
                 {
                     return;
@@ -234,11 +230,11 @@ namespace JongSnam.Mobile.ViewModels
 
                 if (statusSaved)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.SaveSuccessfully, MessageConstants.Ok);
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                    await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.CannotSave, MessageConstants.Ok);
                 }
             }
             catch (Exception ex)
@@ -255,6 +251,7 @@ namespace JongSnam.Mobile.ViewModels
         {
             await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(DataUser.Id.Value));
         }
+
         public async Task OnAppearingAsync()
         {
             IsBusy = true;
@@ -265,27 +262,24 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        private async Task TakePhotoAsync()
+        async Task TakePhotoAsync()
         {
             if (!CrossMedia.Current.IsCameraAvailable)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotAccessCamera, MessageConstants.CameraNeedPermission, MessageConstants.Ok);
                 return;
             }
 
             if (!CrossMedia.Current.IsTakePhotoSupported)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotAccessCamera, MessageConstants.NotSupportThisCamera, MessageConstants.Ok);
                 return;
             }
-
-            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
-            //_isBackFromChooseImage = true;
 
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
                 SaveToAlbum = true,
-                Directory = "JongSnam",
+                Directory = MessageConstants.Directory,
                 DefaultCamera = CameraDevice.Rear,
                 PhotoSize = PhotoSize.Large,
                 CompressionQuality = 70,
@@ -294,24 +288,18 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                // รูปได้ค่าตอนนี้เด้อ
                 ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
-            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
-            //_isBackFromChooseImage = false;
         }
 
-        private async Task PickPhotoAsync()
+        async Task PickPhotoAsync()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotChooseImage, MessageConstants.CannotChooseImage, MessageConstants.Ok);
                 return;
             }
-
-            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
-            //_isBackFromChooseImage = true;
 
             var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
             {
@@ -325,13 +313,11 @@ namespace JongSnam.Mobile.ViewModels
                 ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
-            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
-            //_isBackFromChooseImage = false;
         }
 
         async Task ExecuteLogoutCommand()
         {
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการออกจากระบบใช่หรือไม่ ?", "ใช่", "ไม่");
+            bool answer = await Shell.Current.DisplayAlert(MessageConstants.Noti, "ต้องการออกจากระบบใช่หรือไม่ ?", "ใช่", "ไม่");
             if (!answer)
             {
                 return;
@@ -344,7 +330,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             else
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถออกจากระบบได้ กรุณาลองใหม่ภายหลัง", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.Noti, "ไม่สามารถออกจากระบบได้ กรุณาลองใหม่ภายหลัง", MessageConstants.Ok);
             }
         }
     }

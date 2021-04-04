@@ -1,4 +1,5 @@
-﻿using JongSnam.Mobile.ViewModels;
+﻿using System.Threading.Tasks;
+using JongSnam.Mobile.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,7 +22,7 @@ namespace JongSnam.Mobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.OnAppearingAsync();
+            Task.Run(async () => await _viewModel.OnAppearingAsync());
         }
     }
 }
