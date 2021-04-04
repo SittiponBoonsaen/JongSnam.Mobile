@@ -253,9 +253,9 @@ namespace JongSnam.Mobile.ViewModels
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาให้ถูกต้อง", "ตกลง");
                     return;
                 }
-                else if (FromTime.Hours <= ToTime.Hours)
+                else if (FromTime.Hours >= ToTime.Hours)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาจองขั้นตํ่า 1 ชั่วโมง", "ตกลง");
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาที่จองให้ถูกต้อง", "ตกลง");
                     return;
                 }
 

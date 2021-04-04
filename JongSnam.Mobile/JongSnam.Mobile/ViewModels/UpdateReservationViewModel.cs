@@ -397,19 +397,21 @@ namespace JongSnam.Mobile.ViewModels
 
                 
 
-                var Paymentrequest = new UpdatePaymentRequest
-                {
-                    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
-                    Date = DateTime.Now,
-                    IsFullAmount = IsFull == null ? IsFullAmount : IsFull.Value,
-                    Amount = Amount
-                };
+                //var Paymentrequest = new PaymentRequest
+                //{
+                //    ReservationId = reservationId,
+                //    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
+                //    Date = DateTime.Now,
+                //    IsFullAmount = IsFull == null ? IsFullAmount : IsFull.Value,
+                //    Amount = Amount
+                //};
+                //var result = await _paymentServices.CreatePayment(Paymentrequest);
 
                 var resultReservation = await _reservationServices.UpdateReservation(Id ,Reservation);
 
-                var result = await _paymentServices.UpdatePayment(_idPayment, Paymentrequest);
+                
 
-                if (result == true && resultReservation == true)
+                if (resultReservation == true)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
                     await Shell.Current.Navigation.PopAsync();
