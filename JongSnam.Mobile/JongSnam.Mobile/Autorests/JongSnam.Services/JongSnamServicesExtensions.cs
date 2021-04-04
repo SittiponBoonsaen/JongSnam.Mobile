@@ -888,6 +888,36 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object UpdateReservation(this IJongSnamServices operations, int id, UpdateReservationRequest body = default(UpdateReservationRequest))
+            {
+                return operations.UpdateReservationAsync(id, body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateReservationAsync(this IJongSnamServices operations, int id, UpdateReservationRequest body = default(UpdateReservationRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateReservationWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='storeId'>
             /// </param>
             /// <param name='currentPage'>
