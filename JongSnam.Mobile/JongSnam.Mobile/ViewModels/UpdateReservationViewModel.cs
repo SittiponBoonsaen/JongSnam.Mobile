@@ -261,21 +261,6 @@ namespace JongSnam.Mobile.ViewModels
             SaveCommand = new Command(async () => await ExecuteSaveCommand(reservationId, approvalStatus));
         }
 
-        async Task ExecuteSaveCommand(int reservationId,bool approvalStatus)
-        {
-            try
-            {
-                //var data = await _reservationServices.
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-
-            }
-        }
 
         async Task ExecuteLoadItemsCommand(int reservationId)
         {
@@ -319,7 +304,25 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-            internal void OnAppearing()
+        async Task ExecuteSaveCommand(int reservationId, bool approvalStatus)
+        {
+            try
+            {
+                IsBusy = true;
+
+                //var data = await _reservationServices.
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        internal void OnAppearing()
         {
             IsBusy = true;
         }
