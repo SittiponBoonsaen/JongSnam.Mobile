@@ -107,6 +107,22 @@ namespace JongSnam.Mobile.Services.Implementations
             return ReservationDto.Collection;
         }
 
+        public async Task<bool> UpdateReservation(int id, UpdateReservationRequest reservationRequest)
+        {
+            try
+            {
+                var response = await JongSnamServices.UpdateReservationWithHttpMessagesAsync(id, reservationRequest, CustomHeaders);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+        }
+
+
 
     }
 }

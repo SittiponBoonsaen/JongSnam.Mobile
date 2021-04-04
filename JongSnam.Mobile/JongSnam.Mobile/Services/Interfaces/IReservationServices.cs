@@ -22,5 +22,6 @@ namespace JongSnam.Mobile.Services.Interfaces
 
         Task<IEnumerable<GrahpDto>> GraphMonthReservation(int userId, int month, int currentPage, int pageSize);
 
+        Task<bool> UpdateReservation(int id, UpdateReservationRequest reservationRequest);
     }
 }

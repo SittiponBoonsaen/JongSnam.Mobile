@@ -6,9 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Helpers;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -24,23 +28,27 @@ namespace JongSnam.Mobile.ViewModels
 
 
         private int _id;
+        private int _idPayment;
         private string _userName;
         private string _storeName;
         private string _contactMobile;
-        private DateTime _startTime;
-        private DateTime _stopTime;
+        private TimeSpan _startTime;
+        private TimeSpan _stopTime;
         private string _approvalStatusString;
         private bool _isApproved;
         private bool _unApproved;
         private string _fieldName;
         private double _pricePerHour;
         private double _amount;
-        private string _dateBook;
+        private DateTime _dateBook;
+        private DateTime _dateNow;
         private ImageSource _receiptPayment;
         private ImageSource _ImageProfile;
         private ValidatableObject<EnumDto> _selectedPayment;
         private string _saveTitle;
         private bool _approvalStatus;
+        private string _IsFullAmountString;
+        private bool _IsFullAmount;
 
         public string SaveTitle
         {
@@ -87,7 +95,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ContactMobile));
             }
         }
-        public DateTime StartTimes
+        public TimeSpan StartTimes
         {
             get => _startTime;
             set
@@ -96,7 +104,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(StartTimes));
             }
         }
-        public DateTime StopTime
+        public TimeSpan StopTime
         {
             get => _stopTime;
             set
@@ -182,23 +190,13 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public string DateBook
+        public DateTime DateBook
         {
             get => _dateBook;
             set
             {
                 _dateBook = value;
                 OnPropertyChanged(nameof(DateBook));
-            }
-        }
-
-        public string PaymentName
-        {
-            get => _dateBook;
-            set
-            {
-                _dateBook = value;
-                OnPropertyChanged(nameof(PaymentName));
             }
         }
         public ValidatableObject<EnumDto> SelectedPayment
@@ -223,8 +221,47 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ApprovalStatus));
             }
         }
+        public string IsFullAmountString
+        {
+            get => _IsFullAmountString;
+            set
+            {
+                _IsFullAmountString = value;
+                OnPropertyChanged(nameof(IsFullAmountString));
+            }
+        } 
+        public bool IsFullAmount
+        {
+            get => _IsFullAmount;
+            set
+            {
+                _IsFullAmount = value;
+                OnPropertyChanged(nameof(IsFullAmount));
+            }
+        }
+        public List<IsOpen> IsFulls { get; set; } = new List<IsOpen>()
+        {
+        new IsOpen(){Name = "จ่ายเต็มจำนวน",Value = true},
+        new IsOpen(){Name = "แบ่งจ่าย",Value = false}
+        };
+        private IsOpen _isFull;
+
+        public IsOpen IsFull
+        {
+            get
+            {
+                return _isFull;
+            }
+            set
+            {
+                _isFull = value;
+                OnPropertyChanged(nameof(IsFull));
+            }
+        }
+
 
         public Command SaveCommand { get; }
+        public Command UploadImageCommand { get; }
 
         public UpdateReservationViewModel(int reservationId, bool approvalStatus)
         {
@@ -242,23 +279,42 @@ namespace JongSnam.Mobile.ViewModels
             _reservationServices = DependencyService.Get<IReservationServices>();
             _paymentServices = DependencyService.Get<IPaymentServices>();
 
-            PaymentMethodList = new ObservableCollection<EnumDto>
-            {
-                new EnumDto
-                {
-                    Id = 1,
-                    Name = "จ่ายเต็มจำนวน"
-                },
-                new EnumDto
-                {
-                    Id = 2,
-                    Name = "แบ่งจ่าย"
-                }
-            };
-
             Task.Run(async () => await ExecuteLoadItemsCommand(reservationId));
 
             SaveCommand = new Command(async () => await ExecuteSaveCommand(reservationId, approvalStatus));
+
+            UploadImageCommand = new Command(async () =>
+            {
+                if (IsBusy)
+                {
+                    return;
+                }
+
+                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
+
+                switch (actionSheet)
+                {
+                    case "Cancel":
+
+                        // Do Something when 'Cancel' Button is pressed
+
+                        break;
+
+                    case "กล้อง":
+
+                        await TakePhotoAsync();
+
+                        break;
+
+                    case "แกลลอรี่":
+
+                        await PickPhotoAsync();
+
+                        break;
+
+                }
+            });
+
         }
 
 
@@ -270,11 +326,12 @@ namespace JongSnam.Mobile.ViewModels
                 var items = await _reservationServices.GetShowDetailYourReservation(reservationId);
 
                 Id = items.Id.Value;
+                
                 UserName = items.UserName;
                 StoreName = items.StoreName;
                 ContactMobile = items.ContactMobile;
-                StartTimes = items.StartTime.Value;
-                StopTime = items.StopTime.Value;
+                StartTimes = items.StartTime.Value.TimeOfDay;
+                StopTime = items.StopTime.Value.TimeOfDay;
                 IsApproved = items.ApprovalStatus.Value ? true : false;
                 UnApproved = items.ApprovalStatus == false ? true : false;
                 ApprovalStatusString = items.ApprovalStatus == true ? ApprovalStatusString = "อนุมัติแล้ว" : ApprovalStatusString = "ยังไม่ทำการอนุมัติ";
@@ -282,17 +339,19 @@ namespace JongSnam.Mobile.ViewModels
                 Amount = items.AmountForPay.Value;
                 PricePerHour = items.PricePerHour.Value;
 
-                var paymentId = items.IsFullAmount.Value ? 1 : 2;
+                IsFullAmount = items.IsFullAmount.Value;
 
-                SelectedPayment.Value = PaymentMethodList.Where(w => w.Id.Value == paymentId).FirstOrDefault();
+                IsFullAmountString = items.IsFullAmount.Value == true ? IsFullAmountString = "จ่ายเต็มจำนวน" : IsFullAmountString = "แบ่งจ่าย";
 
-                DateBook = items.StartTime.Value.Date.ToString("dd/MMMM/yyyy");
+
+
+                DateBook = items.StartTime.Value;
+
                 ReceiptPayment =
                     items.PaymentModel.Count > 0 ? ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.PaymentModel[0].Image)))
                     : null;
                 ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(items.ImageProfile)));
-
-
+                _idPayment = items.PaymentModel[0].Id.Value;
             }
             catch (Exception ex)
             {
@@ -311,9 +370,59 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = true;
 
                 //var data = await _reservationServices.
+
+                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการบันทึกการชำระเงินใช่หรือไม่ ?", "ใช่", "ไม่");
+                if (!answer)
+                {
+                    return;
+                }
+
+                var imageStream = await ((StreamImageSource)ReceiptPayment).Stream.Invoke(new System.Threading.CancellationToken());
+                if (imageStream == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
+                    return;
+                }
+                if (Amount == 0)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรอกจำนวนที่ต้องจ่ายเงิน", "ตกลง");
+                    return;
+                }
+
+                var Reservation = new UpdateReservationRequest
+                {
+                    StartTime = new DateTime(DateBook.Year, DateBook.Month, DateBook.Day, StartTimes.Hours, StartTimes.Minutes, 0),
+                    StopTime = new DateTime(DateBook.Year, DateBook.Month, DateBook.Day, StopTime.Hours, StopTime.Minutes, 0),
+                };
+
+                
+
+                var Paymentrequest = new UpdatePaymentRequest
+                {
+                    Image = await GeneralHelper.GetBase64StringAsync(imageStream),
+                    Date = DateTime.Now,
+                    IsFullAmount = IsFull == null ? IsFullAmount : IsFull.Value,
+                    Amount = Amount
+                };
+
+                var resultReservation = await _reservationServices.UpdateReservation(Id ,Reservation);
+
+                var result = await _paymentServices.UpdatePayment(_idPayment, Paymentrequest);
+
+                if (result == true && resultReservation == true)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                }
+
             }
             catch (Exception ex)
             {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
                 throw ex;
             }
             finally
@@ -325,6 +434,60 @@ namespace JongSnam.Mobile.ViewModels
         internal void OnAppearing()
         {
             IsBusy = true;
+        }
+
+        private async Task TakePhotoAsync()
+        {
+            if (!CrossMedia.Current.IsCameraAvailable)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                return;
+            }
+
+            if (!CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                SaveToAlbum = true,
+                Directory = "JongSnam",
+                DefaultCamera = CameraDevice.Rear,
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                // รูปได้ค่าตอนนี้เด้อ
+                ReceiptPayment = ImageSource.FromStream(() => file.GetStream());
+            }
+            IsBusy = false;
+        }
+
+        private async Task PickPhotoAsync()
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                return;
+            }
+
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                PhotoSize = PhotoSize.Large,
+                CompressionQuality = 70,
+                MaxWidthHeight = 1024
+            });
+
+            if (file != null)
+            {
+                ReceiptPayment = ImageSource.FromStream(() => file.GetStream());
+            }
+            IsBusy = false;
         }
     }
 }

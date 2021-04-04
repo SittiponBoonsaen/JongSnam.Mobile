@@ -62,22 +62,22 @@
                         <Label Text="ตั้งแต่ :" TextColor="Black" Grid.Row="7" Grid.Column="0" HorizontalTextAlignment="End"  VerticalTextAlignment="Center"/>
                         <Label Text="ถึง :" TextColor="Black" Grid.Row="8" Grid.Column="0" HorizontalTextAlignment="End"  VerticalTextAlignment="Center"/>
                         <DatePicker Date="{Binding DateBook}" TextColor="Black" Grid.Row="6" Grid.Column="2" FontSize="15"  VerticalOptions="Start"/>
-                        <TimePicker Time="{Binding StartTimes}" TextColor="Black" Grid.Row="7" Grid.Column="2" FontSize="15" VerticalOptions="Start"  />
-                        <TimePicker Time="{Binding StopTime}" TextColor="Black" Grid.Row="8" Grid.Column="2" FontSize="15" VerticalOptions="Start" />
+                        <TimePicker Time="{Binding StartTimes, Mode=TwoWay}" TextColor="Black" Grid.Row="7" Grid.Column="2" FontSize="15" VerticalOptions="Start"  />
+                        <TimePicker Time="{Binding StopTime, Mode=TwoWay}" TextColor="Black" Grid.Row="8" Grid.Column="2" FontSize="15" VerticalOptions="Start" />
 
             </Grid>
 
             <Label BackgroundColor="Black" FontSize="0.2" />
                     <StackLayout Padding="50">
-                                    <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" 
+                                    <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black"  IsEnabled="True"
                                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                HorizontalOptions="Center"
                                VerticalOptions="Start"/>
-                        <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric"  HorizontalTextAlignment="Center"  />
-                        <Picker ItemsSource="{Binding PaymentMethodList}"  HorizontalTextAlignment="Center" 
+                        <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric"  HorizontalTextAlignment="Center" IsEnabled="False" />
+                        <Picker ItemsSource="{Binding IsFulls}"  HorizontalTextAlignment="Center" 
                                                     ItemDisplayBinding="{Binding Name}"
-                                                    SelectedItem="{Binding SelectedPayment.Value, Mode=TwoWay}"
-                                                    Title="กรุณาเลือก วิธีการชำระเงิน">
+                                                    SelectedItem="{Binding IsFull, Mode=TwoWay}"
+                                                    Title="{Binding IsFullAmountString}">
                             <Picker.Behaviors>
                                 <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
                                                                                       Command="{Binding SelectedPaymentIndexChangedCommand}"/>
@@ -88,7 +88,7 @@
                     </StackLayout>
 
                     <Image Source="{Binding ReceiptPayment}" WidthRequest="200" HeightRequest="200"/>
-            <Grid>
+                    <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -100,8 +100,8 @@
                              WidthRequest="64"
                                 Padding="5"
                                 Source="add_photo.png"
-                                 Command="{Binding CommitApprovalStatusCommand}"/>
-            </Grid>
+                                 Command="{Binding UploadImageCommand}"/>
+            </Grid>-->
         </StackLayout>
     </ScrollView>
         </StackLayout>
