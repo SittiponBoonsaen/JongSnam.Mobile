@@ -138,6 +138,7 @@ namespace JongSnam.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
+                BarModel.InvalidatePlot(true);
             }
         }
 

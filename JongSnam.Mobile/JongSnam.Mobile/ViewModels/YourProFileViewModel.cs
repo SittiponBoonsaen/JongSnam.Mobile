@@ -201,6 +201,8 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception ex)
             {
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "เกิดช้อผิดพลาดบางอย่าง", "ตกลง");
+                return;
                 throw ex;
             }
             finally

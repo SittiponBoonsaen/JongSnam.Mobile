@@ -130,7 +130,6 @@ namespace JongSnam.Mobile.ViewModels
                         DateTime = item.StartTime.Value.Date,
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
 
-
                     });
                 }
             }

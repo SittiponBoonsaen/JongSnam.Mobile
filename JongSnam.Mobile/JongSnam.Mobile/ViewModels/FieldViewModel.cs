@@ -250,7 +250,7 @@ namespace JongSnam.Mobile.ViewModels
                 }
                 else if(FromTime.Minutes != 00 && FromTime.Minutes != 30 || ToTime.Minutes != 00 && ToTime.Minutes != 30)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเลือกวันเวลาให้ถูกต้อง", "ตกลง");
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", $"กรุณาเลือกวันเวลาให้ถูกต้อง", "ตกลง");
                     return;
                 }
                 else if (FromTime.Hours >= ToTime.Hours)
