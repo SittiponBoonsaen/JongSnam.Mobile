@@ -168,13 +168,10 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\addedStar.png" />
   </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\no-image-available.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadUnhandledDeviceExceptionJongSnamMobileAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadUnhandledDeviceExceptionJongSnamMobileAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

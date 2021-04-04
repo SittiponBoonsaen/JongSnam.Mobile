@@ -14,6 +14,7 @@ using Xamarin.Forms.GoogleMaps;
 using Xamarin.Essentials;
 using Location = Xamarin.Essentials.Location;
 using Map = Xamarin.Forms.GoogleMaps.Map;
+using System.Reflection;
 
 namespace JongSnam.Mobile.ViewModels
 {
@@ -312,17 +313,17 @@ namespace JongSnam.Mobile.ViewModels
         {
             _imageProfile = new ValidatableObject<ImageSource>();
             _imageProfile.Validations.Add(new IsHaveImageRule { OriginalFile = ImageConstants.NoImageAvailable, ValidationMessage = MessageConstants.PleaseAddImage });
-            _imageProfile.Value = ImageConstants.NoImageAvailable;
+            _imageProfile.Value = ImageSource.FromUri(new Uri(ImageConstants.NoImageAvailable));
 
             _name = new ValidatableObject<string>();
             _name.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
-            
+
             _address = new ValidatableObject<string>();
             _address.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillAddress });
-            
+
             _contactMobile = new ValidatableObject<string>();
             _contactMobile.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillContactMobile });
-            
+
             _officeHours = new ValidatableObject<string>();
             _officeHours.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillOfficeHour });
 

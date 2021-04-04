@@ -170,7 +170,6 @@ namespace JongSnam.Mobile.ViewModels
                     id,
                     executeSuccess: (dataUser) =>
                     {
-                        //MessagingCenter.Send(this, ShopAddedMessage);
                         FirstName = dataUser.FirstName;
                         LastName = dataUser.LastName;
                         Email = dataUser.Email;
@@ -184,14 +183,12 @@ namespace JongSnam.Mobile.ViewModels
                         }
                         else
                         {
-                            ImageProfile.Value = ImageSource.FromFile(ImageConstants.NoImageAvailable);
+                            ImageProfile.Value = ImageSource.FromUri(new Uri(ImageConstants.NoImageAvailable));
                         }
                     },
                     executeError: async (msg, ex) =>
                     {
                         IsBusy = false;
-                        var aa = (Shell.Current.CurrentItem.Items[0] as IShellSectionController).PresentedPage;
-                        //await CurrentShell.DisplayAlert(AppResource.CannotDisplayShopList, msg, AppResource.ButtonOk);
                         //await UserService.Logout();
                         await Shell.Current.Navigation.PopToRootAsync();
                         //await Shell.Current.GoToAsync("//LoginPage");
@@ -220,16 +217,7 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     return;
                 }
-                if (ImageProfile.IsValid)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
-                    return;
-                }
-                else if (Phone.Length < 10)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
-                    return;
-                }
+ 
                 var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
 
                 var request = new UpdateUserRequest
