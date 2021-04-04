@@ -32,7 +32,6 @@ namespace JongSnam.Mobile.ViewModels
 
         private ValidatableObject<ImageSource> _imageProfile;
 
-        public byte[] ImageProfuke { get; set; }
 
         public string FirstName
         {
