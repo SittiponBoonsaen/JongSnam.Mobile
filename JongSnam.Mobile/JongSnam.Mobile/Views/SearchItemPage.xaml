@@ -12,22 +12,18 @@
     <ContentPage.Content>
 
         <StackLayout BackgroundColor="#f5f5f3" Padding="24">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
-                <Entry  Text="{Binding StartPrice}" Grid.Column="1" Grid.Row="1" />
-                <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>
-                <Entry Text="{Binding ToPrice}"  Grid.Column="3" Grid.Row="1" />
-            </Grid>
+            <StackLayout>
+                <Slider x:Name="slider" Value="{Binding StartPrice}"
+                Maximum="1000" />
+                
+                <Label x:Name="displayLabel"
+               Text="{Binding Source={x:Reference slider},
+                              Path=Value, 
+                              StringFormat='ราคาเริ่มต้น : {0:F0}'}"
+               HorizontalOptions="Center" FontSize="18"
+               VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+
 
             <Picker ItemsSource="{Binding Province}"
                                         ItemDisplayBinding="{Binding Name}"

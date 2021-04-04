@@ -38,6 +38,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        public string IsOpenString { get; private set; }
 
         public YourFieldViewModel(int storeId, string nameStore)
         {
@@ -82,6 +83,7 @@ namespace JongSnam.Mobile.ViewModels
                         Id = item.Id,
                         Name = item.Name,
                         PriceString = item.Price.ToString() + "/ชั่วโมง",
+                        IsOpenString = item.IsOpen == true ? IsOpenString = "เปิดบริการ" : IsOpenString = "ปิดบริการ",
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
                     });
                 }

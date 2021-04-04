@@ -24,6 +24,7 @@
                                 <ColumnDefinition Width="0.5*" />
                                 <ColumnDefinition Width="0.5*" />
                                 <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="80" />
@@ -36,14 +37,17 @@
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 
-                            <Label Text="{Binding PriceString}" Grid.Row="0" Grid.Column="2"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End"
+                            <Label Text="{Binding PriceString}" Grid.Row="0" Grid.Column="2"   VerticalOptions="Center" HorizontalOptions="End"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
-                            
-                            <Label Text="/ชม" Grid.Row="0" Grid.Column="3"  VerticalOptions="Center" HorizontalOptions="Center"
-                                            FontSize="13" />
+
+                            <Label Text="{Binding IsOpenString}" Grid.Row="0" Grid.Column="3"  VerticalOptions="Center" HorizontalOptions="End"
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="13"/>
+
+                          
                             <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
-                             HeightRequest="32" Grid.Column="3" Grid.RowSpan="2" 
+                             HeightRequest="32" Grid.Column="4" Grid.RowSpan="2" 
                              WidthRequest="32"
                                 Padding="5"
                                 Source="icon_booking.png"
