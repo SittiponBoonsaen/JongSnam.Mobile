@@ -163,7 +163,6 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
 
                 InitValidation();
 
@@ -203,6 +202,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception)
             {
+
             }
             finally
             {
