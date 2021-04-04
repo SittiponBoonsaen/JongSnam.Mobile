@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Models;
@@ -53,8 +54,8 @@ namespace JongSnam.Mobile.ViewModels
             ItemTapped = new Command<FieldDto>(OnItemSelected);
             _storeId = storeId;
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
-            IsBusy = false;
+            //Task.Run(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
+            
         }
 
         async void OnBookingCommand(FieldDto fieldDto)
@@ -64,25 +65,28 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task ExecuteLoadItemsCommand(int storeId, string nameStore)
         {
-            IsBusy = true;
-
             try
             {
+                IsBusy = true;
                 Items.Clear();
-                var items = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
-
+                var data = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
+                if (data == null)
+                {
+                    return;
+                }
                 StoreName = nameStore;
-
-                foreach (var item in items)
+                foreach (var item in data)
                 {
                     Items.Add(new YourFieldModel
                     {
                         Id = item.Id,
                         Name = item.Name,
-                        Price = item.Price,
+                        PriceString = item.Price.ToString() + "/ชั่วโมง",
                         ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
                     });
                 }
+                //Count =  Items.Count().ToString();
+
             }
             catch
             {
@@ -114,6 +118,7 @@ namespace JongSnam.Mobile.ViewModels
 
         internal async void OnAppearingAsync()
         {
+            IsBusy = true;
             var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
             if (isLoggedIn != "True")
             {

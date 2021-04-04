@@ -11,6 +11,8 @@ namespace JongSnam.Mobile.Models
 
         public string IsOpenString { get; set; }
 
+        public string PriceString { get; set; }
+
         public StoreModel StoredtoModel { get; set; }
     }
 }

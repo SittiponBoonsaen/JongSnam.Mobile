@@ -35,8 +35,8 @@
                             <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
-                            
-                            <Label Text="{Binding Price}" Grid.Row="0" Grid.Column="2"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End"
+
+                            <Label Text="{Binding PriceString}" Grid.Row="0" Grid.Column="2"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
                             
