@@ -90,9 +90,10 @@ namespace JongSnam.Mobile.ViewModels
             {
                 return;
             }
+            IsBusy = true;
 
             var statusLogin = await _authenticationServices.Login(Email.Value, Password.Value);
-
+            IsBusy = false;
             if (!statusLogin)
             {
                 await App.Current.MainPage.DisplayAlert("ไม่สามารถเข้าสู่ระบบได้!", "Email หรือ password ไม่ถูกต้อง", "ตกลง");

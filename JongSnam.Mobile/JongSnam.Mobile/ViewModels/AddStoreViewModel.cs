@@ -517,15 +517,17 @@ namespace JongSnam.Mobile.ViewModels
 
         async Task InitMapLocation()
         {
-            Location location = await Geolocation.GetLastKnownLocationAsync();
+            try
+            {
+                Location location = await Geolocation.GetLastKnownLocationAsync();
             if (location == null)
             {
-                location = await Geolocation.GetLocationAsync(new GeolocationRequest
-                {
-                    DesiredAccuracy = GeolocationAccuracy.Medium,
-                    Timeout = TimeSpan.FromSeconds(10)
-                });
-            }
+                    location = await Geolocation.GetLocationAsync(new GeolocationRequest
+                    {
+                        DesiredAccuracy = GeolocationAccuracy.Medium,
+                        Timeout = TimeSpan.FromSeconds(10)
+                    });
+                }
 
             Pin pin = new Pin()
             {
@@ -540,6 +542,12 @@ namespace JongSnam.Mobile.ViewModels
             _map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(5000)));
 
             _map.PinDragEnd += (_, e) => SetLocation(e.Pin);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         void SetLocation(Pin pin)
