@@ -311,8 +311,9 @@ namespace JongSnam.Mobile.ViewModels
         private void InitValidation()
         {
             _imageProfile = new ValidatableObject<ImageSource>();
-            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
-            
+            _imageProfile.Validations.Add(new IsHaveImageRule { OriginalFile = ImageConstants.NoImageAvailable, ValidationMessage = MessageConstants.PleaseAddImage });
+            _imageProfile.Value = ImageConstants.NoImageAvailable;
+
             _name = new ValidatableObject<string>();
             _name.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillStoreName });
             
@@ -337,7 +338,7 @@ namespace JongSnam.Mobile.ViewModels
 
         private bool IsValid()
         {
-            return _name.Validate() & _address.Validate() & _contactMobile.Validate() & _officeHours.Validate() &
+            return _imageProfile.Validate() & _name.Validate() & _address.Validate() & _contactMobile.Validate() & _officeHours.Validate() &
                 _selectedProvince.Validate() & _selectedDistrict.Validate() & _selectedSubDistrict.Validate();
         }
 
@@ -347,8 +348,6 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
                 IsBusy = true;
-
-                ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
 
                 Province = await _enumServices.GetProvinces();
             }
