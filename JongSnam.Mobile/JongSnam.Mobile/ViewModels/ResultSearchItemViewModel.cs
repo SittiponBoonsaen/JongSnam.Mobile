@@ -49,6 +49,12 @@ namespace JongSnam.Mobile.ViewModels
             {
                 Items.Clear();
                 var items = await _fieldServices.GetFieldBySearch(startPrice, toPrice, districtId, provinceId, 1, 6);
+                if (items == null)
+                {
+                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่พบการค้นหาของคุณ", "ตกลง");
+                    await Shell.Current.Navigation.PopAsync();
+                    return;
+                }
                 foreach (var item in items)
                 {
                     Items.Add(new YourFieldModel
