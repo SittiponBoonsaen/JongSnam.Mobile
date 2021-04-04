@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.AddFieldPage"
              BindingContext="{Binding AddFieldViewModel}"
-             Title="เพิ่มสนาม">
+             Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>

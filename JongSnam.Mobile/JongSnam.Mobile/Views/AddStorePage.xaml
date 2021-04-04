@@ -92,13 +92,13 @@
             <Label Text="{Binding SelectedSubDistrict.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                                             Style="{StaticResource ErrorLabel}"/>
 
-            <Entry Placeholder="เบอร์ติดต่อ" MaxLength="10" PlaceholderColor="Gray" Text="{Binding ContactMobile.Value}">
+            <Entry Placeholder="เบอร์ติดต่อ" MaxLength="10" Keyboard="Numeric" PlaceholderColor="Gray" Text="{Binding ContactMobile.Value}">
                 <Entry.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="TextChanged"
                                                                   Command="{Binding ContactMobileTextChangedCommand}"/>
                 </Entry.Behaviors>
             </Entry>
-            <Label Text="{Binding ContactMobile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+            <Label Text="{Binding ContactMobile.Errors, Converter={StaticResource FirstValidationErrorConverter}}" 
                                             Style="{StaticResource ErrorLabel}"/>
 
             <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours.Value}">

@@ -100,7 +100,7 @@ namespace JongSnam.Mobile.ViewModels
         //}
         async void OnAddFieldAsync(object obj)
         {
-            await Shell.Current.Navigation.PushAsync(new AddFieldPage(_storeId));
+            await Shell.Current.Navigation.PushAsync(new AddFieldPage(_storeId, StoreName));
         }
         private async void OnItemSelected(FieldDto fieldDto)
         {
