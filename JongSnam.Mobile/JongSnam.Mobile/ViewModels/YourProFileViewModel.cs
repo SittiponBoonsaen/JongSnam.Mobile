@@ -21,56 +21,16 @@ namespace JongSnam.Mobile.ViewModels
         private readonly IUsersServices _usersServices;
         private readonly IAuthenticationServices _authenticationServices;
 
-        private string userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
-
-        private string _firstName;
-        private string _lastName;
-        private string _emailName;
-        private string _phone;
+        private int _userId = Convert.ToInt32(Preferences.Get(AuthorizeConstants.UserIdKey, null));
         private string _address;
 
+        public ValidatableObject<string> FirstName { get; set; }
 
-        private ValidatableObject<ImageSource> _imageProfile;
+        public ValidatableObject<string> LastName { get; set; }
 
+        public ValidatableObject<string> Email { get; set; }
 
-        public string FirstName
-        {
-            get => _firstName;
-            set
-            {
-                _firstName = value;
-                OnPropertyChanged(nameof(FirstName));
-            }
-        }
-
-        public string LastName
-        {
-            get => _lastName;
-            set
-            {
-                _lastName = value;
-                OnPropertyChanged(nameof(LastName));
-            }
-        }
-        public string Email
-        {
-            get => _emailName;
-            set
-            {
-                _emailName = value;
-                OnPropertyChanged(nameof(Email));
-            }
-        }
-
-        public string Phone
-        {
-            get => _phone;
-            set
-            {
-                _phone = value;
-                OnPropertyChanged(nameof(Phone));
-            }
-        }
+        public ValidatableObject<string> Phone { get; set; }
 
         public string Address
         {
@@ -82,26 +42,25 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ValidatableObject<ImageSource> ImageProfile
-        {
-            get { return _imageProfile; }
-            set
-            {
-                _imageProfile = value;
-                OnPropertyChanged(nameof(ImageProfile));
-            }
-        }
+        public ValidatableObject<ImageSource> ImageProfile { get; set; }
 
-        public UserDto DataUser { get; set; }
+        public Command LoadItemsCommand { get; private set; }
 
-        public Command LoadItemsCommand { get; }
+        public Command ChangePasswordCommand { get; private set; }
 
-        public Command ChangePasswordCommand { get; }
-
-        public Command SaveCommand { get; }
+        public Command SaveCommand { get; private set; }
 
         public Command UploadImageCommand { get; private set; }
-        public Command LogoutCommand { get; }
+
+        public Command LogoutCommand { get; private set; }
+
+        public Command FirstNameTextChangedCommand { get; private set; }
+
+        public Command LastNameTextChangedCommand { get; private set; }
+
+        public Command EmailTextChangedCommand { get; private set; }
+
+        public Command PhoneTextChangedCommand { get; private set; }
 
         public YourProFileViewModel()
         {
@@ -109,53 +68,53 @@ namespace JongSnam.Mobile.ViewModels
 
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
-            DataUser = new UserDto();
+            InitValidation();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(Convert.ToInt32(userId)));
+            InitOnChange();
 
-            SaveCommand = new Command(async () => await ExecuteSaveCommand(Convert.ToInt32(userId)));
+            SetupCommands();
+        }
+
+        void SetupCommands()
+        {
+            Task.Run(async () => await ExecuteLoadItemsCommand(_userId));
+
+            SaveCommand = new Command(async () => await ExecuteSaveCommand(_userId));
 
             ChangePasswordCommand = new Command(OnChangePassword);
 
-            UploadImageCommand = new Command(async () =>
-            {
-                //if (IsBusy)
-                //{
-                //    return;
-                //}
-                var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
-
-                switch (actionSheet)
-                {
-                    case "Cancel":
-
-                        // Do Something when 'Cancel' Button is pressed
-
-                        break;
-
-                    case "กล้อง":
-
-                        await TakePhotoAsync();
-
-                        break;
-
-                    case "แกลลอรี่":
-
-                        await PickPhotoAsync();
-
-                        break;
-
-                }
-            });
+            UploadImageCommand = new Command(async () => await SetupActionSheetForCamera());
 
             LogoutCommand = new Command(async () => await ExecuteLogoutCommand());
         }
 
-        private void InitValidation()
+        void InitValidation()
         {
-            _imageProfile = new ValidatableObject<ImageSource>();
-            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
+            ImageProfile = new ValidatableObject<ImageSource>();
+            ImageProfile.Validations.Add(new IsHaveImageRule { OriginalFile = ImageConstants.NoImageAvailable, ValidationMessage = MessageConstants.PleaseAddImage });
 
+            FirstName = new ValidatableObject<string>();
+            FirstName.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillLastName });
+            
+            LastName = new ValidatableObject<string>();
+            LastName.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillLastName });
+            
+            Email = new ValidatableObject<string>();
+            Email.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillEmail });
+            
+            Phone = new ValidatableObject<string>();
+            Phone.Validations.Add(new IsNotNullOrEmptyRule<string>() { ValidationMessage = MessageConstants.PleaseFillPhone });
+        }
+
+        void InitOnChange()
+        {
+            FirstNameTextChangedCommand = new Command(() => FirstName.Validate());
+
+            LastNameTextChangedCommand = new Command(() => LastName.Validate());
+
+            EmailTextChangedCommand = new Command(() => Email.Validate());
+
+            PhoneTextChangedCommand = new Command(() => Phone.Validate());
         }
 
         async Task ExecuteLoadItemsCommand(int id)
@@ -164,41 +123,32 @@ namespace JongSnam.Mobile.ViewModels
             try
             {
 
-                InitValidation();
-
                 await _usersServices.GetUserById(
                     id,
-                    executeSuccess: (dataUser) =>
+                    executeSuccess: (user) =>
                     {
-                        //MessagingCenter.Send(this, ShopAddedMessage);
-                        FirstName = dataUser.FirstName;
-                        LastName = dataUser.LastName;
-                        Email = dataUser.Email;
-                        Phone = dataUser.ContactMobile;
-                        Address = dataUser.Address;
-                        DataUser = dataUser;
+                        FirstName.Value = user.FirstName;
+                        LastName.Value = user.LastName;
+                        Email.Value = user.Email;
+                        Phone.Value = user.ContactMobile;
+                        Address = user.Address;
 
-                        if (!(String.IsNullOrEmpty(dataUser.Image)))
+                        if (!string.IsNullOrEmpty(user.Image))
                         {
-                            ImageProfile.Value = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
+                            ImageProfile.Value = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(user.Image)));
                         }
                         else
                         {
-                            ImageProfile.Value = ImageSource.FromFile(ImageConstants.NoImageAvailable);
+                            ImageProfile.Value = ImageSource.FromUri(new Uri(ImageConstants.NoImageAvailable));
                         }
                     },
                     executeError: async (msg, ex) =>
                     {
                         IsBusy = false;
-                        var aa = (Shell.Current.CurrentItem.Items[0] as IShellSectionController).PresentedPage;
-                        //await CurrentShell.DisplayAlert(AppResource.CannotDisplayShopList, msg, AppResource.ButtonOk);
                         //await UserService.Logout();
                         await Shell.Current.Navigation.PopToRootAsync();
                         //await Shell.Current.GoToAsync("//LoginPage");
-                });
-
-                //var dataUser = await _usersServices.GetUserById(id);
-
+                    });
             }
             catch (Exception)
             {
@@ -215,29 +165,25 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
-                bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการที่จะแก้ไขจริงๆใช่ไหม ?", "ใช่", "ไม่");
+                if (!IsValid())
+                {
+                    return;
+                }
+
+                bool answer = await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.WantToEdit, "ใช่", "ไม่");
                 if (!answer)
                 {
                     return;
                 }
-                if (ImageProfile.IsValid)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
-                    return;
-                }
-                else if (Phone.Length < 10)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
-                    return;
-                }
+
                 var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
 
                 var request = new UpdateUserRequest
                 {
-                    LastName = LastName,
-                    FirstName = FirstName,
-                    Email = Email,
-                    ContactMobile = Phone,
+                    LastName = LastName.Value,
+                    FirstName = FirstName.Value,
+                    Email = Email.Value,
+                    ContactMobile = Phone.Value,
                     Address = Address,
                     ImageProfile = await GeneralHelper.GetBase64StringAsync(imageStream),
                 };
@@ -246,11 +192,11 @@ namespace JongSnam.Mobile.ViewModels
 
                 if (statusSaved)
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ข้อมูลถูกบันทึกเรียบร้อยแล้ว", "ตกลง");
+                    await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.SaveSuccessfully, MessageConstants.Ok);
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                    await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.CannotSave, MessageConstants.Ok);
                 }
             }
             catch (Exception ex)
@@ -263,10 +209,37 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
+        bool IsValid()
+        {
+            return LastName.Validate();
+        }
+
+        async Task SetupActionSheetForCamera()
+        {
+            var actionSheet = await Shell.Current.DisplayActionSheet(MessageConstants.UploadImage, MessageConstants.Cancel, null, MessageConstants.Camera, MessageConstants.Gallery);
+
+            switch (actionSheet)
+            {
+                case MessageConstants.Camera:
+
+                    await TakePhotoAsync();
+
+                    break;
+
+                case MessageConstants.Gallery:
+
+                    await PickPhotoAsync();
+
+                    break;
+
+            }
+        }
+
         async void OnChangePassword()
         {
-            await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(DataUser.Id.Value));
+            await Shell.Current.Navigation.PushAsync(new ChangePasswordPage(_userId));
         }
+
         public async Task OnAppearingAsync()
         {
             IsBusy = true;
@@ -277,27 +250,24 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        private async Task TakePhotoAsync()
+        async Task TakePhotoAsync()
         {
             if (!CrossMedia.Current.IsCameraAvailable)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "กล้องใช้ไม่ได้ต้องการสิทธิ์ในการเข้าถึง", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotAccessCamera, MessageConstants.CameraNeedPermission, MessageConstants.Ok);
                 return;
             }
 
             if (!CrossMedia.Current.IsTakePhotoSupported)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถใช้กล้องได้", "แอพนี้ไม่รองรับการใช้งานกล้องของเครื่องนี้", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotAccessCamera, MessageConstants.NotSupportThisCamera, MessageConstants.Ok);
                 return;
             }
-
-            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
-            //_isBackFromChooseImage = true;
 
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
                 SaveToAlbum = true,
-                Directory = "JongSnam",
+                Directory = MessageConstants.Directory,
                 DefaultCamera = CameraDevice.Rear,
                 PhotoSize = PhotoSize.Large,
                 CompressionQuality = 70,
@@ -306,24 +276,18 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                // รูปได้ค่าตอนนี้เด้อ
                 ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
-            //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
-            //_isBackFromChooseImage = false;
         }
 
-        private async Task PickPhotoAsync()
+        async Task PickPhotoAsync()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
-                await Shell.Current.DisplayAlert("ไม่สามารถเลือกรูป", "ไม่สามารถเลือกรูปได้", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.CannotChooseImage, MessageConstants.CannotChooseImage, MessageConstants.Ok);
                 return;
             }
-
-            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
-            //_isBackFromChooseImage = true;
 
             var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
             {
@@ -337,13 +301,11 @@ namespace JongSnam.Mobile.ViewModels
                 ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
-            //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
-            //_isBackFromChooseImage = false;
         }
 
         async Task ExecuteLogoutCommand()
         {
-            bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน!", "ต้องการออกจากระบบใช่หรือไม่ ?", "ใช่", "ไม่");
+            bool answer = await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.WanToLogout, "ใช่", "ไม่");
             if (!answer)
             {
                 return;
@@ -356,7 +318,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             else
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถออกจากระบบได้ กรุณาลองใหม่ภายหลัง", "ตกลง");
+                await Shell.Current.DisplayAlert(MessageConstants.Noti, MessageConstants.CannotLogout, MessageConstants.Ok);
             }
         }
     }
