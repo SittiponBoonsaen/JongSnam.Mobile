@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
@@ -18,11 +19,10 @@ namespace JongSnam.Mobile.ViewModels
 
         public Command SaveCommand { get; }
 
-        private ImageSource _imageProfile;
+        private ValidatableObject<ImageSource> _imageProfile;
 
         public Command UploadImageCommand { get; private set; }
 
-        public ValidatableObject<string> ImageValidata { get; set; }
 
         private string _nameField;
         private int _priceField;
@@ -33,7 +33,6 @@ namespace JongSnam.Mobile.ViewModels
         private System.DateTime _endDate = DateTime.Now;
         private System.DateTime _dateNow;
         private string _detail;
-        private string _storeName;
 
         public string NameField
         {
@@ -109,7 +108,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ImageSource ImageProfile
+        public ValidatableObject<ImageSource> ImageProfile
         {
             get { return _imageProfile; }
             set
@@ -118,6 +117,7 @@ namespace JongSnam.Mobile.ViewModels
                 OnPropertyChanged(nameof(ImageProfile));
             }
         }
+
         public List<IsOpen> SizeFields { get; set; } = new List<IsOpen>()
         {
         new IsOpen(){Name = "ขนาด 5 คน"},
@@ -145,15 +145,12 @@ namespace JongSnam.Mobile.ViewModels
 
             Title = storeName;
 
-            InitValidation();
-
             SaveCommand = new Command(async () => await OnSaveCommand(storeId));
 
-            InitPage();
+            Task.Run(async () => await ExecuteLoadItemsCommand());
 
             UploadImageCommand = new Command(async () =>
             {
-
 
                 var actionSheet = await Shell.Current.DisplayActionSheet("อัพโหลดรูปภาพ", "Cancel", null, "กล้อง", "แกลลอรี่");
 
@@ -180,31 +177,46 @@ namespace JongSnam.Mobile.ViewModels
                 }
             });
 
-            IsBusy = false;
+            InitValidation();
         }
+
+        async Task ExecuteLoadItemsCommand()
+        {
+            try
+            {
+                IsBusy = true;
+                DateNow = DateTime.Now;
+                ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         internal void OnAppearing()
         {
             IsBusy = true;
         }
 
-        void InitPage()
-        {
-            DateNow = DateTime.Now;
-            ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
-            IsBusy = false;
-        }
 
         async Task OnSaveCommand(int storeId)
         {
             try
             {
                 IsBusy = true;
+
                 bool answer = await Shell.Current.DisplayAlert("แจ้งเตือน?", "ต้องการบันทึกใช่ไหม ?", "ใช่", "ไม่");
                 if (!answer)
                 {
                     return;
                 }
-                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+                var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
+
 
                 if (imageStream == null)
                 {
@@ -284,9 +296,11 @@ namespace JongSnam.Mobile.ViewModels
 
         private void InitValidation()
         {
-            ImageValidata = new ValidatableObject<string>();
-            ImageValidata.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Image is null" });
+            _imageProfile = new ValidatableObject<ImageSource>();
+            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
+
         }
+
 
         private async Task TakePhotoAsync()
         {
@@ -318,7 +332,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
             //_isBackFromChooseImage = false;
@@ -344,7 +358,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง

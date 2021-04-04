@@ -5,6 +5,7 @@ using JongSnam.Mobile.Constants;
 using JongSnam.Mobile.CustomErrors;
 using JongSnam.Mobile.Helpers;
 using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Validations;
 using JongSnam.Mobile.Views;
 using JongSnamService.Models;
 using Plugin.Media;
@@ -28,7 +29,8 @@ namespace JongSnam.Mobile.ViewModels
         private string _phone;
         private string _address;
 
-        private ImageSource _imageProfile;
+
+        private ValidatableObject<ImageSource> _imageProfile;
 
         public byte[] ImageProfuke { get; set; }
 
@@ -81,7 +83,7 @@ namespace JongSnam.Mobile.ViewModels
             }
         }
 
-        public ImageSource ImageProfile
+        public ValidatableObject<ImageSource> ImageProfile
         {
             get { return _imageProfile; }
             set
@@ -105,6 +107,7 @@ namespace JongSnam.Mobile.ViewModels
         public YourProFileViewModel()
         {
             _usersServices = DependencyService.Get<IUsersServices>();
+
             _authenticationServices = DependencyService.Get<IAuthenticationServices>();
 
             DataUser = new UserDto();
@@ -149,11 +152,20 @@ namespace JongSnam.Mobile.ViewModels
             LogoutCommand = new Command(async () => await ExecuteLogoutCommand());
         }
 
+        private void InitValidation()
+        {
+            _imageProfile = new ValidatableObject<ImageSource>();
+            _imageProfile.Validations.Add(new IsNotNullOrEmptyRule<ImageSource>() { ValidationMessage = MessageConstants.PleaseAddImage });
+
+        }
+
         async Task ExecuteLoadItemsCommand(int id)
         {
             IsBusy = true;
             try
             {
+                InitValidation();
+
                 await _usersServices.GetUserById(
                     id,
                     executeSuccess: (dataUser) =>
@@ -168,11 +180,11 @@ namespace JongSnam.Mobile.ViewModels
 
                         if (!(String.IsNullOrEmpty(dataUser.Image)))
                         {
-                            ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
+                            ImageProfile.Value = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataUser.Image)));
                         }
                         else
                         {
-                            ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                            ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
                         }
                     },
                     executeError: async (msg, ex) =>
@@ -207,7 +219,7 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     return;
                 }
-                var imageStream = await ((StreamImageSource)ImageProfile).Stream.Invoke(new System.Threading.CancellationToken());
+                var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
 
                 if (imageStream == null)
                 {
@@ -294,7 +306,7 @@ namespace JongSnam.Mobile.ViewModels
             if (file != null)
             {
                 // รูปได้ค่าตอนนี้เด้อ
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
             //เอาไว้เช็คว่าออกมาจากกล้องหรือยัง
@@ -321,7 +333,7 @@ namespace JongSnam.Mobile.ViewModels
 
             if (file != null)
             {
-                ImageProfile = ImageSource.FromStream(() => file.GetStream());
+                ImageProfile.Value = ImageSource.FromStream(() => file.GetStream());
             }
             IsBusy = false;
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง

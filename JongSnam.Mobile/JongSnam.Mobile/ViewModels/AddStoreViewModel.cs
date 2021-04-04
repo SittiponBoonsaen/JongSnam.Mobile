@@ -348,6 +348,8 @@ namespace JongSnam.Mobile.ViewModels
             {
                 IsBusy = true;
 
+                ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+
                 Province = await _enumServices.GetProvinces();
             }
             catch (Exception ex)
