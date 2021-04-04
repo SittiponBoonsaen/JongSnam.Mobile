@@ -164,6 +164,8 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                ImageProfile.Value = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+
                 InitValidation();
 
                 await _usersServices.GetUserById(
@@ -219,9 +221,7 @@ namespace JongSnam.Mobile.ViewModels
                 {
                     return;
                 }
-                var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
-
-                if (imageStream == null)
+                if (ImageProfile.IsValid)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณาเพิ่มรูปภาพให้ถูกต้อง", "ตกลง");
                     return;
@@ -231,6 +231,8 @@ namespace JongSnam.Mobile.ViewModels
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", "กรุณากรอกเบอร์โทรให้ครบ10หลัก", "ตกลง");
                     return;
                 }
+                var imageStream = await ((StreamImageSource)ImageProfile.Value).Stream.Invoke(new System.Threading.CancellationToken());
+
                 var request = new UpdateUserRequest
                 {
                     LastName = LastName,
