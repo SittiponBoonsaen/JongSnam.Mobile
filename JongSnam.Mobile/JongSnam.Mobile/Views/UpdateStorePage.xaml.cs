@@ -12,7 +12,7 @@ namespace JongSnam.Mobile.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new UpdateStoreViewModel(idStore);
+            BindingContext = _viewModel = new UpdateStoreViewModel(idStore, map);
 
         }
         protected override void OnAppearing()

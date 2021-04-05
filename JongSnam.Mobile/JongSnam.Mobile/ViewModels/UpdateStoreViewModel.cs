@@ -9,7 +9,12 @@ using JongSnam.Mobile.Validations;
 using JongSnamService.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = Xamarin.Essentials.Location;
+using Map = Xamarin.Forms.GoogleMaps.Map;
+using System.Reflection;
+using Xamarin.Forms.GoogleMaps;
 
 namespace JongSnam.Mobile.ViewModels
 {
@@ -40,10 +45,13 @@ namespace JongSnam.Mobile.ViewModels
         private string _isOpen;
         private bool _isOpenbool;
         private string _officeHours;
+        private double _setlatitude;
 
+        private double _setlongtitude;
         private int _distrctId;
         private int _subDistrictId;
         private int _provinceId;
+        private Map _map;
 
         private List<EnumDto> _listprovince;
         private List<EnumDto> _listdistrict;
@@ -282,9 +290,13 @@ namespace JongSnam.Mobile.ViewModels
 
 
 
-        public UpdateStoreViewModel(int idStore)
+        public UpdateStoreViewModel(int idStore, Map map)
         {
             InitValidation();
+
+            //Task.Run(async () => await ExecuteLoadItemsCommand(idStore));
+
+            _map = map;
 
             _storeServices = DependencyService.Get<IStoreServices>();
 
@@ -292,7 +304,7 @@ namespace JongSnam.Mobile.ViewModels
 
             _enumServices = DependencyService.Get<IEnumServices>();
 
-            Task.Run(async () => await ExecuteLoadItemsCommand(idStore));
+            
 
             UploadImageCommand = new Command(async () =>
             {
@@ -332,6 +344,9 @@ namespace JongSnam.Mobile.ViewModels
             LoadDistrictCommand = new Command(async () => await LoadDistrictEnum(SelectedProvince.Value.Id.Value));
 
             LoadSubDistrictCommand = new Command(async () => await LoadSubDistrictEnum(SelectedDistrict.Value.Id.Value));
+
+
+            Task.Run(async () => await InitMapLocation(idStore));
         }
 
         private void InitValidation()
@@ -381,9 +396,10 @@ namespace JongSnam.Mobile.ViewModels
             IsBusy = true;
             try
             {
+                var dataStore = await _storeServices.GetStoreById(idStore);
+
                 ListProvince = await _enumServices.GetProvinces();
 
-                var dataStore = await _storeServices.GetStoreById(idStore);
                 var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
                 var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
                 var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
@@ -422,6 +438,8 @@ namespace JongSnam.Mobile.ViewModels
                 _distrctId = dataStore.DistrictId.Value;
                 _subDistrictId = dataStore.SubDistrictId.Value;
                 _provinceId = dataStore.ProvinceId.Value;
+
+
             }
             catch (Exception ex)
             {
@@ -593,6 +611,90 @@ namespace JongSnam.Mobile.ViewModels
 
             //เอาไว้เช็คว่าออกมาจากคลังภาพหรือยัง
             //_isBackFromChooseImage = false;
+        }
+        async Task InitMapLocation(int idStore)
+        {
+            try
+            {
+                IsBusy = true;
+                var dataStore = await _storeServices.GetStoreById(idStore);
+                _setlatitude = dataStore.Latitude.Value;
+                _setlongtitude = dataStore.Longtitude.Value;
+
+                Location location = await Geolocation.GetLastKnownLocationAsync();
+                location.Latitude = _setlatitude;
+                location.Longitude = _setlongtitude;
+
+                Pin pin = new Pin()
+                {
+                    Type = PinType.Place,
+                    Label = "กดค้างแล้วลากเพื่อย้ายตำแหน่ง.",
+                    Position = new Position(location.Latitude, location.Longitude),
+                    Rotation = 33.3f,
+                    IsDraggable = true
+                };
+
+                _map.Pins.Add(pin);
+                _map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(5000)));
+
+                _map.PinDragEnd += (_, e) => SetLocation(e.Pin);
+
+                ListProvince = await _enumServices.GetProvinces();
+
+                var subDistrict = await _addressServices.GetSubDistrictById((int)dataStore.SubDistrictId);
+                var district = await _addressServices.GetDistrictById((int)dataStore.DistrictId);
+                var province = await _addressServices.GetProvinceById((int)dataStore.ProvinceId);
+
+                Name = dataStore.Name;
+                Address = dataStore.Address;
+                ContactMobile = dataStore.ContactMobile;
+                Latitude = (double)dataStore.Latitude;
+                Longtitude = (double)dataStore.Longtitude;
+                Rules = dataStore.Rules;
+                Image = dataStore.Image;
+                _isOpenbool = dataStore.IsOpen.Value;
+                if (dataStore.IsOpen.Value)
+                {
+                    IsOpenString = "เปิดบริการ";
+                }
+                else
+                {
+                    IsOpenString = "ปิดบริการ";
+                }
+                OfficeHours = dataStore.OfficeHours;
+
+                SubDistrictString = subDistrict.Name;
+                DistrictString = district.Name;
+                ProvinceString = province.Name;
+                if (!(String.IsNullOrEmpty(dataStore.Image)))
+                {
+                    ImageProfile = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(dataStore.Image)));
+                }
+                else
+                {
+                    ImageProfile = ImageSource.FromUri(new Uri("https://image.makewebeasy.net/makeweb/0/xOIgxrdh9/Document/Compac_spray_small_size_1.pdf"));
+                }
+
+
+                _distrctId = dataStore.DistrictId.Value;
+                _subDistrictId = dataStore.SubDistrictId.Value;
+                _provinceId = dataStore.ProvinceId.Value;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+        }
+
+        void SetLocation(Pin pin)
+        {
+            Latitude = pin.Position.Latitude;
+            Longtitude = pin.Position.Longitude;
         }
     }
 }

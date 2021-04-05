@@ -243,12 +243,7 @@ namespace JongSnam.Mobile.ViewModels
                 var Minutes = interval.Minutes;
                 var Seconds = interval.Seconds;
                 var Hours = interval.Hours;
-                if (FromTime.Hours < Hours)
-                {
-                    await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถลงเวลาย้อนหลังได้", "ตกลง");
-                    return;
-                }
-                else if(FromTime.Minutes != 00 && FromTime.Minutes != 30 || ToTime.Minutes != 00 && ToTime.Minutes != 30)
+                if(FromTime.Minutes != 00 && FromTime.Minutes != 30 || ToTime.Minutes != 00 && ToTime.Minutes != 30)
                 {
                     await Shell.Current.DisplayAlert("แจ้งเตือน!", $"กรุณาเลือกวันเวลาให้ถูกต้อง", "ตกลง");
                     return;

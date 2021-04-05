@@ -424,7 +424,7 @@ namespace JongSnam.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("แจ้งเตือน!", "ไม่สามารถบันทึกข้อมูลได้", "ตกลง");
+                await Shell.Current.DisplayAlert("แจ้งเตือน!", "เกิดช้อผิดพลาดบางอย่าง", "ตกลง");
                 throw ex;
             }
             finally
