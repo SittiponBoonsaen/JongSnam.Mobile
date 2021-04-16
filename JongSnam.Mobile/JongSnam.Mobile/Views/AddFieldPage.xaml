@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JongSnam.Mobile.Views.AddFieldPage"
+             BindingContext="{Binding AddFieldViewModel}"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+
+                <StackLayout>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
+                    <Frame OutlineColor="Gray" HeightRequest="200" WidthRequest="180">
+                        <Image Grid.RowSpan="5"  Source="{Binding ImageProfile.Value}" />
+                    </Frame>
+                    <ImageButton Margin="3"
+                             BackgroundColor="#f5f5f3"
+                             HeightRequest="64" 
+                             WidthRequest="64"
+                            Padding="2"
+                            Source="add_photo.png"
+                            Command="{Binding UploadImageCommand}">
+                    </ImageButton>
+                    <Label Text="{Binding ImageProfile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                               Style="{StaticResource ErrorLabel}"/>
+                </StackLayout>
+                
+                <Label Text="ชื่อสนาม"/>
+                <Entry Placeholder="ชื่อสนาม" Text="{Binding NameField}" PlaceholderColor="Gray" />
+                <Label Text="ราคาสนาม"/>
+            <Entry Placeholder="ราคาสนาม" Text="{Binding PriceField}" PlaceholderColor="Gray" />
+                <Picker Title="ขนาดสนาม"
+                    ItemsSource="{Binding SizeFields}"
+                    SelectedItem="{Binding SizeField}"
+                    ItemDisplayBinding="{Binding Name}"/>
+                <Label Text="ส่วนลด %"/>
+                <Entry Placeholder="ส่วนลด %" Text="{Binding Percentage}" PlaceholderColor="Gray" Keyboard="Numeric" />
+                
+            <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                
+                    <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" 
+                        Date="{Binding StartDate}" />
+                
+                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>                
+                    <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+            </Grid>
+                
+                <StackLayout>
+                <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
+            </StackLayout>
+
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

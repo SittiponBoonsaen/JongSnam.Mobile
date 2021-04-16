@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JongSnam.Mobile.Views.SearchReservationPage"
+             Title="ค้นหาการจองของคุณ">
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="0"></Label>
+                <DatePicker MinimumDate="01/01/2019" Format="dd/MM/yyyy"
+                    MaximumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"  Grid.Column="1" Grid.Row="0" 
+                    Date="{Binding StartDate,StringFormat='{0:dd MMMM, yyyy}', Mode=TwoWay}"/>
+                
+                <Label Text="ถึง :" Grid.Column="2" Grid.Row="0" ></Label>
+                <DatePicker MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    MaximumDate="12/31/2024" Format="dd/MM/yyyy"  Grid.Column="3" Grid.Row="0"
+                    Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}', Mode=TwoWay}" />
+                
+                <ImageButton Grid.Column="4" Grid.Row="0" Command="{Binding SearchCommand}" Source="https://icon-library.com/images/black-search-icon-png/black-search-icon-png-8.jpg" />
+            </Grid>
+            <Label Text="ชื่อลูกค้า"/>
+            <Entry Text="{Binding UserName }" PlaceholderColor="Gray" />
+            <Label Text="ชื่อร้าน"/>
+            <Entry Text="{Binding StoreName }" MaxLength="10" PlaceholderColor="Gray" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

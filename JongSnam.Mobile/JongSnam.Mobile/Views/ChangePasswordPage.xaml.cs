@@ -1,9 +1,4 @@
 ﻿using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,10 +9,10 @@ namespace JongSnam.Mobile.Views
     public partial class ChangePasswordPage : ContentPage
     {
         ChangePasswordViewModel _viewModel;
-        public ChangePasswordPage()
+        public ChangePasswordPage(int idUser)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ChangePasswordViewModel();
+            BindingContext = _viewModel = new ChangePasswordViewModel(idUser);
         }
         protected override void OnAppearing()
         {

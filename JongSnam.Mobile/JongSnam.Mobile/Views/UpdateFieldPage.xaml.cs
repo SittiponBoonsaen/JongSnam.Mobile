@@ -1,9 +1,5 @@
 ﻿using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JongSnamService.Models;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,10 +10,10 @@ namespace JongSnam.Mobile.Views
     public partial class UpdateFieldPage : ContentPage
     {
         UpdateFieldViewModel _viewModel;
-        public UpdateFieldPage()
+        public UpdateFieldPage(FieldDto fieldDto,int storeId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new UpdateFieldViewModel();
+            BindingContext = _viewModel = new UpdateFieldViewModel(fieldDto, storeId);
         }
         protected override void OnAppearing()
         {

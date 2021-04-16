@@ -1,9 +1,4 @@
 ﻿using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,16 +9,16 @@ namespace JongSnam.Mobile.Views
     public partial class YourFieldPage : ContentPage
     {
         YourFieldViewModel _viewModel;
-        public YourFieldPage()
+        public YourFieldPage(int storeId, string storeName)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new YourFieldViewModel();
+            BindingContext = _viewModel = new YourFieldViewModel(storeId, storeName);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.OnAppearing();
+            _viewModel.OnAppearingAsync();
         }
     }
 }

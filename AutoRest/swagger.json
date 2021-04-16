@@ -5,12 +5,293 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Address/Provinces": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetProvinces",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProvinceModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Address/{id}/Provinces": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetProvinceById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProvinceModel"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Address/{ProvinceId}/GetDistrictByProvinceId": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetDistrictByProvinceId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ProvinceId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DistrictModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Address/{id}/GetDistrictById": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetDistrictById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DistrictModel"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Address/{DistrictId}/GetSubDistrictByDistrictId": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetSubDistrictByDistrictId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "DistrictId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SubDistrictModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Address/{id}/GetSubDistrictById": {
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "operationId": "GetSubDistrictById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SubDistrictModel"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enum": {
+      "get": {
+        "tags": [
+          "Enum"
+        ],
+        "operationId": "GetEnums",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "enumName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnumDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Field/Search": {
       "get": {
         "tags": [
           "Field"
         ],
-        "operationId": "GetAll",
+        "operationId": "GetFieldBySearch",
         "produces": [
           "application/json"
         ],
@@ -278,6 +559,83 @@
         }
       }
     },
+    "/api/Payment/{reservationId}": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "operationId": "GetPaymentByReservationId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reservationId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PaymentDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Payment/{id}": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "operationId": "GetPaymentById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PaymentDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
     "/api/Payment": {
       "post": {
         "tags": [
@@ -356,7 +714,7 @@
         }
       }
     },
-    "/api/Reservation/{storeId}": {
+    "/api/Reservation/{userId}": {
       "get": {
         "tags": [
           "Reservation"
@@ -368,14 +726,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "storeId",
+            "name": "userId",
             "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "in": "query",
-            "name": "ownerId",
             "type": "integer",
             "format": "int32"
           },
@@ -396,7 +748,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FieldDtoBasePagingDto"
+              "$ref": "#/definitions/ReservationDtoBasePagingDto"
             }
           },
           "400": {
@@ -419,20 +771,14 @@
         "tags": [
           "Reservation"
         ],
-        "operationId": "GetAll",
+        "operationId": "GetReservationBySearch",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
             "in": "query",
-            "name": "storeId",
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "in": "query",
-            "name": "ownerId",
+            "name": "userId",
             "type": "integer",
             "format": "int32"
           },
@@ -535,7 +881,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FieldDtoBasePagingDto"
+              "$ref": "#/definitions/ReservationDtoBasePagingDto"
             }
           },
           "400": {
@@ -575,7 +921,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/FieldDtoBasePagingDto"
+              "$ref": "#/definitions/ReservationDtoBasePagingDto"
             }
           },
           "400": {
@@ -862,6 +1208,40 @@
             }
           }
         }
+      }
+    },
+    "/api/Store/{id}": {
+      "get": {
+        "tags": [
+          "Store"
+        ],
+        "operationId": "GetStoreById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StoreDetailDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
       },
       "put": {
         "tags": [
@@ -876,8 +1256,9 @@
         ],
         "parameters": [
           {
-            "in": "query",
+            "in": "path",
             "name": "id",
+            "required": true,
             "type": "integer",
             "format": "int32"
           },
@@ -905,7 +1286,7 @@
         }
       }
     },
-    "/api/Store/{ownerId}": {
+    "/api/Store/{ownerId}/Detail": {
       "get": {
         "tags": [
           "Store"
@@ -1020,7 +1401,41 @@
         }
       }
     },
-    "/api/User/ChangePassword": {
+    "/api/User/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetUserById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/ChangePassword": {
       "put": {
         "tags": [
           "User"
@@ -1034,8 +1449,9 @@
         ],
         "parameters": [
           {
-            "in": "query",
+            "in": "path",
             "name": "id",
+            "required": true,
             "type": "integer",
             "format": "int32"
           },
@@ -1062,10 +1478,54 @@
           }
         }
       }
+    },
+    "/api/User/{id}/Update": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UpdateUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemsDetailDto"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "FieldDto": {
+    "ProvinceModel": {
       "type": "object",
       "properties": {
         "id": {
@@ -1074,35 +1534,6 @@
         },
         "name": {
           "type": "string"
-        },
-        "price": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "storeName": {
-          "type": "string"
-        },
-        "isOpen": {
-          "type": "boolean"
-        }
-      }
-    },
-    "FieldDtoBasePagingDto": {
-      "type": "object",
-      "properties": {
-        "currentPage": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "totalPage": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "collection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FieldDto"
-          }
         }
       }
     },
@@ -1133,6 +1564,135 @@
         "errorCode": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "DistrictModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "provinceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "provinceModel": {
+          "$ref": "#/definitions/ProvinceModel"
+        }
+      }
+    },
+    "SubDistrictModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "districtId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "districtModel": {
+          "$ref": "#/definitions/DistrictModel"
+        }
+      }
+    },
+    "EnumDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ImageFieldModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "createdDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "updatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "fieldId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "FieldDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "storeName": {
+          "type": "string"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "imageFieldModel": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageFieldModel"
+          }
+        }
+      }
+    },
+    "FieldDtoBasePagingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldDto"
+          }
         }
       }
     },
@@ -1345,6 +1905,29 @@
         }
       }
     },
+    "PaymentDto": {
+      "type": "object",
+      "properties": {
+        "reservationId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "isFullAmount": {
+          "type": "boolean"
+        }
+      }
+    },
     "PaymentRequest": {
       "type": "object",
       "properties": {
@@ -1384,6 +1967,54 @@
         },
         "isFullAmount": {
           "type": "boolean"
+        }
+      }
+    },
+    "ReservationDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "approvalStatus": {
+          "type": "boolean"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "storeName": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "stopTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ReservationDtoBasePagingDto": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPage": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationDto"
+          }
         }
       }
     },
@@ -1520,6 +2151,9 @@
         },
         "officeHours": {
           "type": "string"
+        },
+        "image": {
+          "type": "string"
         }
       }
     },
@@ -1545,13 +2179,13 @@
     "StoreRequest": {
       "required": [
         "address",
-        "amphur",
         "contactMobile",
-        "district",
+        "districtId",
         "isOpen",
         "name",
         "ownerId",
-        "province"
+        "provinceId",
+        "subDistrictId"
       ],
       "type": "object",
       "properties": {
@@ -1572,20 +2206,17 @@
           "maxLength": 50,
           "type": "string"
         },
-        "district": {
-          "format": "string",
-          "maxLength": 50,
-          "type": "string"
+        "subDistrictId": {
+          "format": "int32",
+          "type": "integer"
         },
-        "amphur": {
-          "format": "string",
-          "maxLength": 50,
-          "type": "string"
+        "districtId": {
+          "format": "int32",
+          "type": "integer"
         },
-        "province": {
-          "format": "string",
-          "maxLength": 50,
-          "type": "string"
+        "provinceId": {
+          "format": "int32",
+          "type": "integer"
         },
         "contactMobile": {
           "format": "tel",
@@ -1610,6 +2241,56 @@
         },
         "rules": {
           "maxLength": 50,
+          "type": "string"
+        }
+      }
+    },
+    "StoreDetailDto": {
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "subDistrictId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "districtId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "provinceId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "longtitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "rules": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "isOpen": {
+          "type": "boolean"
+        },
+        "officeHours": {
           "type": "string"
         }
       }
@@ -1686,6 +2367,9 @@
           "type": "integer"
         },
         "name": {
+          "type": "string"
+        },
+        "image": {
           "type": "string"
         }
       }
@@ -1817,6 +2501,46 @@
         "confirmNewPassword": {
           "maxLength": 20,
           "minLength": 8,
+          "type": "string"
+        }
+      }
+    },
+    "UpdateUserRequest": {
+      "required": [
+        "contactMobile",
+        "email",
+        "firstName",
+        "lastName"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "format": "email",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "firstName": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "lastName": {
+          "format": "string",
+          "maxLength": 50,
+          "type": "string"
+        },
+        "address": {
+          "format": "string",
+          "maxLength": 150,
+          "type": "string"
+        },
+        "contactMobile": {
+          "format": "tel",
+          "maxLength": 10,
+          "minLength": 9,
+          "type": "string"
+        },
+        "imageProfile": {
           "type": "string"
         }
       }

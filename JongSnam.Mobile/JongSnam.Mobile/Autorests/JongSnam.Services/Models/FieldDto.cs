@@ -7,6 +7,8 @@
 namespace JongSnamService.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class FieldDto
@@ -22,13 +24,17 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the FieldDto class.
         /// </summary>
-        public FieldDto(int? id = default(int?), string name = default(string), int? price = default(int?), string storeName = default(string), bool? isOpen = default(bool?))
+        public FieldDto(int? id = default(int?), string name = default(string), int? price = default(int?), string storeName = default(string), string size = default(string), bool? isOpen = default(bool?), bool? active = default(bool?), StoreModel storeModel = default(StoreModel), IList<ImageFieldModel> imageFieldModel = default(IList<ImageFieldModel>))
         {
             Id = id;
             Name = name;
             Price = price;
             StoreName = storeName;
+            Size = size;
             IsOpen = isOpen;
+            Active = active;
+            StoreModel = storeModel;
+            ImageFieldModel = imageFieldModel;
             CustomInit();
         }
 
@@ -59,8 +65,28 @@ namespace JongSnamService.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "isOpen")]
         public bool? IsOpen { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "active")]
+        public bool? Active { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "storeModel")]
+        public StoreModel StoreModel { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "imageFieldModel")]
+        public IList<ImageFieldModel> ImageFieldModel { get; set; }
 
     }
 }

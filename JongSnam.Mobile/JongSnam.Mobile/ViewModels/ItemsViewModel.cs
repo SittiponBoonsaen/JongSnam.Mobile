@@ -1,45 +1,76 @@
-﻿using JongSnam.Mobile.Models;
-using JongSnam.Mobile.Views;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
+using JongSnamService.Models;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private readonly IStoreServices _storeServices;
 
-        public ObservableCollection<Item> Items { get; }
+        private StoreDtoModel _selectedItem;
+
+        public ObservableCollection<StoreDtoModel> Items { get; }
         public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command SearchItemCommand { get; }
+        public Command<StoreDtoModel> ItemTapped { get; }
+
+        public StoreDtoModel SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                OnItemSelected(value);
+            }
+        }
+
+
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            Title = "JongSnamFootBall";
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            _storeServices = DependencyService.Get<IStoreServices>();
 
-            AddItemCommand = new Command(OnAddItem);
+            Items = new ObservableCollection<StoreDtoModel>();
+
+            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+
+            Task.Run(async () => await ExecuteLoadItemsCommand());
+
+            ItemTapped = new Command<StoreDtoModel>(OnItemSelected);
+
+            SearchItemCommand = new Command(OnSearchItem);
         }
 
         async Task ExecuteLoadItemsCommand()
         {
-            IsBusy = true;
-
             try
             {
+                IsBusy = true;
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await _storeServices.GetStores(1, 20);
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    Items.Add(new StoreDtoModel { 
+                        Id = item.Id,
+                        Name = item.Name,
+                        OfficeHours = item.OfficeHours,
+                        Rating = item.Rating,
+                        Image = item.Image,
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+                    });
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -57,28 +88,18 @@ namespace JongSnam.Mobile.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        private async void OnSearchItem(object obj)
         {
-            get => _selectedItem;
-            set
+            await Shell.Current.Navigation.PushAsync(new SearchItemPage());
+        }
+
+        async void OnItemSelected(StoreDtoModel storeDto)
+        {
+            if (storeDto == null)
             {
-                SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
-            }
-        }
-
-        private async void OnAddItem(object obj)
-        {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
-        }
-
-        async void OnItemSelected(Item item)
-        {
-            if (item == null)
                 return;
-
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            }
+            await Shell.Current.Navigation.PushAsync(new ListFieldPage(storeDto));
         }
     }
 }

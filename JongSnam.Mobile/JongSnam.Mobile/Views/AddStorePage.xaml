@@ -2,67 +2,126 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.AddStorePage"
+             xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             BindingContext="{Binding AddStoreViewModel}"
              Title="เพิ่มร้าน">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
-    
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+
+    <ScrollView InputTransparent="True">
+        <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+
             <StackLayout>
-                <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
+
+                <Frame OutlineColor="Gray" HeightRequest="200" WidthRequest="180">
+                    <Image Grid.RowSpan="5"  Source="{Binding ImageProfile.Value}" />
+                </Frame>
+                <Label Text="{Binding ImageProfile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                               Style="{StaticResource ErrorLabel}"/>
+                <ImageButton Margin="3"
+                            BackgroundColor="#f5f5f3"
+                            HeightRequest="64" 
+                            WidthRequest="64"
+                        Padding="2"
+                        Source="add_photo.png"
+                        Command="{Binding UploadImageCommand}">
+                </ImageButton>
             </StackLayout>
-            <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" />
-            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" />
-                <Picker x:Name="SubDistricts" Title="ตำบล"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เหมาะสำหรับ 5คน</x:String>
-                        <x:String>เหมาะสำหรับ 7คน</x:String>
-                        <x:String>เหมาะสำหรับ 11คน</x:String>
-                    </Picker.Items>
-                </Picker>
+            <Entry Placeholder="ชื่อร้าน" PlaceholderColor="Gray" Text="{Binding Name.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding NameTextChangedCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                               Style="{StaticResource ErrorLabel}"/>
 
-                <Picker x:Name="Districts" Title="อำเภอ"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดบริการ</x:String>
-                        <x:String>ปิดบริการ</x:String>
-                    </Picker.Items>
-                </Picker>
-                <Picker x:Name="Province" Title="จังหวัด"
-                HorizontalOptions="FillAndExpand">
-                    <Picker.Items>
-                        <x:String>เปิดยริก่าร</x:String>
-                        <x:String>ปิดบริกร</x:String>
-                    </Picker.Items>
-                </Picker>
+            <Entry Placeholder="ที่อยู่..." PlaceholderColor="Gray" Text="{Binding Address.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding AddressTextChangedCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding Address.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                               Style="{StaticResource ErrorLabel}"/>
 
-            <Entry Placeholder="Phone" MaxLength="10" PlaceholderColor="Gray" />
-            <Grid >
-                <Entry Grid.Column="0"
-                   Keyboard="Numeric"
-                   Placeholder="ลัดติจูด"
-                   IsEnabled="false" />
-
-                <Entry Grid.Column="1"
-                   Keyboard="Numeric"
-                   Placeholder="ลองติจูด"
-                   IsEnabled="false" />
-            </Grid>
-            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray" />
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
+            <Picker ItemsSource="{Binding Province}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedProvince.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก จังหวัด">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                            Command="{Binding SelectedProvinceIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                            Command="{Binding LoadDistrictCommand}"/>
+                </Picker.Behaviors>
             </Picker>
-            <Editor Placeholder="กฏของร้าน" HeightRequest="80" />
+            <Label Text="{Binding SelectedProvince.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                            Style="{StaticResource ErrorLabel}"/>
+
+            <Picker ItemsSource="{Binding District}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedDistrict.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก อำเภอ">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                            Command="{Binding SelectedDistrictIndexChangedCommand}"/>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                            Command="{Binding LoadSubDistrictCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+            <Label Text="{Binding SelectedDistrict.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                            Style="{StaticResource ErrorLabel}"/>
+            
+            <Picker ItemsSource="{Binding SubDistrict}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedSubDistrict.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก ตำบล">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                            Command="{Binding SelectedSubDistrictIndexChangedCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+            <Label Text="{Binding SelectedSubDistrict.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                            Style="{StaticResource ErrorLabel}"/>
+
+            <Entry Placeholder="เบอร์ติดต่อ" MaxLength="10" Keyboard="Numeric" PlaceholderColor="Gray" Text="{Binding ContactMobile.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding ContactMobileTextChangedCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding ContactMobile.Errors, Converter={StaticResource FirstValidationErrorConverter}}" 
+                                            Style="{StaticResource ErrorLabel}"/>
+
+            <Entry Placeholder="เปิด-ปิด (ทุกวัน 07:00 - 22:00)" PlaceholderColor="Gray"  Text="{Binding OfficeHours.Value}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding OfficeHoursTextChangedCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding OfficeHours.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                                            Style="{StaticResource ErrorLabel}"/>
+
+            <Picker Title="สถานะ"
+                ItemsSource="{Binding Privacies}"
+                SelectedItem="{Binding Privacy}"
+                ItemDisplayBinding="{Binding Name}"/>
+            
+            <Entry Placeholder="กฏของร้าน" HeightRequest="80" Text="{Binding Rules}" />
+            
+            <StackLayout HeightRequest="300" WidthRequest="400">
+                <maps:Map x:Name="map"/>
+            </StackLayout>
+
         </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+
+    </ScrollView>
 </ContentPage>

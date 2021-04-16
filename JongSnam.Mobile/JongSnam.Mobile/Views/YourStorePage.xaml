@@ -4,18 +4,22 @@
              x:Class="JongSnam.Mobile.Views.YourStorePage"
              xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"
              xmlns:model="clr-namespace:JongSnam.Mobile.Models"
-             x:Name="ThisPage">
+             x:Name="ThisPage"
+             Title="ร้านของคุณ">
+    
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="เพิ่ม" Command="{Binding AddStoreCommand}"/>
+        <ToolbarItem Text="เพิ่มร้านของคุณ" Command="{Binding AddStoreCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <RefreshView x:DataType="local:YourStoreViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ItemsListView"
+    <ContentPage.Content>
+        <StackLayout>
+            <RefreshView x:DataType="local:YourStoreViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ItemsListView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="0" x:DataType="model:Item">
+                        <StackLayout Padding="0" x:DataType="model:YourStoreModel">
                         <Grid Margin="5,7,5,7" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.5*" />
@@ -24,34 +28,45 @@
                                     <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1" />
+                                    <RowDefinition Height="80" />
                                 </Grid.RowDefinitions>
 
-                            <!--<Button Text="แก้ไข" Grid.Column="0" Grid.RowSpan="2"
-                                HorizontalOptions="End" VerticalOptions="Center" />-->
-                            <Image Source="https://static.vecteezy.com/system/resources/thumbnails/000/522/621/small/kflj_bbzy_140326.jpg" 
+                                <Image Source="{Binding ImageSource}"   HeightRequest="60" WidthRequest="50" Aspect="Fill"
                                    Grid.Column="0" Grid.RowSpan="2"/>
 
-                            <Label Text="{Binding Text}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
+                            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center"
                                Style="{DynamicResource ListItemTextStyle}" 
                                FontSize="13"/>
 
-                            <Button Text="ดู" Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" FontSize="13"
-
-                                    Command="{Binding BindingContext.YourFieldCommand, Source={x:Reference ThisPage}}"
-                                    CommandParameter="{Binding .}"/>
-
-                            <Button Text="แก้ไข" Grid.Column="3" Grid.RowSpan="2" 
-                                    HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"
-                                    Command="{Binding BindingContext.UpdateStoreCommand, Source={x:Reference ThisPage}}"
-                                    CommandParameter="{Binding .}"/>
-                        </Grid>
-                            <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                            <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="32" Grid.Column="3" Grid.RowSpan="2" 
+                             WidthRequest="32"
+                                Padding="5"
+                                Source="icon_edit.png"
+                                 Command="{Binding BindingContext.UpdateStoreCommand, Source={x:Reference ThisPage}}" 
+                                         CommandParameter="{Binding .}"/>
+                    </Grid>
+                        <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:YourStoreViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
                     </StackLayout>
-
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+            </CollectionView>
+        <!--loading activity-->
     </RefreshView>
+
+            <!-- <Button Text="โหลดเพิ่มเติม" 
+                                    HorizontalOptions="End" FontSize="13" BackgroundColor="ForestGreen"
+                                    Command="{Binding BindingContext.LoadMoreCommand, Source={x:Reference ThisPage}}"
+                                    CommandParameter="{Binding .}"/> -->
+
+        </StackLayout>
+    </ContentPage.Content>
+
 </ContentPage>

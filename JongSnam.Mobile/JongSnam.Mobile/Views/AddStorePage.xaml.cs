@@ -1,9 +1,4 @@
 ﻿using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,10 +9,10 @@ namespace JongSnam.Mobile.Views
     public partial class AddStorePage : ContentPage
     {
         AddStoreViewModel _viewModel;
-        public AddStorePage()
+        public AddStorePage(int userId)
         {
             InitializeComponent();
-            BindingContext = _viewModel = new AddStoreViewModel();
+            BindingContext = _viewModel = new AddStoreViewModel(userId, map);
         }
         protected override void OnAppearing()
         {

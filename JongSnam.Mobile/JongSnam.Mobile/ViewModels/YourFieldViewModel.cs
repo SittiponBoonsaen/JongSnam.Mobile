@@ -1,63 +1,93 @@
-﻿using JongSnam.Mobile.Models;
-using JongSnam.Mobile.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
+using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
     public class YourFieldViewModel : BaseViewModel
     {
+        private readonly IFieldServices _fieldServices;
         public Command LoadItemsCommand { get; }
+        public Command<FieldDto> BookingCommand { get; }
         public Command UpdateFieldCommand { get; }
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<FieldDto> Items { get; }
 
-        public YourFieldViewModel()
+        public Command AddFieldCommand { get; }
+
+        private string _storeName;
+        private int _storeId;
+
+        public Command<FieldDto> ItemTapped { get; }
+
+        public string StoreName
         {
-            Items = new ObservableCollection<Item>();
-
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-            UpdateFieldCommand = new Command<Item>(OnUpdateField);
+            get => _storeName;
+            set
+            {
+                _storeName = value;
+                OnPropertyChanged(nameof(StoreName));
+            }
         }
 
-        async Task ExecuteLoadItemsCommand()
-        {
-            IsBusy = true;
+        public string IsOpenString { get; private set; }
 
+        public YourFieldViewModel(int storeId, string nameStore)
+        {
+            _fieldServices = DependencyService.Get<IFieldServices>();
+
+            Items = new ObservableCollection<FieldDto>();
+
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
+
+            BookingCommand = new Command<FieldDto>(OnBookingCommand);
+
+            AddFieldCommand = new Command(OnAddFieldAsync);
+
+            ItemTapped = new Command<FieldDto>(OnItemSelected);
+            _storeId = storeId;
+
+            //Task.Run(async () => await ExecuteLoadItemsCommand(storeId, nameStore));
+            
+        }
+
+        async void OnBookingCommand(FieldDto fieldDto)
+        {
+            await Shell.Current.Navigation.PushAsync(new BookingPage(fieldDto, StoreName));
+        }
+
+        async Task ExecuteLoadItemsCommand(int storeId, string nameStore)
+        {
             try
             {
+                IsBusy = true;
                 Items.Clear();
-
-                var items = new ObservableCollection<Item> {
-                    new Item{
-                        Text = "สนามที่1",
-                        Description = "test"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่2",
-                        Description = "hgadf"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่3",
-                        Description = "ดกhafdเหก"
-                    },
-                    new Item
-                    {
-                        Text = "สนามที่4",
-                        Description = "ahdf"
-                    }
-                };
-
-                foreach (var item in items)
+                var data = await _fieldServices.GetFieldByStoreId(storeId, 1, 20);
+                if (data == null)
                 {
-                    Items.Add(item);
+                    return;
                 }
+                StoreName = nameStore;
+                foreach (var item in data)
+                {
+                    Items.Add(new YourFieldModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        PriceString = item.Price.ToString() + "/ชั่วโมง",
+                        IsOpenString = item.IsOpen == true ? IsOpenString = "เปิดบริการ" : IsOpenString = "ปิดบริการ",
+                        ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.ImageFieldModel[0].Image)))
+                    });
+                }
+                //Count =  Items.Count().ToString();
 
             }
             catch
@@ -69,13 +99,33 @@ namespace JongSnam.Mobile.ViewModels
                 IsBusy = false;
             }
         }
-        async void OnUpdateField(Item Item)
+
+        //async void OnUpdateField(FieldDto fieldDto)
+        //{
+        //    await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto));
+        //}
+        async void OnAddFieldAsync(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(UpdateFieldPage));
+            await Shell.Current.Navigation.PushAsync(new AddFieldPage(_storeId, StoreName));
         }
-        public void OnAppearing()
+        private async void OnItemSelected(FieldDto fieldDto)
+        {
+            if (fieldDto == null)
+            {
+                return;
+            }
+            await Shell.Current.Navigation.PushAsync(new UpdateFieldPage(fieldDto, _storeId));
+        }
+
+
+        internal async void OnAppearingAsync()
         {
             IsBusy = true;
+            var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+            if (isLoggedIn != "True")
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
         }
     }
 }

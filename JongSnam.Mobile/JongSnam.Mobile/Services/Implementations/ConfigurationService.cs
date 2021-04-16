@@ -1,12 +1,8 @@
-﻿using JongSnam.Mobile.Models;
+﻿using System.IO;
+using System.Reflection;
+using JongSnam.Mobile.Models;
 using JongSnam.Mobile.Services.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using Xamarin.Forms;
 
 namespace JongSnam.Mobile.Services.Implementations
 {

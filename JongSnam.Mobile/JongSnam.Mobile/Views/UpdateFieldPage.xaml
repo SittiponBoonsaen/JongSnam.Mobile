@@ -2,51 +2,72 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JongSnam.Mobile.Views.UpdateFieldPage"
+              BindingContext="{Binding UpdateFieldViewModel}"
              Title="แก้ไขสนาม">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="บันทึก" Command="{Binding SaveCommand}"/>
+        <ToolbarItem Text="บันทึก" Order="Primary" Command="{Binding SaveCommand}"/>
+
+        <ToolbarItem Text="ลบสนามนี้"
+                 Order="Secondary" 
+                 Priority="1"  Command="{Binding DeleteFieldCommand}"/>
+        
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#f5f5f3" Padding="20">
-            <StackLayout>
-                    <Image WidthRequest="150" HeightRequest="150" Source="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>
-                    <Label Text="เพิ่มรูปภาพ..." HorizontalOptions="Center" />
-            </StackLayout>
-            <Entry Placeholder="สนามที่4" PlaceholderColor="Gray" />
-            <Entry Placeholder="ราคา" PlaceholderColor="Gray" />
-            <Picker x:Name="SizeField" Title="ขนาดสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เหมาะสำหรับ 5คน</x:String>
-                    <x:String>เหมาะสำหรับ 7คน</x:String>
-                    <x:String>เหมาะสำหรับ 11คน</x:String>
-                </Picker.Items>
-            </Picker>
 
-            <Picker x:Name="Status" Title="สถานนะของสนาม"
-            HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>เปิดบริการ</x:String>
-                    <x:String>ปิดบริการ</x:String>
-                </Picker.Items>
-            </Picker>
-            <Entry Placeholder="ส่วนลด(%)" PlaceholderColor="Gray" />
-            <Grid>
-                <DatePicker Grid.Column="0" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="06/21/2018"  />
-                <DatePicker Grid.Column="1" MinimumDate="01/01/2018"
-                    MaximumDate="12/31/2018"
-                    Date="07/21/2018" />
-            </Grid>
-            <StackLayout Padding="20,0">
-                <Editor Placeholder="รายละเอียดส่วนลด" HeightRequest="70" />
+                <StackLayout>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
+                    <Frame OutlineColor="Gray">
+                    <Image Grid.RowSpan="5" HeightRequest="200" WidthRequest="180" Source="{Binding ImageProfile}" BackgroundColor="#f2f2f0" />
+                    </Frame>
+                        <ImageButton Margin="3"
+                             BackgroundColor="#f5f5f3"
+                             HeightRequest="64" 
+                             WidthRequest="64"
+                            Padding="2"
+                            Source="add_photo.png"
+                            Command="{Binding UploadImageCommand}">
+                    </ImageButton>
+                </StackLayout>
+                <Entry Text="{Binding Name}" />
+                <Entry Text="{Binding Price}"/>
+                <Entry Placeholder="ขนาดสนาม" Text="{Binding SizeField}"/>
+                <Picker
+                    ItemsSource="{Binding IsOpenValues}"
+                    SelectedItem="{Binding SelectedIsOpen.Value}"
+                    ItemDisplayBinding="{Binding Name}" TextColor="Black" TitleColor="Black"/>
+
+                <Entry Placeholder="ส่วนลด(%)" Text="{Binding Percentage}" />
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Text="ตั้งแต่ :" Grid.Column="0" Grid.Row="1" VerticalOptions="Center"></Label>
+                    <DatePicker  Grid.Column="1" Grid.Row="1" MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}" 
+                    MaximumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    Date="{Binding StartDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+                    <Label Text="ถึง :" Grid.Column="2" Grid.Row="1" VerticalOptions="Center" ></Label>
+                    <DatePicker Grid.Column="3" Grid.Row="1"  MinimumDate="{Binding DateNow,StringFormat='{0:dd MMMM, yyyy}'}"
+                    MaximumDate="12/25/2024"
+                    Date="{Binding EndDate,StringFormat='{0:dd MMMM, yyyy}'}" />
+                </Grid>
+                
+                <StackLayout Padding="20,0">
+                    <Editor Placeholder="รายละเอียดส่วนลด" Text="{Binding Detail}" HeightRequest="70" />
             </StackLayout>
-            <Button Text="ลบสนามนี้"
-                VerticalOptions="CenterAndExpand" Command="{Binding DeleteFieldCommand}"
-                    BackgroundColor="Red"/>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>

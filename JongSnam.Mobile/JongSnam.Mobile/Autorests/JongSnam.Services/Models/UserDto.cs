@@ -22,7 +22,7 @@ namespace JongSnamService.Models
         /// <summary>
         /// Initializes a new instance of the UserDto class.
         /// </summary>
-        public UserDto(int? id = default(int?), string firstName = default(string), string lastName = default(string), string email = default(string), string address = default(string), string contactMobile = default(string), string image = default(string), string userType = default(string))
+        public UserDto(int? id = default(int?), string firstName = default(string), string lastName = default(string), string email = default(string), string address = default(string), string contactMobile = default(string), string image = default(string), string userType = default(string), bool? isLoggedIn = default(bool?), string password = default(string))
         {
             Id = id;
             FirstName = firstName;
@@ -32,6 +32,8 @@ namespace JongSnamService.Models
             ContactMobile = contactMobile;
             Image = image;
             UserType = userType;
+            IsLoggedIn = isLoggedIn;
+            Password = password;
             CustomInit();
         }
 
@@ -79,6 +81,16 @@ namespace JongSnamService.Models
         /// </summary>
         [JsonProperty(PropertyName = "userType")]
         public string UserType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isLoggedIn")]
+        public bool? IsLoggedIn { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "password")]
+        public string Password { get; set; }
 
     }
 }

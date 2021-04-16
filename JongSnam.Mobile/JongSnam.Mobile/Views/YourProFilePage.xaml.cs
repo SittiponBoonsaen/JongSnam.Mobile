@@ -1,9 +1,5 @@
-﻿using JongSnam.Mobile.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using JongSnam.Mobile.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,14 +15,14 @@ namespace JongSnam.Mobile.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new YourProFileViewModel(5);
+            BindingContext = _viewModel = new YourProFileViewModel();
 
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.OnAppearing();
+            Task.Run(async () => await _viewModel.OnAppearingAsync());
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using JongSnam.Mobile.Services.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.CustomErrors;
+using JongSnam.Mobile.Services.Interfaces;
 using JongSnamService;
 using Microsoft.Rest;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,13 +15,29 @@ namespace JongSnam.Mobile.Services.Base
 {
     public abstract class BaseServices
     {
-        protected const string AccessTokenKey = "AccessToken";
-
         protected readonly IConfigurationService ConfigurationService;
 
         protected readonly JongSnamServices JongSnamServices;
 
-      
+        protected readonly IConnectivityService ConnectivityService;
+
+        private string User
+        {
+            get
+            {
+                var user = Preferences.Get(AuthorizeConstants.UserKey, string.Empty);
+                return user;
+            }
+        }
+
+        private string Password
+        {
+            get
+            {
+                var password = Preferences.Get(AuthorizeConstants.PasswordKey, string.Empty);
+                return password;
+            }
+        }
 
         protected Dictionary<string, List<string>> CustomHeaders
         {
@@ -28,7 +45,9 @@ namespace JongSnam.Mobile.Services.Base
             {
                 var customHeaders = new Dictionary<string, List<string>>();
 
-                customHeaders.Add("Authorization", new List<string> { "Test Token" });
+                customHeaders.Add(AuthorizeConstants.AuthorizationKey, new List<string> { "keyHere" });
+                customHeaders.Add(AuthorizeConstants.UserKey, new List<string> { User });
+                customHeaders.Add(AuthorizeConstants.PasswordKey, new List<string> { Password });
 
                 return customHeaders;
             }
@@ -37,6 +56,7 @@ namespace JongSnam.Mobile.Services.Base
         public BaseServices()
         {
             ConfigurationService = DependencyService.Get<IConfigurationService>();
+            ConnectivityService = DependencyService.Get<IConnectivityService>();
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (msg, cert, chain, errors) =>
             {
@@ -44,8 +64,9 @@ namespace JongSnam.Mobile.Services.Base
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
-            //JongSnamServices = new JongSnamServices(new Uri(ConfigurationService.Configuration.JongSnamServicesUrl), handler);
-            JongSnamServices = new JongSnamServices(new Uri("http://192.168.197.177:8080/"), handler);
+            //JongSnamServices = new JongSnamServices(new Uri("http://192.168.1.13:8588/"), handler);
+            //JongSnamServices = new JongSnamServices(new Uri("http://172.18.52.145:8080/"), handler);
+            JongSnamServices = new JongSnamServices(new Uri("https://jongsnamservices25640404210358.azurewebsites.net/"), handler);
         }
 
         protected async Task<T> GetRespondDtoHandlerHttpStatus<T>(HttpOperationResponse httpOperationResponse)
@@ -59,5 +80,17 @@ namespace JongSnam.Mobile.Services.Base
             var respondModel = JsonConvert.DeserializeObject<T>(responseString);
             return respondModel;
         }
+
+        protected T InvokeServiceCheckInternetConnection<T>(Func<T> serviceMethod)
+        {
+            var isInternetConnection = ConnectivityService.IsInternetConnection();
+            if (!isInternetConnection)
+            {
+                throw new NoInternetConnectionException($"Cannot request to {nameof(serviceMethod)}");
+            }
+
+            return serviceMethod.Invoke();
+        }
+
     }
 }

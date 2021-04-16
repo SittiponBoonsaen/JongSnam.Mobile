@@ -2,13 +2,58 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
              mc:Ignorable="d"
              x:Class="JongSnam.Mobile.Views.LoginPage"
+             Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False">
+
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+        <StackLayout BackgroundColor="#f5f5f3" Padding="20">
+            <Button HorizontalOptions="End"  Text="Register" TextColor="Gray" Image="Instagram/i759refresh2toolbarselected.png" BorderColor="Transparent" BackgroundColor="Transparent"
+            Command="{Binding RegisterCommand}"></Button>
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                              Color="Blue"
+                               AbsoluteLayout.LayoutFlags="All"
+                               AbsoluteLayout.LayoutBounds=".5,.5,.1,.1"/>
+            <Label Text="Login" FontSize="Title" HorizontalOptions="Center" />
+            <Image Source="icon_logo.png"/>
+            <StackLayout>
+                <Entry Placeholder="Email"
+                        Text="{Binding Email.Value}"
+                        Keyboard="Email"
+                        MaxLength="20">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding EmailTextChangedCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
+
+                <Label Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                               Style="{StaticResource ErrorLabel}"/>
+            </StackLayout>
+
+            <StackLayout>
+                <Entry Placeholder="Password"
+                               Text="{Binding Password.Value}"
+                               IsPassword="True">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                  Command="{Binding PasswordTextChangedCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
+
+                <Label Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                               Style="{StaticResource ErrorLabel}"/>
+            </StackLayout>
+
+            <Button Text="Login"
+                VerticalOptions="CenterAndExpand"
+                BackgroundColor="RoyalBlue"
+                Command="{Binding LoginCommand}"    
+                />
+            <Label Text="version1.1" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

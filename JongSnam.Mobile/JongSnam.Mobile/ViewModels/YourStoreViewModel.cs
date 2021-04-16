@@ -1,37 +1,47 @@
-﻿using JongSnam.Mobile.Models;
-using JongSnam.Mobile.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
+using JongSnam.Mobile.Constants;
+using JongSnam.Mobile.Models;
+using JongSnam.Mobile.Services.Interfaces;
+using JongSnam.Mobile.Views;
+using JongSnamService.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace JongSnam.Mobile.ViewModels
 {
     public class YourStoreViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; }
+        private readonly IStoreServices _storeServices;
+        public ObservableCollection<YourStoreModel> Items { get; }
 
         public Command LoadItemsCommand { get; }
 
         public Command AddStoreCommand { get; }
 
         public Command UpdateStoreCommand { get; }
+        public Command LoadMoreCommand { get; }
 
-        public Command YourFieldCommand { get; }
+        public Command<YourStore> ItemTapped { get; }
 
         public YourStoreViewModel()
         {
-            Items = new ObservableCollection<Item>();
+
+            Items = new ObservableCollection<YourStoreModel>();
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             AddStoreCommand = new Command(OnAddStore);
 
-            UpdateStoreCommand = new Command<Item>(OnUpdateStore);
+            UpdateStoreCommand = new Command<YourStore>(OnUpdateStore);
 
-            YourFieldCommand = new Command<Item>(OnYourField);
+            ItemTapped = new Command<YourStore>(OnYourField);
+
+            _storeServices = DependencyService.Get<IStoreServices>();
+
+            //Task.Run(async () => await ExecuteLoadItemsCommand());
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -40,39 +50,37 @@ namespace JongSnam.Mobile.ViewModels
 
             try
             {
+                //if (isLoadMore)
+                //{
+                //    _currentPage++;
+                //}
+                //else
+                //{
+                //    Items.Clear();
+                //    _currentPage = 1;
+                //}
                 Items.Clear();
+                var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
+                var data = await _storeServices.GetYourStores(Convert.ToInt32(userId), 1, 10);
 
-                var items = new ObservableCollection<Item> {
-                    new Item{
-                        Text = "The goals",
-                        Description = "ggg"
-                    },
-                    new Item
-                    {
-                        Text = "ร้าน Happy มอใหม่",
-                        Description = "gfgasdf"
-                    },
-                    new Item
-                    {
-                        Text = "ร้าน Happy ท่าขอนยาง",
-                        Description = "gfgasdf"
-                    },
-                    new Item
-                    {
-                        Text = "Soccer pro บางนา",
-                        Description = "gfgasdf"
-                    }
-                };
+                if (data == null)
+                    return;
 
-                foreach (var item in items)
+                foreach (var item in data)
                 {
-                    Items.Add(item);
+                    Items.Add(
+                        new YourStoreModel
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            ImageSource = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.Image)))
+                        });
                 }
-                
-            }
-            catch
-            {
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             finally
             {
@@ -82,23 +90,32 @@ namespace JongSnam.Mobile.ViewModels
 
         async void OnAddStore(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(AddStorePage));
+            var userId = Preferences.Get(AuthorizeConstants.UserIdKey, null);
+            await Shell.Current.Navigation.PushAsync(new AddStorePage(Convert.ToInt32(userId)));
         }
 
-        async void OnUpdateStore(Item item)
+        async void OnUpdateStore(YourStore item)
         {
-            await Shell.Current.GoToAsync(nameof(UpdateStorePage));
+            await Shell.Current.Navigation.PushAsync(new UpdateStorePage(item.Id.Value));
         }
-        async void OnYourField(Item item)
+
+        async void OnYourField(YourStore item)
         {
-
-            await Shell.Current.GoToAsync(nameof(YourFieldPage));
+            if (item == null)
+            {
+                return;
+            }
+            await Shell.Current.Navigation.PushAsync(new YourFieldPage(item.Id.Value, item.Name));
         }
 
-
-        public void OnAppearing()
+        public async void OnAppearingAsync()
         {
             IsBusy = true;
+            var isLoggedIn = Preferences.Get(AuthorizeConstants.IsLoggedInKey, string.Empty);
+            if (isLoggedIn != "True")
+            {
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
         }
     }
 }

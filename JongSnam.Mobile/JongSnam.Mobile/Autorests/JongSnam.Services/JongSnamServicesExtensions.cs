@@ -7,6 +7,8 @@
 namespace JongSnamService
 {
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -15,6 +17,270 @@ namespace JongSnamService
     /// </summary>
     public static partial class JongSnamServicesExtensions
     {
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static object GetProvinces(this IJongSnamServices operations)
+            {
+                return operations.GetProvincesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetProvincesAsync(this IJongSnamServices operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetProvincesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetProvinceById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetProvinceByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetProvinceByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetProvinceByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='provinceId'>
+            /// </param>
+            public static object GetDistrictByProvinceId(this IJongSnamServices operations, int provinceId)
+            {
+                return operations.GetDistrictByProvinceIdAsync(provinceId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='provinceId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetDistrictByProvinceIdAsync(this IJongSnamServices operations, int provinceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDistrictByProvinceIdWithHttpMessagesAsync(provinceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetDistrictById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetDistrictByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetDistrictByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDistrictByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='districtId'>
+            /// </param>
+            public static object GetSubDistrictByDistrictId(this IJongSnamServices operations, int districtId)
+            {
+                return operations.GetSubDistrictByDistrictIdAsync(districtId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='districtId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubDistrictByDistrictIdAsync(this IJongSnamServices operations, int districtId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubDistrictByDistrictIdWithHttpMessagesAsync(districtId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetSubDistrictById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetSubDistrictByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubDistrictByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubDistrictByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='user'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            public static object Login(this IJongSnamServices operations, string user = default(string), string password = default(string))
+            {
+                return operations.LoginAsync(user, password).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='user'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> LoginAsync(this IJongSnamServices operations, string user = default(string), string password = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.LoginWithHttpMessagesAsync(user, password, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object Logout(this IJongSnamServices operations, int? id = default(int?))
+            {
+                return operations.LogoutAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> LogoutAsync(this IJongSnamServices operations, int? id = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.LogoutWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object CreateUser(this IJongSnamServices operations, UserRequest body = default(UserRequest))
+            {
+                return operations.CreateUserAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> CreateUserAsync(this IJongSnamServices operations, UserRequest body = default(UserRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateUserWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='enumName'>
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetEnums(this IJongSnamServices operations, string enumName = default(string), int? id = default(int?))
+            {
+                return operations.GetEnumsAsync(enumName, id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='enumName'>
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetEnumsAsync(this IJongSnamServices operations, string enumName = default(string), int? id = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEnumsWithHttpMessagesAsync(enumName, id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -30,9 +296,9 @@ namespace JongSnamService
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetAll(this IJongSnamServices operations, double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GetFieldBySearch(this IJongSnamServices operations, double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetAllAsync(startPrice, toPrice, districtId, provinceId, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GetFieldBySearchAsync(startPrice, toPrice, districtId, provinceId, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -53,9 +319,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAllAsync(this IJongSnamServices operations, double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetFieldBySearchAsync(this IJongSnamServices operations, double? startPrice = default(double?), double? toPrice = default(double?), int? districtId = default(int?), int? provinceId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAllWithHttpMessagesAsync(startPrice, toPrice, districtId, provinceId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetFieldBySearchWithHttpMessagesAsync(startPrice, toPrice, districtId, provinceId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -206,6 +472,58 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='reservationId'>
+            /// </param>
+            public static object GetPaymentByReservationId(this IJongSnamServices operations, int reservationId)
+            {
+                return operations.GetPaymentByReservationIdAsync(reservationId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetPaymentByReservationIdAsync(this IJongSnamServices operations, int reservationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPaymentByReservationIdWithHttpMessagesAsync(reservationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object GetPaymentById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetPaymentByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetPaymentByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPaymentByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='body'>
             /// </param>
             public static object CreatePayment(this IJongSnamServices operations, PaymentRequest body = default(PaymentRequest))
@@ -262,25 +580,21 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='currentPage'>
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetYourReservation(this IJongSnamServices operations, int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GetYourReservation(this IJongSnamServices operations, int userId, int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetYourReservationAsync(storeId, ownerId, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GetYourReservationAsync(userId, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='currentPage'>
             /// </param>
@@ -289,9 +603,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetYourReservationAsync(this IJongSnamServices operations, int storeId, int? ownerId = default(int?), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetYourReservationAsync(this IJongSnamServices operations, int userId, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetYourReservationWithHttpMessagesAsync(storeId, ownerId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetYourReservationWithHttpMessagesAsync(userId, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -300,9 +614,83 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
+            /// <param name='userId'>
             /// </param>
-            /// <param name='ownerId'>
+            /// <param name='month'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            public static object GraphMonthReservation(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?))
+            {
+                return operations.GraphMonthReservationAsync(userId, month, currentPage, pageSize).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='month'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GraphMonthReservationAsync(this IJongSnamServices operations, int userId, int month, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GraphMonthReservationWithHttpMessagesAsync(userId, month, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='year'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            public static object GraphYearReservation(this IJongSnamServices operations, int userId, int year, int? currentPage = default(int?), int? pageSize = default(int?))
+            {
+                return operations.GraphYearReservationAsync(userId, year, currentPage, pageSize).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='year'>
+            /// </param>
+            /// <param name='currentPage'>
+            /// </param>
+            /// <param name='pageSize'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GraphYearReservationAsync(this IJongSnamServices operations, int userId, int year, int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GraphYearReservationWithHttpMessagesAsync(userId, year, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='userId'>
             /// </param>
             /// <param name='startTimeYear'>
             /// </param>
@@ -336,17 +724,15 @@ namespace JongSnamService
             /// </param>
             /// <param name='pageSize'>
             /// </param>
-            public static object GetAll1(this IJongSnamServices operations, int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?))
+            public static object GetReservationBySearch(this IJongSnamServices operations, int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?))
             {
-                return operations.GetAll1Async(storeId, ownerId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize).GetAwaiter().GetResult();
+                return operations.GetReservationBySearchAsync(userId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='storeId'>
-            /// </param>
-            /// <param name='ownerId'>
+            /// <param name='userId'>
             /// </param>
             /// <param name='startTimeYear'>
             /// </param>
@@ -383,9 +769,9 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAll1Async(this IJongSnamServices operations, int? storeId = default(int?), int? ownerId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetReservationBySearchAsync(this IJongSnamServices operations, int? userId = default(int?), int? startTimeYear = default(int?), int? startTimeMonth = default(int?), int? startTimeDay = default(int?), int? startTimeHour = default(int?), int? startTimeMinute = default(int?), int? startTimeSecond = default(int?), int? stopTimeYear = default(int?), int? stopTimeMonth = default(int?), int? stopTimeDay = default(int?), int? stopTimeHour = default(int?), int? stopTimeMinute = default(int?), int? stopTimeSecond = default(int?), string userName = default(string), string storeName = default(string), int? currentPage = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAll1WithHttpMessagesAsync(storeId, ownerId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetReservationBySearchWithHttpMessagesAsync(userId, startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, startTimeSecond, stopTimeYear, stopTimeMonth, stopTimeDay, stopTimeHour, stopTimeMinute, stopTimeSecond, userName, storeName, currentPage, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -494,6 +880,36 @@ namespace JongSnamService
             public static async Task<object> DeleteReservationAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteReservationWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object UpdateReservation(this IJongSnamServices operations, int id, UpdateReservationRequest body = default(UpdateReservationRequest))
+            {
+                return operations.UpdateReservationAsync(id, body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateReservationAsync(this IJongSnamServices operations, int id, UpdateReservationRequest body = default(UpdateReservationRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateReservationWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -620,9 +1036,35 @@ namespace JongSnamService
             /// </param>
             /// <param name='id'>
             /// </param>
+            public static object GetStoreById(this IJongSnamServices operations, int id)
+            {
+                return operations.GetStoreByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetStoreByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStoreByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
             /// <param name='body'>
             /// </param>
-            public static object UpdateStore(this IJongSnamServices operations, int? id = default(int?), UpdateStoreRequest body = default(UpdateStoreRequest))
+            public static object UpdateStore(this IJongSnamServices operations, int id, UpdateStoreRequest body = default(UpdateStoreRequest))
             {
                 return operations.UpdateStoreAsync(id, body).GetAwaiter().GetResult();
             }
@@ -637,7 +1079,7 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateStoreAsync(this IJongSnamServices operations, int? id = default(int?), UpdateStoreRequest body = default(UpdateStoreRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpdateStoreAsync(this IJongSnamServices operations, int id, UpdateStoreRequest body = default(UpdateStoreRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateStoreWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -704,24 +1146,24 @@ namespace JongSnamService
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='body'>
+            /// <param name='id'>
             /// </param>
-            public static object CreateUser(this IJongSnamServices operations, UserRequest body = default(UserRequest))
+            public static object GetUserById(this IJongSnamServices operations, int id)
             {
-                return operations.CreateUserAsync(body).GetAwaiter().GetResult();
+                return operations.GetUserByIdAsync(id).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='body'>
+            /// <param name='id'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> CreateUserAsync(this IJongSnamServices operations, UserRequest body = default(UserRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetUserByIdAsync(this IJongSnamServices operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateUserWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetUserByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -734,7 +1176,7 @@ namespace JongSnamService
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static object ChangePassword(this IJongSnamServices operations, int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest))
+            public static object ChangePassword(this IJongSnamServices operations, int id, ChangePasswordRequest body = default(ChangePasswordRequest))
             {
                 return operations.ChangePasswordAsync(id, body).GetAwaiter().GetResult();
             }
@@ -749,9 +1191,61 @@ namespace JongSnamService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> ChangePasswordAsync(this IJongSnamServices operations, int? id = default(int?), ChangePasswordRequest body = default(ChangePasswordRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ChangePasswordAsync(this IJongSnamServices operations, int id, ChangePasswordRequest body = default(ChangePasswordRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ChangePasswordWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static object UpdateUser(this IJongSnamServices operations, int id, UpdateUserRequest body = default(UpdateUserRequest))
+            {
+                return operations.UpdateUserAsync(id, body).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateUserAsync(this IJongSnamServices operations, int id, UpdateUserRequest body = default(UpdateUserRequest), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateUserWithHttpMessagesAsync(id, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IList<WeatherForecast> Get(this IJongSnamServices operations)
+            {
+                return operations.GetAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<WeatherForecast>> GetAsync(this IJongSnamServices operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

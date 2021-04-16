@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:JongSnam.Mobile.ViewModels"  
+             xmlns:model="clr-namespace:JongSnam.Mobile.Models" xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
+             x:Class="JongSnam.Mobile.Views.DetailYourReservationPage"
+             BindingContext="{Binding DetailYourReservationViewModel}">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="แก้ไช"
+                 IconImageSource=""
+                 Order="Secondary" 
+                 Priority="1"  Command="{Binding EditDetailYourReservationCommand}"/>
+        
+        <ToolbarItem Text="{Binding SaveTitle}" Command="{Binding SaveCommand}" />
+
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+            <StackLayout>
+                <Label             
+                    Text="{Binding StoreName}"
+                    FontSize="25"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="Black"/>
+                
+                <Grid RowSpacing="-35" ColumnSpacing="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding ImageProfile}" 
+                   Grid.Row="0"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Center"
+                   WidthRequest="120"
+                   HeightRequest="60"/>
+
+                    <Label Text="รหัสการจอง :" TextColor="Black" Grid.Row="0" Grid.Column="1" HorizontalOptions="End"/>
+                    <Label Text="สถานะการจอง :" TextColor="Black" Grid.Row="1" Grid.Column="1" HorizontalOptions="End"/>
+                    <Label Text="ชื่อ :" TextColor="Black" Grid.Row="2" Grid.Column="1" HorizontalOptions="End"/>
+                    <Label Text="เบอร์โทร :" TextColor="Black" Grid.Row="3" Grid.Column="1" HorizontalOptions="End"/>
+
+                    <Label Text="{Binding Id}" TextColor="Black" Grid.Row="0" Grid.Column="2" HorizontalOptions="Start"/>
+                    
+                    <Label IsVisible="{Binding IsApproved}" Text="{Binding ApprovalStatusString}" 
+                        TextColor="Green" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start"/>
+                    <Label IsVisible="{Binding UnApproved}" Text="{Binding ApprovalStatusString}" 
+                        TextColor="Orange" Grid.Row="1" Grid.Column="2" HorizontalOptions="Start"/>
+                    
+                    <Label Text="{Binding UserName}" TextColor="Black" Grid.Row="2" Grid.Column="2" HorizontalOptions="Start"/>
+                    <Label Text="{Binding ContactMobile}" TextColor="Black" Grid.Row="3" Grid.Column="2" HorizontalOptions="Start"/>
+
+
+                <Label Text="วันที่จอง :" TextColor="Black" Grid.Row="4" Grid.Column="1" HorizontalOptions="End"/>
+                <Label Text="ตั้งแต่ :" TextColor="Black" Grid.Row="5" Grid.Column="1" HorizontalOptions="End"/>
+                <Label Text="ถึง :" TextColor="Black" Grid.Row="6" Grid.Column="1" HorizontalOptions="End"/>
+                <Label Text="สนามที่จอง :" TextColor="Black" Grid.Row="7" Grid.Column="1" HorizontalOptions="End"/>
+                <Label Text="อัตราค่าบริการ :" TextColor="Black" Grid.Row="8" Grid.Column="1" HorizontalOptions="End"/>
+
+                <Label Text="{Binding DateBook}" TextColor="Black" Grid.Row="4" Grid.Column="2" HorizontalOptions="Start"/>
+                <Label Text="{Binding StartTimes}" TextColor="Black" Grid.Row="5" Grid.Column="2" HorizontalOptions="Start"/>
+                <Label Text="{Binding StopTime}" TextColor="Black" Grid.Row="6" Grid.Column="2" HorizontalOptions="Start"/>
+                <Label Text="{Binding FieldName}" TextColor="Black" Grid.Row="7" Grid.Column="2" HorizontalOptions="Start"/>
+                <Label Text="{Binding PricePerHour}" TextColor="Black" Grid.Row="8" Grid.Column="2" HorizontalOptions="Start"/>
+            </Grid>
+            <Label BackgroundColor="Gray" FontSize="0.2" />
+            <StackLayout Padding="50">
+                    <Label Text="หลักฐานการโอนเงิน" FontSize="20" TextColor="Black" Padding="10" 
+                   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"/>
+            <Entry Placeholder="จำนวนเงิน" PlaceholderColor="Gray" Text="{Binding Amount}" Keyboard="Numeric" HorizontalTextAlignment="Center" IsEnabled="{Binding IsCustomer}" />
+            <Picker ItemsSource="{Binding PaymentMethodList}" HorizontalTextAlignment="Center" 
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedItem="{Binding SelectedPayment.Value, Mode=TwoWay}"
+                                        Title="กรุณาเลือก วิธีการชำระเงิน" IsEnabled="{Binding IsCustomer}">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                          Command="{Binding SelectedPaymentIndexChangedCommand}"/>
+
+                </Picker.Behaviors>
+            </Picker>
+            </StackLayout>
+            <Image Source="{Binding ReceiptPayment}" WidthRequest="200" HeightRequest="200"/>
+            <Grid  IsVisible="{Binding IsOwner}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.Column="1" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="icon_cancel.png"
+                                 Command="{Binding CancelApprovalStatusCommand}"/>
+                
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.Column="2" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="confirm.png"
+                                 Command="{Binding CommitApprovalStatusCommand}"/>
+            </Grid>
+
+            <Grid IsVisible="{Binding IsCustomer}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ImageButton Margin="20" BorderColor="Transparent" BackgroundColor="Transparent"
+                             HeightRequest="64" Grid.Row="0" Grid.ColumnSpan="3" 
+                             WidthRequest="64"
+                                Padding="5"
+                                Source="add_photo.png"
+                                 Command="{Binding UploadReceiptCommand}"/>
+                
+            </Grid>
+        </StackLayout>
+        </ScrollView>
+</ContentPage>

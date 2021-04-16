@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms" xmlns:behaviors="clr-namespace:JongSnam.Mobile.Behaviors"
+             x:Class="JongSnam.Mobile.Views.YearGraphPage">
+    <ContentPage.Content>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" ></RowDefinition>
+                <RowDefinition Height="*" ></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Picker Title="กรุณาเลือกปีที่คุณต้องการแสดง" Grid.Column="0" Grid.Row="0" HorizontalOptions="FillAndExpand"
+                    ItemsSource="{Binding selectYears}"
+                    SelectedItem="{Binding selectYear,Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Name}">
+                <Picker.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                                               Command="{Binding LoadGraphCommand}"/>
+                </Picker.Behaviors> 
+            </Picker>
+
+            <oxy:PlotView Model="{Binding Model}" VerticalOptions="Center" HorizontalOptions="Center"  Grid.Column="0" Grid.Row="1"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+
